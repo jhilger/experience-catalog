@@ -5,6 +5,7 @@ const Search = (
   {
     sObject = "Account",
     searchField = "Name",
+    inputName,
     className,
     name,
     onChange = () => {},
