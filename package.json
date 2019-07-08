@@ -2,10 +2,17 @@
   "name": "experience-catalog",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/experience-catalog",
   "dependencies": {
+    "@trendmicro/react-sidenav": "^0.4.5",
+    "jsforce": "https://github.com/couturecraigj/jsforce.git",
+    "jsforce-ajax-proxy": "^1.0.0",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.1",
+    "react-transition-group": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,7 +27,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ie 11"
     ],
     "development": [
       "last 1 chrome version",
