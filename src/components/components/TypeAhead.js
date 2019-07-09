@@ -8,7 +8,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   const ref = useRef();
   const menuRef = useRef();
   const [records, setRecords] = useState();
-  const [record, setRecord] = useState({ Id });
+  const [record, setRecord] = useState(Id ? { Id } : '');
   const [hovered, setHovered] = useState(null);
   // eslint-disable-next-line no-unused-vars
   let [formContext, addedFieldsContext, formDispatch, addedFieldsDispatch] = [
@@ -26,7 +26,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     );
   } catch (error) {}
   const clearValues = () => {
-    setRecord("");
+    setRecord({});
     onChange("");
     formDispatch({
       type: "FIELD/change",
@@ -99,8 +99,9 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
         <label htmlFor={name}>{label}</label>
         <Search
           ref={ref}
-          onChange={(more, records) => {
-            setRecords(records);
+          onChange={(more, newRecords) => {
+            if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
+            setRecords(newRecords);
             setRecord({});
           }}
           onBlur={onBlur}

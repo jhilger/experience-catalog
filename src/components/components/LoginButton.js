@@ -3,7 +3,6 @@ import Context from "../Context";
 
 const LoginButton = () => {
   const [context, dispatch] = useContext(Context);
-  console.log(context);
   const [rendered, setRendered] = useState(false);
   useEffect(() => {
     setRendered(true);
@@ -17,14 +16,12 @@ const LoginButton = () => {
           localStorage.removeItem("local_user");
           context.jsforce.browser.logout();
         };
-        console.log(window.loginUrl);
         context.jsforce.browser.login(
           {
             loginUrl: window.loginUrl,
             popup: { width: 912, height: 600 }
           },
           function(err) {
-            console.log(err);
             if (err) {
               return dispatch(
                 {
@@ -41,7 +38,6 @@ const LoginButton = () => {
             context.jsforce.browser.connection
               .identity()
               .then(payload => {
-                console.log(payload);
                 dispatch({ type: "loggedin", payload });
                 dispatch(
                   {
