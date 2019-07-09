@@ -35,7 +35,10 @@ const App = ({ value = defaultState }) => {
           ))}
         </ToastsModal>
       )}
-      <LoginButton />
+      <div style={{paddingLeft: '68px'}}>
+        <LoginButton />
+      </div>
+     
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/oauth/callback" component={OAuthCallback} />

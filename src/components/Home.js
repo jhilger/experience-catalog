@@ -34,13 +34,17 @@ const Home = () => {
 
   useEffect(() => {
     setRendered(true);
-    context.jsforce.browser.connection.query(
-      "SELECT Id, Strategic_Partner__r.Account_Name__r.Name FROM Experiences__c WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
-      (err, result) => {
-        console.log(err, result)
-      }
-    );
-  }, [context.loggedIn]);
+  }, []);
+  useEffect(() => {
+    if (rendered && context.loggedIn) {
+      context.jsforce.browser.connection.query(
+        "SELECT Id, Strategic_Partner__r.Account_Name__r.Name FROM Experiences__c WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+        (err, result) => {
+          console.log(result)
+        }
+      );
+    }
+  }, [rendered, context.loggedIn])
 
   const filterItems = query => {
     return window.experiences.map(exp => {
@@ -57,7 +61,7 @@ const Home = () => {
   return (
     <React.Fragment>
       {context.loggedIn ? (
-        <div>
+        <div style={{paddingLeft: '68px'}}>
           <h2>Welcome {context.user.display_name}</h2>
           <Form onSubmit={console.log} autoComplete="off">
             <div>
@@ -101,7 +105,7 @@ const Home = () => {
           </Form>
         </div>
       ) : (
-        <h1>You need to Log in to view this site</h1>
+        <h1 style={{paddingLeft: '68px'}}>You need to Log in to view this site</h1>
       )}
 
       <SideNav
