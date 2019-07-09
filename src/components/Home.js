@@ -26,7 +26,7 @@ import SubmitForApproval from "./components/SubmitForApproval";
 //SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [state] = useContext(Context);
+  const [context] = useContext(Context);
 
   const [expanded, setExpanded] = useState(false);
   const [filtered, setFiltered] = useState(window.experiences);
@@ -34,7 +34,13 @@ const Home = () => {
 
   useEffect(() => {
     setRendered(true);
-  }, []);
+    context.jsforce.browser.connection.query(
+      "SELECT Id, Strategic_Partner__r.Account_Name__r.Name FROM Experiences__c WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+      (err, result) => {
+        console.log(err, result)
+      }
+    );
+  }, [context.loggedIn]);
 
   const filterItems = query => {
     return window.experiences.map(exp => {
@@ -50,9 +56,9 @@ const Home = () => {
   if (!rendered) return null;
   return (
     <React.Fragment>
-      {state.loggedIn ? (
+      {context.loggedIn ? (
         <div>
-          <h2>Welcome {state.user.display_name}</h2>
+          <h2>Welcome {context.user.display_name}</h2>
           <Form onSubmit={console.log} autoComplete="off">
             <div>
               <SubmitForApproval objectId="001E000000B78SG" />
