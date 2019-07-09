@@ -11,6 +11,7 @@ const Field = ({
   className,
   style
 }) => {
+  // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(Context);
   useEffect(() => {
     dispatch({ type: "FIELD/insert", payload: { name, label } });
@@ -19,6 +20,7 @@ const Field = ({
         type: "FIELD/remove",
         payload: { name }
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
   return (
     <div className={className} style={style}>

@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import ReactDOM from "react-dom";
-import Context from "../Context";
+import React from "react";
 
 const Toast = ({ toast }) => {
   let children = null;

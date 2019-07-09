@@ -19,6 +19,7 @@ const AdditionalFields = ({
   children
 }) => {
   let initialState = {}
+  // eslint-disable-next-line no-unused-vars
   let [formState, formDispatch, context] = [{}, () => {}];
   try {
     [formState, formDispatch, context] = useContext(FormContext);
