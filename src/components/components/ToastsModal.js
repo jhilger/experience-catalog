@@ -13,6 +13,7 @@ const Toasts = ({ children }) => {
     return () => {
       context.toastsRoot.removeChild(el);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return el

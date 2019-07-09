@@ -20,7 +20,7 @@ const Search = (
   },
   ref
 ) => {
-  const [context, dispatch] = useContext(Context);
+  const [context] = useContext(Context);
   const [displayValue, setDisplayValue] = useState(
     typeof value === "object" && value[searchField] ? value[searchField] : ""
   );
@@ -29,7 +29,6 @@ const Search = (
   const [record, setRecord] = useState(typeof value === "object" ? value : {});
 
   useEffect(() => {
-    console.log(context);
     if (typeof value === "string" && value)
       context.jsforce.browser.connection.query(
         `SELECT ${searchField} FROM ${sObject} WHERE Id = '${value}'`,
@@ -52,6 +51,7 @@ const Search = (
       setRecord({});
       setDisplayValue("");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   useEffect(() => {
@@ -60,7 +60,8 @@ const Search = (
         if (err) console.error(err);
         onChange(result.done, result.records);
       });
-  }, [query]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, onChange]);
   return React.createElement(component, {
     className,
     ref,

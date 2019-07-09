@@ -10,6 +10,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   const [records, setRecords] = useState();
   const [record, setRecord] = useState({ Id });
   const [hovered, setHovered] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   let [formContext, addedFieldsContext, formDispatch, addedFieldsDispatch] = [
     {},
     {},
@@ -90,6 +91,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
         payload: { name }
       });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
   return (
     <div style={{ display: "inline-block", position: "relative" }}>
