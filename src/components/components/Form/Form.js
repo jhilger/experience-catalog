@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Context from "./Context";
 
 const Form = ({ onSubmit: handleSubmit = () => {}, children, ...props }) => {
+  // eslint-disable-next-line no-unused-vars
   const [state, dispatch, context] = useContext(Context);
   return (
     <form

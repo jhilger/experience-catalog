@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Context from "../AdditionalFields/Context";
 import FormContext from "./Context";
 
@@ -16,6 +16,7 @@ const InputField = ({
   className,
   style
 }) => {
+  // eslint-disable-next-line no-unused-vars
   let [context, state, dispatch, dispatchLocal] = [{}, {}, () => {}, () => {}];
   try {
     [state, dispatch] = useContext(Context);
@@ -36,6 +37,7 @@ const InputField = ({
         payload: { name }
       });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
 
   return (
