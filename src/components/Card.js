@@ -9,7 +9,7 @@ import trophy from '../img/trophy.svg';
 
 const Card = props => {
   const [cardSize, setCardSize] = useState(false);
-
+  console.log(props.experience.Image_URL__c);
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
@@ -37,7 +37,7 @@ const Card = props => {
 
     <div className={cardSize ? `medium-12 medium-order-${Math.floor(props.sort / 2)} large-order-${Math.floor(props.sort / 3)} cell exp-card open` : `medium-6 large-4 medium-order-${Math.floor(props.sort / 2) + 1} large-order-${Math.floor(props.sort / 3) + 1} cell exp-card close`}>
       <button onClick={toggleCard} className={cardSize ? 'exp-card-toggle close' : 'exp-card-toggle'}><div className="exp-card-plus"></div></button>
-      <div className="exp-card-hero" style={{ backgroundImage: `url(${props.experience.hero})` }}><img src={getIcon(props.experience.Experience_Type__c)} alt="Experience type icon" /></div>
+      <div className="exp-card-hero" style={{ backgroundImage: `url(${props.experience.Image_URL__c ? props.experience.Image_URL__c : props.experience.default})` }}><img src={getIcon(props.experience.Experience_Type__c)} alt="Experience type icon" /></div>
       <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
         <div className={cardSize ? 'medium-6 cell' : 'medium-12 cell'}>
           <div className="exp-card-title">
