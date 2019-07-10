@@ -1,11 +1,11 @@
 import React, { useReducer } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./Home";
-import OAuthCallback from "./OAuthCallback/index";
+import Home from "../routes/Home";
+import OAuthCallback from "../routes/OAuthCallback/index";
 import { Provider } from "./Context";
-import LoginButton from "./components/LoginButton";
-import ToastsModal from "./components/ToastsModal";
-import Toast from "./components/Toast";
+import LoginButton from "./LoginButton";
+import ToastsModal from "./ToastsModal";
+import Toast from "./Toast";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
 

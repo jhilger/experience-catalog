@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, forwardRef } from "react";
-import Context from "../Context";
+import Context from "./Context";
 
 const Search = (
   {

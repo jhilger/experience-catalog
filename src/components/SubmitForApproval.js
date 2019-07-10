@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Context from "../Context";
+import Context from "./Context";
 
 const SubmitForApproval = ({ objectId }) => {
   const [context, dispatch] = useContext(Context);

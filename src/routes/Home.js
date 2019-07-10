@@ -14,13 +14,13 @@ import music from "../img/music.svg";
 import outdoor from "../img/outdoor.svg";
 import trophy from "../img/trophy.svg";
 import home from "../img/home2.svg";
-import Card from "./Card";
+import Card from "../components/Card";
 
-import Context from "./Context";
-import TypeAhead from "./components/TypeAhead";
-import AdditionalFields, { Field } from "./components/AdditionalFields";
-import Form, { InputField, Debug } from "./components/Form";
-import SubmitForApproval from "./components/SubmitForApproval";
+import Context from "../components/Context";
+import TypeAhead from "../components/TypeAhead";
+import AdditionalFields, { Field } from "../components/AdditionalFields";
+import Form, { InputField, Debug } from "../components/Form";
+import SubmitForApproval from "../components/SubmitForApproval";
 
 //Experience is in window.experiences
 //SideNavFilters is in window.sideNavFilters
