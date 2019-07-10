@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import ReactDOM from "react-dom";
-import Context from "../Context";
+import Context from "./Context";
 
 const Toasts = ({ children }) => {
   const [context] = useContext(Context);

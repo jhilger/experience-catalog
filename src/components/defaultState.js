@@ -2,8 +2,8 @@ const defaultState = {
   user: {
     photos: {}
   },
-  toasts: []
+  toasts: [],
+  experiences: []
 };
 
 export default defaultState;
-

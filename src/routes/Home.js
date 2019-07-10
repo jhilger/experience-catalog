@@ -14,52 +14,58 @@ import music from "../img/music.svg";
 import outdoor from "../img/outdoor.svg";
 import trophy from "../img/trophy.svg";
 import home from "../img/home2.svg";
-import Card from "./Card";
+import Card from "../components/Card";
 
-import Context from "./Context";
-import TypeAhead from "./components/TypeAhead";
-import AdditionalFields, { Field } from "./components/AdditionalFields";
-import Form, { InputField, Debug } from "./components/Form";
-import SubmitForApproval from "./components/SubmitForApproval";
+import Context from "../components/Context";
+import TypeAhead from "../components/TypeAhead";
+import AdditionalFields, { Field } from "../components/AdditionalFields";
+import Form, { InputField, Debug } from "../components/Form";
+import SubmitForApproval from "../components/SubmitForApproval";
 
 //Experience is in window.experiences
 //SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [context] = useContext(Context);
-
+  const [context, dispatch] = useContext(Context);
+  console.log(context);
   const [expanded, setExpanded] = useState(false);
-  const [records, setRecords] = useState([]);
-  const [filtered, setFiltered] = useState(records);
+  const [filtered, setFiltered] = useState(context.experiences);
   const [rendered, setRendered] = useState(false);
+  //  WORK ON THIS
+  const sideNavFilters = context.experiences.reduce(() => {}, []);
 
   useEffect(() => {
     setRendered(true);
   }, []);
   useEffect(() => {
+    setFiltered(context.experiences);
+  }, [context.experiences]);
+  useEffect(() => {
     if (rendered && context.loggedIn) {
       context.jsforce.browser.connection.query(
-        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c "
-        + "FROM Experience__c "
-        + "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
-       (err, result) => {
+        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c " +
+          "FROM Experience__c " +
+          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+        (err, result) => {
           console.error(err);
           const records = result.records.map(record => {
             record.display = true;
             record.default = "img/davisestates3.jpg";
             return record;
-          })
-          setRecords(records)
-          setFiltered(records)
+          });
+
+          dispatch({
+            type: "EXP/init",
+            payload: records
+          });
         }
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rendered, context.loggedIn])
+  }, [rendered, context.loggedIn]);
 
   const filterItems = query => {
-    return records.map(exp => {
-      console.log(records)
+    return context.experiences.map(exp => {
       if (query === "home") {
         exp.display = true;
       } else {
@@ -68,12 +74,12 @@ const Home = () => {
       return exp;
     });
   };
-  console.log(filtered)
+
   if (!rendered) return null;
   return (
     <React.Fragment>
       {context.loggedIn ? (
-        <div style={{paddingLeft: '68px'}}>
+        <div style={{ paddingLeft: "68px" }}>
           <h2>Welcome {context.user.display_name}</h2>
           <Form onSubmit={console.log} autoComplete="off">
             <div>
@@ -117,7 +123,9 @@ const Home = () => {
           </Form>
         </div>
       ) : (
-        <h1 style={{paddingLeft: '68px'}}>You need to Log in to view this site</h1>
+        <h1 style={{ paddingLeft: "68px" }}>
+          You need to Log in to view this site
+        </h1>
       )}
 
       <SideNav
@@ -225,31 +233,30 @@ const Home = () => {
           )}
         </SideNav.Nav>
       </SideNav>
-      {filtered.length && 
-      <main className={expanded ? "expanded" : ""}>
-      <h1 className="exp-title">
-        Customer Experience <span>Catalog</span>
-      </h1>
+      {filtered.length && (
+        <main className={expanded ? "expanded" : ""}>
+          <h1 className="exp-title">
+            Customer Experience <span>Catalog</span>
+          </h1>
 
-      <div className="grid-x grid-margin-x grid-margin-y">
-        {filtered.map((exp, i) => {
-          console.log(exp)
-          return (
-            <CSSTransition
-              key={exp.Id}
-              in={exp.display}
-              timeout={300}
-              classNames="cardanim"
-              unmountOnExit
-            >
-              <Card sort={i} experience={exp} />
-            </CSSTransition>
-          );
-        })}
-      </div>
-    </main>
-      }
-      
+          <div className="grid-x grid-margin-x grid-margin-y">
+            {filtered.map((exp, i) => {
+              console.log(exp);
+              return (
+                <CSSTransition
+                  key={exp.Id}
+                  in={exp.display}
+                  timeout={300}
+                  classNames="cardanim"
+                  unmountOnExit
+                >
+                  <Card sort={i} experience={exp} />
+                </CSSTransition>
+              );
+            })}
+          </div>
+        </main>
+      )}
     </React.Fragment>
   );
 };
