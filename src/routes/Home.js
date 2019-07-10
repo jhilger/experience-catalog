@@ -32,7 +32,12 @@ const Home = () => {
   const [filtered, setFiltered] = useState(context.experiences);
   const [rendered, setRendered] = useState(false);
   //  WORK ON THIS
-  const sideNavFilters = context.experiences.reduce(() => {}, []);
+  const sideNavFilters = context.experiences.reduce((types, experience) => {
+    if(!types.includes(experience.Experience_Type__c)) {
+      types.push(experience.Experience_Type__c.toLowerCase())
+    }
+    return types
+  }, []);
 
   useEffect(() => {
     setRendered(true);
@@ -69,7 +74,7 @@ const Home = () => {
       if (query === "home") {
         exp.display = true;
       } else {
-        exp.display = exp.type === query ? true : false;
+        exp.display = exp.Experience_Type__c.toLowerCase() === query ? true : false;
       }
       return exp;
     });
@@ -146,7 +151,7 @@ const Home = () => {
             <NavText>Home</NavText>
           </NavItem>
 
-          {window.sideNavFilters.includes("wine") ? (
+          {sideNavFilters.includes("wine") ? (
             <NavItem eventKey="wine">
               <NavIcon>
                 <img
@@ -161,7 +166,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("driving") ? (
+          {sideNavFilters.includes("driving") ? (
             <NavItem eventKey="driving">
               <NavIcon>
                 <img
@@ -176,7 +181,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("art") ? (
+          {sideNavFilters.includes("art") ? (
             <NavItem eventKey="art">
               <NavIcon>
                 <img className="exp-nav-icon" src={art} alt="Art Expeiences" />
@@ -187,7 +192,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("music") ? (
+          {sideNavFilters.includes("music") ? (
             <NavItem eventKey="music">
               <NavIcon>
                 <img
@@ -202,7 +207,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("outdoor") ? (
+          {sideNavFilters.includes("outdoor") ? (
             <NavItem eventKey="outdoor">
               <NavIcon>
                 <img
@@ -217,7 +222,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("sports") ? (
+          {sideNavFilters.includes("sports") ? (
             <NavItem eventKey="sports">
               <NavIcon>
                 <img
@@ -241,7 +246,6 @@ const Home = () => {
 
           <div className="grid-x grid-margin-x grid-margin-y">
             {filtered.map((exp, i) => {
-              console.log(exp);
               return (
                 <CSSTransition
                   key={exp.Id}
