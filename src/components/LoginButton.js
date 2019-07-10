@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Button from './Button'
+import Button from "./Button";
 import Context from "./Context";
 
 const LoginButton = () => {
@@ -12,7 +12,7 @@ const LoginButton = () => {
   if (context.loggedIn || !rendered) return null;
   return (
     <Button
-      variant="primary"
+      variant="warning"
       onClick={e => {
         window.onunload = () => {
           localStorage.removeItem("local_user");
@@ -59,7 +59,7 @@ const LoginButton = () => {
         );
       }}
     >
-      LoginLoginLoginLoginLoginLoginLoginLoginLoginLoginLogin
+      Login
     </Button>
   );
 };

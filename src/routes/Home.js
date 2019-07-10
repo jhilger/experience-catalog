@@ -15,6 +15,7 @@ import outdoor from "../img/outdoor.svg";
 import trophy from "../img/trophy.svg";
 import home from "../img/home2.svg";
 import Card from "../components/Card";
+import Button from "../components/Button";
 
 import Context from "../components/Context";
 import TypeAhead from "../components/TypeAhead";
@@ -40,12 +41,12 @@ const Home = () => {
       context.jsforce.browser.connection.query(
         "SELECT Id, Strategic_Partner__r.Account_Name__r.Name FROM Experiences__c WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
         (err, result) => {
-          console.log(result)
+          console.log(result);
         }
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rendered, context.loggedIn])
+  }, [rendered, context.loggedIn]);
 
   const filterItems = query => {
     return window.experiences.map(exp => {
@@ -62,7 +63,7 @@ const Home = () => {
   return (
     <React.Fragment>
       {context.loggedIn ? (
-        <div style={{paddingLeft: '68px'}}>
+        <div style={{ paddingLeft: "68px" }}>
           <h2>Welcome {context.user.display_name}</h2>
           <Form onSubmit={console.log} autoComplete="off">
             <div>
@@ -78,7 +79,7 @@ const Home = () => {
                   `<label>${c.label}:</label> <span>${c.value}</span>`,
                 after: "</li></ul>"
               }}
-              onChange={v => console.log(JSON.stringify(v))}
+              // onChange={v => console.log(JSON.stringify(v))}
             >
               <TypeAhead name="AccountId" label="Account" />
               <Field name="name" label="Name" />
@@ -102,11 +103,18 @@ const Home = () => {
               />
               <Debug styles={{ color: "#aaa" }} />
             </AdditionalFields>
-            <button type="submit">Submit</button>
+            <Button variant="default" type="submit">
+              Submit
+            </Button>
+            <Button variant="error" type="button">
+              Cancel
+            </Button>
           </Form>
         </div>
       ) : (
-        <h1 style={{paddingLeft: '68px'}}>You need to Log in to view this site</h1>
+        <h1 style={{ paddingLeft: "68px" }}>
+          You need to Log in to view this site
+        </h1>
       )}
 
       <SideNav
@@ -240,24 +248,3 @@ const Home = () => {
 };
 
 export default Home;
-
-/*import React, { useState, useEffect } from 'react';
-
-function Example() {
-  const [count, setCount] = useState(0);
-
-  // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
-    // Update the document title using the browser API
-    document.title = `You clicked ${count} times`;
-  });
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}*/

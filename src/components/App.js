@@ -4,10 +4,11 @@ import Home from "../routes/Home";
 import OAuthCallback from "../routes/OAuthCallback/index";
 import { Provider } from "./Context";
 import LoginButton from "./LoginButton";
+import Button from "./Button";
 import ToastsModal from "./ToastsModal";
 import Toast from "./Toast";
 import { ThemeProvider } from "styled-components";
-import theme from './theme'
+import theme from "./theme";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
 
@@ -29,7 +30,7 @@ const App = ({ value = defaultState }) => {
   };
   return (
     <Provider value={[state, newDispatch]}>
-      <ThemeProvider theme={{ mode: "light", colors: theme }}>
+      <ThemeProvider theme={{ mode: "light", main: theme }}>
         <React.Fragment>
           {!!state.toasts.length && (
             <ToastsModal>
@@ -40,7 +41,10 @@ const App = ({ value = defaultState }) => {
             </ToastsModal>
           )}
           <div style={{ paddingLeft: "68px" }}>
-            <LoginButton />
+            <Button.Group>
+              <LoginButton />
+              <Button>Cancel</Button>
+            </Button.Group>
           </div>
 
           <Switch>

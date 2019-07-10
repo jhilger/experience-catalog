@@ -12,15 +12,18 @@ const SubmitForApproval = ({ objectId }) => {
           (err, response) => {
             if (err) {
               const timeStamp = Date.now();
-              return dispatch({
-                type: "TOAST/error",
-                payload: {
-                  timeStamp,
-                  name: err.name,
-                  message: err.message,
-                  info: "Triggered by Submitting for Approval"
-                }
-              }, 3000);
+              return dispatch(
+                {
+                  type: "TOAST/error",
+                  payload: {
+                    timeStamp,
+                    name: err.name,
+                    message: err.message,
+                    info: "Triggered by Submitting for Approval"
+                  }
+                },
+                3000
+              );
             }
             console.log(response);
           }
