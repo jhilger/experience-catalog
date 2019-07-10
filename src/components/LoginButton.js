@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Context from "../Context";
+import Context from "./Context";
 
 const LoginButton = () => {
   const [context, dispatch] = useContext(Context);
