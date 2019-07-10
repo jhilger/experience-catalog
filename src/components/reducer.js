@@ -4,6 +4,17 @@ function reducer(state = defaultState, action) {
   switch (action.type) {
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
+    case "EXP/init":
+      console.log(action);
+      return {
+        ...state,
+        experiences: action.payload
+      };
+    case "EXP/add":
+      return {
+        ...state,
+        experiences: state.experiences.concat(action.payload)
+      };
     case "TOAST/error":
       return {
         ...state,
@@ -36,9 +47,7 @@ function reducer(state = defaultState, action) {
     case "CLEAR":
       return {
         ...state,
-        toasts: state.toasts.filter(
-          v => v.timeOut < action.payload.timeOut
-        )
+        toasts: state.toasts.filter(v => v.timeOut < action.payload.timeOut)
       };
     default:
       return state;
