@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Button from './Button'
+import Button from "./Button";
 import Context from "./Context";
 
 const LoginButton = () => {
@@ -59,7 +59,7 @@ const LoginButton = () => {
         );
       }}
     >
-      LoginLoginLoginLoginLoginLoginLoginLoginLoginLoginLogin
+      Login
     </Button>
   );
 };
