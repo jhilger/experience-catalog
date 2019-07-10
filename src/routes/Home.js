@@ -246,7 +246,6 @@ const Home = () => {
 
           <div className="grid-x grid-margin-x grid-margin-y">
             {filtered.map((exp, i) => {
-              console.log(exp);
               return (
                 <CSSTransition
                   key={exp.Id}
