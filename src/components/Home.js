@@ -39,13 +39,14 @@ const Home = () => {
   useEffect(() => {
     if (rendered && context.loggedIn) {
       context.jsforce.browser.connection.query(
-        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c "
+        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c "
         + "FROM Experience__c "
         + "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
        (err, result) => {
           console.error(err);
           const records = result.records.map(record => {
             record.display = true;
+            record.default = "img/davisestates3.jpg";
             return record;
           })
           setRecords(records)
