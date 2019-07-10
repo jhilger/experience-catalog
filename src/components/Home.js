@@ -29,7 +29,8 @@ const Home = () => {
   const [context] = useContext(Context);
 
   const [expanded, setExpanded] = useState(false);
-  const [filtered, setFiltered] = useState(window.experiences);
+  const [records, setRecords] = useState([]);
+  const [filtered, setFiltered] = useState(records);
   const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
@@ -38,9 +39,17 @@ const Home = () => {
   useEffect(() => {
     if (rendered && context.loggedIn) {
       context.jsforce.browser.connection.query(
-        "SELECT Id, Strategic_Partner__r.Account_Name__r.Name FROM Experiences__c WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
-        (err, result) => {
-          console.log(result)
+        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c "
+        + "FROM Experience__c "
+        + "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+       (err, result) => {
+          console.error(err);
+          const records = result.records.map(record => {
+            record.display = true;
+            return record;
+          })
+          setRecords(records)
+          setFiltered(records)
         }
       );
     }
@@ -48,7 +57,8 @@ const Home = () => {
   }, [rendered, context.loggedIn])
 
   const filterItems = query => {
-    return window.experiences.map(exp => {
+    return records.map(exp => {
+      console.log(records)
       if (query === "home") {
         exp.display = true;
       } else {
@@ -57,7 +67,7 @@ const Home = () => {
       return exp;
     });
   };
-
+  console.log(filtered)
   if (!rendered) return null;
   return (
     <React.Fragment>
@@ -214,27 +224,31 @@ const Home = () => {
           )}
         </SideNav.Nav>
       </SideNav>
+      {filtered.length && 
       <main className={expanded ? "expanded" : ""}>
-        <h1 className="exp-title">
-          Customer Experience <span>Catalog</span>
-        </h1>
+      <h1 className="exp-title">
+        Customer Experience <span>Catalog</span>
+      </h1>
 
-        <div className="grid-x grid-margin-x grid-margin-y">
-          {filtered.map((exp, i) => {
-            return (
-              <CSSTransition
-                key={exp.id}
-                in={exp.display}
-                timeout={300}
-                classNames="cardanim"
-                unmountOnExit
-              >
-                <Card sort={i} experience={exp} />
-              </CSSTransition>
-            );
-          })}
-        </div>
-      </main>
+      <div className="grid-x grid-margin-x grid-margin-y">
+        {filtered.map((exp, i) => {
+          console.log(exp)
+          return (
+            <CSSTransition
+              key={exp.Id}
+              in={exp.display}
+              timeout={300}
+              classNames="cardanim"
+              unmountOnExit
+            >
+              <Card sort={i} experience={exp} />
+            </CSSTransition>
+          );
+        })}
+      </div>
+    </main>
+      }
+      
     </React.Fragment>
   );
 };
