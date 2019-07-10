@@ -6,6 +6,8 @@ import { Provider } from "./Context";
 import LoginButton from "./LoginButton";
 import ToastsModal from "./ToastsModal";
 import Toast from "./Toast";
+import { ThemeProvider } from "styled-components";
+import theme from './theme'
 import reducer from "./reducer";
 import defaultState from "./defaultState";
 
@@ -27,23 +29,27 @@ const App = ({ value = defaultState }) => {
   };
   return (
     <Provider value={[state, newDispatch]}>
-      {!!state.toasts.length && (
-        <ToastsModal>
-          {" "}
-          {state.toasts.map(toast => (
-            <Toast key={toast.timeStamp} toast={toast} />
-          ))}
-        </ToastsModal>
-      )}
-      <div style={{paddingLeft: '68px'}}>
-        <LoginButton />
-      </div>
-     
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/oauth/callback" component={OAuthCallback} />
-        <Route exact path="/ajax/proxy/" component={Home} />
-      </Switch>
+      <ThemeProvider theme={{ mode: "light", colors: theme }}>
+        <React.Fragment>
+          {!!state.toasts.length && (
+            <ToastsModal>
+              {" "}
+              {state.toasts.map(toast => (
+                <Toast key={toast.timeStamp} toast={toast} />
+              ))}
+            </ToastsModal>
+          )}
+          <div style={{ paddingLeft: "68px" }}>
+            <LoginButton />
+          </div>
+
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/oauth/callback" component={OAuthCallback} />
+            <Route exact path="/ajax/proxy/" component={Home} />
+          </Switch>
+        </React.Fragment>
+      </ThemeProvider>
     </Provider>
   );
 };
