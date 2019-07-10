@@ -9,7 +9,7 @@ import trophy from "../img/trophy.svg";
 
 const Card = props => {
   const [cardSize, setCardSize] = useState(false);
-  console.log(props.experience.Image_URL__c);
+
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
