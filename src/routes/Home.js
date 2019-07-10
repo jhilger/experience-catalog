@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import Button from "../components/Button";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
 import "../scss/foundation.css";
@@ -26,33 +27,55 @@ import SubmitForApproval from "../components/SubmitForApproval";
 //SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [context] = useContext(Context);
-
+  const [context, dispatch] = useContext(Context);
+  console.log(context);
   const [expanded, setExpanded] = useState(false);
-  const [filtered, setFiltered] = useState(window.experiences);
+  const [filtered, setFiltered] = useState(context.experiences);
   const [rendered, setRendered] = useState(false);
+  //  WORK ON THIS
+  const sideNavFilters = context.experiences.reduce((types, experience) => {
+    if(!types.includes(experience.Experience_Type__c)) {
+      types.push(experience.Experience_Type__c.toLowerCase())
+    }
+    return types
+  }, []);
 
   useEffect(() => {
     setRendered(true);
   }, []);
   useEffect(() => {
+    setFiltered(context.experiences);
+  }, [context.experiences]);
+  useEffect(() => {
     if (rendered && context.loggedIn) {
       context.jsforce.browser.connection.query(
-        "SELECT Id, Strategic_Partner__r.Account_Name__r.Name FROM Experiences__c WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c " +
+          "FROM Experience__c " +
+          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
         (err, result) => {
-          console.log(result)
+          console.error(err);
+          const records = result.records.map(record => {
+            record.display = true;
+            record.default = "img/davisestates3.jpg";
+            return record;
+          });
+
+          dispatch({
+            type: "EXP/init",
+            payload: records
+          });
         }
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rendered, context.loggedIn])
+  }, [rendered, context.loggedIn]);
 
   const filterItems = query => {
-    return window.experiences.map(exp => {
+    return context.experiences.map(exp => {
       if (query === "home") {
         exp.display = true;
       } else {
-        exp.display = exp.type === query ? true : false;
+        exp.display = exp.Experience_Type__c.toLowerCase() === query ? true : false;
       }
       return exp;
     });
@@ -62,7 +85,7 @@ const Home = () => {
   return (
     <React.Fragment>
       {context.loggedIn ? (
-        <div style={{paddingLeft: '68px'}}>
+        <div style={{ paddingLeft: "68px" }}>
           <h2>Welcome {context.user.display_name}</h2>
           <Form onSubmit={console.log} autoComplete="off">
             <div>
@@ -102,11 +125,13 @@ const Home = () => {
               />
               <Debug styles={{ color: "#aaa" }} />
             </AdditionalFields>
-            <button type="submit">Submit</button>
+            <Button type="submit">Submit</Button>
           </Form>
         </div>
       ) : (
-        <h1 style={{paddingLeft: '68px'}}>You need to Log in to view this site</h1>
+        <h1 style={{ paddingLeft: "68px" }}>
+          You need to Log in to view this site
+        </h1>
       )}
 
       <SideNav
@@ -127,7 +152,7 @@ const Home = () => {
             <NavText>Home</NavText>
           </NavItem>
 
-          {window.sideNavFilters.includes("wine") ? (
+          {sideNavFilters.includes("wine") ? (
             <NavItem eventKey="wine">
               <NavIcon>
                 <img
@@ -142,7 +167,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("driving") ? (
+          {sideNavFilters.includes("driving") ? (
             <NavItem eventKey="driving">
               <NavIcon>
                 <img
@@ -157,7 +182,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("art") ? (
+          {sideNavFilters.includes("art") ? (
             <NavItem eventKey="art">
               <NavIcon>
                 <img className="exp-nav-icon" src={art} alt="Art Expeiences" />
@@ -168,7 +193,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("music") ? (
+          {sideNavFilters.includes("music") ? (
             <NavItem eventKey="music">
               <NavIcon>
                 <img
@@ -183,7 +208,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("outdoor") ? (
+          {sideNavFilters.includes("outdoor") ? (
             <NavItem eventKey="outdoor">
               <NavIcon>
                 <img
@@ -198,7 +223,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("sports") ? (
+          {sideNavFilters.includes("sports") ? (
             <NavItem eventKey="sports">
               <NavIcon>
                 <img
@@ -214,27 +239,29 @@ const Home = () => {
           )}
         </SideNav.Nav>
       </SideNav>
-      <main className={expanded ? "expanded" : ""}>
-        <h1 className="exp-title">
-          Customer Experience <span>Catalog</span>
-        </h1>
+      {filtered.length && (
+        <main className={expanded ? "expanded" : ""}>
+          <h1 className="exp-title">
+            Customer Experience <span>Catalog</span>
+          </h1>
 
-        <div className="grid-x grid-margin-x grid-margin-y">
-          {filtered.map((exp, i) => {
-            return (
-              <CSSTransition
-                key={exp.id}
-                in={exp.display}
-                timeout={300}
-                classNames="cardanim"
-                unmountOnExit
-              >
-                <Card sort={i} experience={exp} />
-              </CSSTransition>
-            );
-          })}
-        </div>
-      </main>
+          <div className="grid-x grid-margin-x grid-margin-y">
+            {filtered.map((exp, i) => {
+              return (
+                <CSSTransition
+                  key={exp.Id}
+                  in={exp.display}
+                  timeout={300}
+                  classNames="cardanim"
+                  unmountOnExit
+                >
+                  <Card sort={i} experience={exp} />
+                </CSSTransition>
+              );
+            })}
+          </div>
+        </main>
+      )}
     </React.Fragment>
   );
 };
