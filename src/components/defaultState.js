@@ -3,7 +3,9 @@ const defaultState = {
     photos: {}
   },
   toasts: [],
-  experiences: []
+  experiences: [],
+  filtered: [],
+  filter: "home"
 };
 
 export default defaultState;

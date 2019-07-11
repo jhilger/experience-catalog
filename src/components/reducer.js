@@ -7,12 +7,19 @@ function reducer(state = defaultState, action) {
     case "EXP/init":
       return {
         ...state,
-        experiences: action.payload
+        experiences: action.payload,
+        filtered: action.payload
       };
     case "EXP/add":
       return {
         ...state,
         experiences: state.experiences.concat(action.payload)
+      };
+    case "EXP/filtered":
+      return {
+        ...state,
+        filtered: action.payload.array,
+        filter: action.payload.selected
       };
     case "TOAST/error":
       return {
