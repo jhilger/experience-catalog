@@ -8,10 +8,10 @@ const Toasts = ({ children }) => {
 
   useEffect(() => {
     const newEl = document.createElement("div");
-    context.toastsRoot.appendChild(el);
+    context.toastsRoot.appendChild(newEl);
     setEl(newEl);
     return () => {
-      context.toastsRoot.removeChild(el);
+      context.toastsRoot.removeChild(newEl);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

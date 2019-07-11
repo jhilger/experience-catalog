@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
+import SideNav from "../components/SideNav";
 import Button from "../components/Button";
 // import "../scss/foundation.css";
 // import "../scss/fonts.scss";
@@ -8,14 +8,7 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 // import "../scss/global.scss";
 // import "../scss/sidenav.scss";
 // import "../scss/cardanimations.scss";
-import wine from "../img/wine.svg";
-import cars from "../img/cars.svg";
-import art from "../img/art.svg";
-import music from "../img/music.svg";
-import outdoor from "../img/outdoor.svg";
-import trophy from "../img/trophy.svg";
-import home from "../img/home2.svg";
-import Card from "../components/Card";
+import Card from "../components/Card/index";
 
 import Context from "../components/Context";
 import TypeAhead from "../components/TypeAhead";
@@ -27,24 +20,16 @@ import SubmitForApproval from "../components/SubmitForApproval";
 // SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [{ experiences, loggedIn, jsforce, user }, dispatch] = useContext(Context);
+  const [{ loggedIn, jsforce, user, filtered }, dispatch] = useContext(Context);
   const [expanded, setExpanded] = useState(false);
-  const [filtered, setFiltered] = useState(experiences);
+  // const [filtered, setFiltered] = useState(experiences);
   const [rendered, setRendered] = useState(false);
   //  WORK ON THIS
-  const sideNavFilters = experiences.reduce((types, experience) => {
-    if (!types.includes(experience.Experience_Type__c)) {
-      types.push(experience.Experience_Type__c.toLowerCase());
-    }
-    return types;
-  }, []);
 
   useEffect(() => {
     setRendered(true);
   }, []);
-  useEffect(() => {
-    setFiltered(experiences);
-  }, [experiences]);
+
   useEffect(() => {
     if (rendered && loggedIn) {
       jsforce.browser.connection.query(
@@ -69,16 +54,6 @@ const Home = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rendered, loggedIn]);
-
-  const filterItems = query =>
-    experiences.map(exp => {
-      if (query === "home") {
-        exp.display = true;
-      } else {
-        exp.display = exp.Experience_Type__c.toLowerCase() === query;
-      }
-      return exp;
-    });
 
   if (!rendered) return null;
   return (
@@ -133,90 +108,10 @@ const Home = () => {
       )}
 
       <SideNav
-        onSelect={selected => {
-          console.log("you selected", selected);
-          setFiltered(filterItems(selected));
-        }}
         onToggle={newExpanded => {
           setExpanded(newExpanded);
         }}
-      >
-        <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="home">
-          <NavItem eventKey="home">
-            <NavIcon>
-              <img className="exp-nav-icon" src={home} alt="Home" />
-            </NavIcon>
-            <NavText>Home</NavText>
-          </NavItem>
-
-          {sideNavFilters.includes("wine") ? (
-            <NavItem eventKey="wine">
-              <NavIcon>
-                <img className="exp-nav-icon" src={wine} alt="Wine Expeiences" />
-              </NavIcon>
-              <NavText>Wine</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("driving") ? (
-            <NavItem eventKey="driving">
-              <NavIcon>
-                <img className="exp-nav-icon" src={cars} alt="Driving Expeiences" />
-              </NavIcon>
-              <NavText>Driving</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("art") ? (
-            <NavItem eventKey="art">
-              <NavIcon>
-                <img className="exp-nav-icon" src={art} alt="Art Expeiences" />
-              </NavIcon>
-              <NavText>Art</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("music") ? (
-            <NavItem eventKey="music">
-              <NavIcon>
-                <img className="exp-nav-icon" src={music} alt="Music Expeiences" />
-              </NavIcon>
-              <NavText>Music</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("outdoor") ? (
-            <NavItem eventKey="outdoor">
-              <NavIcon>
-                <img className="exp-nav-icon" src={outdoor} alt="Outdoor Expeiences" />
-              </NavIcon>
-              <NavText>Outdoor</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("sports") ? (
-            <NavItem eventKey="sports">
-              <NavIcon>
-                <img className="exp-nav-icon" src={trophy} alt="Sports Expeiences" />
-              </NavIcon>
-              <NavText>Sports</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-        </SideNav.Nav>
-      </SideNav>
+      />
       {filtered.length && (
         <main className={expanded ? "expanded" : ""}>
           <h1 className="exp-title">
