@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { getIcon } from "./Icons";
 import Context from "./Context";
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
 const SideNavigation = ({ onToggle }) => {
   const [{ experiences }, dispatch] = useContext(Context);
@@ -13,15 +12,6 @@ const SideNavigation = ({ onToggle }) => {
     return types;
   }, []);
 
-  const filterItems = query =>
-    experiences.map(exp => {
-      if (query === "home") {
-        exp.display = true;
-      } else {
-        exp.display = exp.Experience_Type__c.toLowerCase() === query;
-      }
-      return exp;
-    });
   return (
     <SideNav
       onSelect={selected => {
@@ -29,7 +19,6 @@ const SideNavigation = ({ onToggle }) => {
         dispatch({
           type: "EXP/filtered",
           payload: {
-            array: filterItems(selected),
             selected
           }
         });
@@ -68,7 +57,7 @@ const SideNavigation = ({ onToggle }) => {
         )}
 
         {sideNavFilters.includes("arts") ? (
-          <NavItem eventKey="art">
+          <NavItem eventKey="arts">
             <NavIcon>
               <img className="exp-nav-icon" src={getIcon("art")} alt="Art Expeiences" />
             </NavIcon>

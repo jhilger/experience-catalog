@@ -1,17 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
-import SideNav from "../components/SideNav";
-import Button from "../components/Button";
-import Card from "../components/Card/index";
+import SideNav from "../../components/SideNav";
+import Button from "../../components/Button";
 
-import Context from "../components/Context";
-import TypeAhead from "../components/TypeAhead";
-import AdditionalFields, { Field } from "../components/AdditionalFields";
-import Form, { InputField, Debug } from "../components/Form";
-import SubmitForApproval from "../components/SubmitForApproval";
+import Card from "../../components/Card/index";
 
-// Experience is in window.experiences
-// SideNavFilters is in window.sideNavFilters
+import Context from "../../components/Context";
+import TypeAhead from "../../components/TypeAhead";
+import AdditionalFields, { Field } from "../../components/AdditionalFields";
+import Form, { InputField, Debug } from "../../components/Form";
+import SubmitForApproval from "../../components/SubmitForApproval";
 
 const Home = () => {
   const [{ loggedIn, jsforce, user, filtered }, dispatch] = useContext(Context);
