@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import Home from "../routes/Home";
+import Home from "../routes/Home/index";
 import OAuthCallback from "../routes/OAuthCallback/index";
 import { Provider } from "./Context";
 import LoginButton from "./LoginButton";
