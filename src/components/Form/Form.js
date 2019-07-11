@@ -8,7 +8,7 @@ const Form = ({ onSubmit: handleSubmit = () => {}, children, ...props }) => {
     <form
       onSubmit={e => {
         e.preventDefault();
-        context.form.handleSubmit(e, state.values, context)
+        context.form.handleSubmit(e, state.values, context);
       }}
       {...props}
     >

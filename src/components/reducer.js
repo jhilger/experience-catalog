@@ -5,7 +5,6 @@ function reducer(state = defaultState, action) {
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
     case "EXP/init":
-      console.log(action);
       return {
         ...state,
         experiences: action.payload
