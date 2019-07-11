@@ -57,10 +57,11 @@ const Search = (
   useEffect(() => {
     if (query)
       context.jsforce.browser.connection.query(query, (err, result) => {
+        // eslint-disable-next-line no-console
         if (err) console.error(err);
         onChange(result.done, result.records);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, onChange]);
   return React.createElement(component, {
     className,
@@ -70,11 +71,7 @@ const Search = (
     style,
     autoComplete: "new-password",
     onChange: e => {
-      if (
-        record &&
-        record[searchField] &&
-        record[searchField] === displayValue
-      ) {
+      if (record && record[searchField] && record[searchField] === displayValue) {
         setRecord({});
       }
       // Fix this as it is causing an issue with displaying

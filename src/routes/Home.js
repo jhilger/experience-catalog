@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
-import "../scss/foundation.css";
-import "../scss/fonts.scss";
+import Button from "../components/Button";
+// import "../scss/foundation.css";
+// import "../scss/fonts.scss";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import "../scss/global.scss";
-import "../scss/sidenav.scss";
-import "../scss/cardanimations.scss";
+// import "../scss/global.scss";
+// import "../scss/sidenav.scss";
+// import "../scss/cardanimations.scss";
 import wine from "../img/wine.svg";
 import cars from "../img/cars.svg";
 import art from "../img/art.svg";
@@ -22,37 +23,37 @@ import AdditionalFields, { Field } from "../components/AdditionalFields";
 import Form, { InputField, Debug } from "../components/Form";
 import SubmitForApproval from "../components/SubmitForApproval";
 
-//Experience is in window.experiences
-//SideNavFilters is in window.sideNavFilters
+// Experience is in window.experiences
+// SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [context, dispatch] = useContext(Context);
-  console.log(context);
+  const [{ experiences, loggedIn, jsforce, user }, dispatch] = useContext(Context);
   const [expanded, setExpanded] = useState(false);
-  const [filtered, setFiltered] = useState(context.experiences);
+  const [filtered, setFiltered] = useState(experiences);
   const [rendered, setRendered] = useState(false);
   //  WORK ON THIS
-  const sideNavFilters = context.experiences.reduce((types, experience) => {
-    if(!types.includes(experience.Experience_Type__c)) {
-      types.push(experience.Experience_Type__c.toLowerCase())
+  const sideNavFilters = experiences.reduce((types, experience) => {
+    if (!types.includes(experience.Experience_Type__c)) {
+      types.push(experience.Experience_Type__c.toLowerCase());
     }
-    return types
+    return types;
   }, []);
 
   useEffect(() => {
     setRendered(true);
   }, []);
   useEffect(() => {
-    setFiltered(context.experiences);
-  }, [context.experiences]);
+    setFiltered(experiences);
+  }, [experiences]);
   useEffect(() => {
-    if (rendered && context.loggedIn) {
-      context.jsforce.browser.connection.query(
+    if (rendered && loggedIn) {
+      jsforce.browser.connection.query(
         "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c " +
           "FROM Experience__c " +
           "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
         (err, result) => {
-          console.error(err);
+          // eslint-disable-next-line no-console
+          if (err) console.error(err);
           const records = result.records.map(record => {
             record.display = true;
             record.default = "img/davisestates3.jpg";
@@ -67,26 +68,28 @@ const Home = () => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rendered, context.loggedIn]);
+  }, [rendered, loggedIn]);
 
-  const filterItems = query => {
-    return context.experiences.map(exp => {
+  const filterItems = query =>
+    experiences.map(exp => {
       if (query === "home") {
         exp.display = true;
       } else {
-        exp.display = exp.Experience_Type__c.toLowerCase() === query ? true : false;
+        exp.display = exp.Experience_Type__c.toLowerCase() === query;
       }
       return exp;
     });
-  };
 
   if (!rendered) return null;
   return (
     <React.Fragment>
-      {context.loggedIn ? (
+      {loggedIn ? (
         <div style={{ paddingLeft: "68px" }}>
-          <h2>Welcome {context.user.display_name}</h2>
-          <Form onSubmit={console.log} autoComplete="off">
+          <h2>Welcome {user.display_name}</h2>
+          <Form
+            // onSubmit={console.log}
+            autoComplete="off"
+          >
             <div>
               <SubmitForApproval objectId="001E000000B78SG" />
             </div>
@@ -96,11 +99,10 @@ const Home = () => {
               formatting={{
                 before: "<ul><li>",
                 between: "</li><li>",
-                field: c =>
-                  `<label>${c.label}:</label> <span>${c.value}</span>`,
+                field: c => `<label>${c.label}:</label> <span>${c.value}</span>`,
                 after: "</li></ul>"
               }}
-              onChange={v => console.log(JSON.stringify(v))}
+              // onChange={v => console.log(JSON.stringify(v))}
             >
               <TypeAhead name="AccountId" label="Account" />
               <Field name="name" label="Name" />
@@ -119,18 +121,15 @@ const Home = () => {
                         name: field.name
                       }
                     ];
-                  return;
                 }}
               />
               <Debug styles={{ color: "#aaa" }} />
             </AdditionalFields>
-            <button type="submit">Submit</button>
+            <Button type="submit">Submit</Button>
           </Form>
         </div>
       ) : (
-        <h1 style={{ paddingLeft: "68px" }}>
-          You need to Log in to view this site
-        </h1>
+        <h1 style={{ paddingLeft: "68px" }}>You need to Log in to view this site</h1>
       )}
 
       <SideNav
@@ -138,8 +137,8 @@ const Home = () => {
           console.log("you selected", selected);
           setFiltered(filterItems(selected));
         }}
-        onToggle={expanded => {
-          setExpanded(expanded);
+        onToggle={newExpanded => {
+          setExpanded(newExpanded);
         }}
       >
         <SideNav.Toggle />
@@ -154,11 +153,7 @@ const Home = () => {
           {sideNavFilters.includes("wine") ? (
             <NavItem eventKey="wine">
               <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={wine}
-                  alt="Wine Expeiences"
-                />
+                <img className="exp-nav-icon" src={wine} alt="Wine Expeiences" />
               </NavIcon>
               <NavText>Wine</NavText>
             </NavItem>
@@ -169,11 +164,7 @@ const Home = () => {
           {sideNavFilters.includes("driving") ? (
             <NavItem eventKey="driving">
               <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={cars}
-                  alt="Driving Expeiences"
-                />
+                <img className="exp-nav-icon" src={cars} alt="Driving Expeiences" />
               </NavIcon>
               <NavText>Driving</NavText>
             </NavItem>
@@ -195,11 +186,7 @@ const Home = () => {
           {sideNavFilters.includes("music") ? (
             <NavItem eventKey="music">
               <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={music}
-                  alt="Music Expeiences"
-                />
+                <img className="exp-nav-icon" src={music} alt="Music Expeiences" />
               </NavIcon>
               <NavText>Music</NavText>
             </NavItem>
@@ -210,11 +197,7 @@ const Home = () => {
           {sideNavFilters.includes("outdoor") ? (
             <NavItem eventKey="outdoor">
               <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={outdoor}
-                  alt="Outdoor Expeiences"
-                />
+                <img className="exp-nav-icon" src={outdoor} alt="Outdoor Expeiences" />
               </NavIcon>
               <NavText>Outdoor</NavText>
             </NavItem>
@@ -225,11 +208,7 @@ const Home = () => {
           {sideNavFilters.includes("sports") ? (
             <NavItem eventKey="sports">
               <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={trophy}
-                  alt="Sports Expeiences"
-                />
+                <img className="exp-nav-icon" src={trophy} alt="Sports Expeiences" />
               </NavIcon>
               <NavText>Sports</NavText>
             </NavItem>
@@ -245,19 +224,11 @@ const Home = () => {
           </h1>
 
           <div className="grid-x grid-margin-x grid-margin-y">
-            {filtered.map((exp, i) => {
-              return (
-                <CSSTransition
-                  key={exp.Id}
-                  in={exp.display}
-                  timeout={300}
-                  classNames="cardanim"
-                  unmountOnExit
-                >
-                  <Card sort={i} experience={exp} />
-                </CSSTransition>
-              );
-            })}
+            {filtered.map((exp, i) => (
+              <CSSTransition key={exp.Id} in={exp.display} timeout={300} classNames="cardanim" unmountOnExit>
+                <Card sort={i} experience={exp} />
+              </CSSTransition>
+            ))}
           </div>
         </main>
       )}
@@ -266,24 +237,3 @@ const Home = () => {
 };
 
 export default Home;
-
-/*import React, { useState, useEffect } from 'react';
-
-function Example() {
-  const [count, setCount] = useState(0);
-
-  // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
-    // Update the document title using the browser API
-    document.title = `You clicked ${count} times`;
-  });
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}*/

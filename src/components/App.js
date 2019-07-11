@@ -1,15 +1,17 @@
 import React, { useReducer } from "react";
 import { Route, Switch } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import Home from "../routes/Home";
 import OAuthCallback from "../routes/OAuthCallback/index";
 import { Provider } from "./Context";
 import LoginButton from "./LoginButton";
+import Button from "./Button";
 import ToastsModal from "./ToastsModal";
 import Toast from "./Toast";
-import { ThemeProvider } from "styled-components";
-import theme from './theme'
+import theme from "./theme";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
+import GlobalStyle from "./GlobalStyle/index";
 
 const App = ({ value = defaultState }) => {
   const [state, dispatch] = useReducer(reducer, { ...defaultState, ...value });
@@ -29,8 +31,9 @@ const App = ({ value = defaultState }) => {
   };
   return (
     <Provider value={[state, newDispatch]}>
-      <ThemeProvider theme={{ mode: "light", colors: theme }}>
+      <ThemeProvider theme={{ mode: "light", main: theme }}>
         <React.Fragment>
+          <GlobalStyle />
           {!!state.toasts.length && (
             <ToastsModal>
               {" "}
@@ -40,7 +43,10 @@ const App = ({ value = defaultState }) => {
             </ToastsModal>
           )}
           <div style={{ paddingLeft: "68px" }}>
-            <LoginButton />
+            <Button.Group>
+              <LoginButton />
+              <Button type="button">Cancel</Button>
+            </Button.Group>
           </div>
 
           <Switch>
