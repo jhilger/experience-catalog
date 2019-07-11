@@ -16,7 +16,8 @@
     "react-scripts": "3.0.1",
     "react-transition-group": "^4.0.1",
     "styled-components": "^4.3.2",
-    "styled-theming": "^2.2.0"
+    "styled-theming": "^2.2.0",
+    "wesbos": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
