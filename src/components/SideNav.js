@@ -48,7 +48,7 @@ const SideNavigation = ({ onToggle }) => {
         {sideNavFilters.includes("wine") ? (
           <NavItem eventKey="wine">
             <NavIcon>
-              <img className="exp-nav-icon" src={getIcon("wine")} alt="Wine Expeiences" />
+              <img className="exp-nav-icon" src={getIcon("wine")} alt="Wine Experiences" />
             </NavIcon>
             <NavText>Wine</NavText>
           </NavItem>
