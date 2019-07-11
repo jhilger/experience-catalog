@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import { Route, Switch } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import Home from "../routes/Home";
 import OAuthCallback from "../routes/OAuthCallback/index";
 import { Provider } from "./Context";
@@ -7,11 +8,10 @@ import LoginButton from "./LoginButton";
 import Button from "./Button";
 import ToastsModal from "./ToastsModal";
 import Toast from "./Toast";
-import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
-import GlobalStyle from "./GlobalStyle";
+import GlobalStyle from "./GlobalStyle/index";
 
 const App = ({ value = defaultState }) => {
   const [state, dispatch] = useReducer(reducer, { ...defaultState, ...value });

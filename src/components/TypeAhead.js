@@ -8,22 +8,17 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   const ref = useRef();
   const menuRef = useRef();
   const [records, setRecords] = useState();
-  const [record, setRecord] = useState(Id ? { Id } : '');
+  const [record, setRecord] = useState(Id ? { Id } : "");
   const [hovered, setHovered] = useState(null);
   // eslint-disable-next-line no-unused-vars
-  let [formContext, addedFieldsContext, formDispatch, addedFieldsDispatch] = [
-    {},
-    {},
-    () => {},
-    () => {}
-  ];
+  let [formContext, addedFieldsContext, formDispatch, addedFieldsDispatch] = [{}, {}, () => {}, () => {}];
   try {
     [formContext, formDispatch] = useContext(FormContext);
+    // eslint-disable-next-line no-empty
   } catch (error) {}
   try {
-    [addedFieldsContext, addedFieldsDispatch] = useContext(
-      AdditionalFieldsContext
-    );
+    [addedFieldsContext, addedFieldsDispatch] = useContext(AdditionalFieldsContext);
+    // eslint-disable-next-line no-empty
   } catch (error) {}
   const clearValues = () => {
     setRecord({});
@@ -47,8 +42,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     return setHovered(records[index + 1].Id);
   };
   const upKey = e => {
-    if (typeof hovered !== "string")
-      return setHovered(records[records.length - 1].Id);
+    if (typeof hovered !== "string") return setHovered(records[records.length - 1].Id);
     const index = records.findIndex(v => v.Id === hovered);
     if (!index) return;
     return setHovered(records[index - 1].Id);
@@ -56,12 +50,12 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   const enterKey = e => {
     if (!hovered) return;
     e.preventDefault();
-    const record = records.find(v => v.Id === hovered);
+    const newRecord = records.find(v => v.Id === hovered);
     setRecord(record);
-    formDispatch({ type: "FIELD/change", payload: { value: record.Id, name } });
+    formDispatch({ type: "FIELD/change", payload: { value: newRecord.Id, name } });
     addedFieldsDispatch({
       type: "FIELD/change",
-      payload: { value: record.Name, name }
+      payload: { value: newRecord.Name, name }
     });
     setRecords([]);
     setHovered(null);
@@ -79,7 +73,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     setHovered(null);
   };
   const tabKey = e => {
-    console.log(e);
+    // console.log(e);
   };
   useEffect(() => {
     formDispatch({ type: "FIELD/insert", payload: { name, label } });
@@ -96,6 +90,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   return (
     <div style={{ display: "inline-block", position: "relative" }}>
       <div style={{ display: "inline-block" }}>
+        {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor={name}>{label}</label>
         <Search
           ref={ref}
@@ -132,6 +127,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
         />
         {record.Id && (
           <button
+            type="button"
             onClick={() => {
               clearValues();
               ref.current.focus();

@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import theme from "styled-theming";
+import themed from "styled-theming";
 
 const Color = require("color");
 
-const primaryColor = theme.variants("mode", "variant", {
+const primaryColor = themed.variants("mode", "variant", {
   default: {
     light: ({ theme }) => theme.main.gray.hex(),
     dark: ({ theme }) => theme.main.gray.darken(0.5).hex()
@@ -29,11 +29,8 @@ const primaryColor = theme.variants("mode", "variant", {
 const Button = styled.button`
   background-color: ${primaryColor};
   color: ${props =>
-    Color(primaryColor(props)).isDark()
-      ? props.theme.main.white.hex()
-      : props.theme.main.black.darken(0.8).hex()};
-  padding: ${({ theme }) =>
-    `${theme.main.padding}px ${theme.main.padding * 2}px`};
+    Color(primaryColor(props)).isDark() ? props.theme.main.white.hex() : props.theme.main.black.darken(0.8).hex()};
+  padding: ${({ theme }) => `${theme.main.padding}px ${theme.main.padding * 2}px`};
   margin: ${({ theme }) => theme.main.padding}px;
   border-radius: ${({ theme }) => theme.main.padding}px !important;
 `;

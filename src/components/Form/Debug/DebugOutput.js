@@ -1,9 +1,9 @@
 import React from "react";
 
-const DebugOutput = ({ values, styles }) => {
-  return <div>
+const DebugOutput = ({ values, styles }) => (
+  <div>
     <pre style={styles}>{JSON.stringify(values, null, 2)}</pre>
-  </div>;
-};
+  </div>
+);
 
 export default DebugOutput;

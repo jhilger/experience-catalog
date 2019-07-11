@@ -14,23 +14,21 @@ const AdditionalFields = ({
     field: c => `${c.label}: ${c.value}`,
     after: ""
   },
-  onChange = () =>
-    console.log("You need to assign an onChange to `AdditionalFields`"),
+  // eslint-disable-next-line no-console
+  onChange = () => console.log("You need to assign an onChange to `AdditionalFields`"),
   children
 }) => {
-  let initialState = {}
+  let initialState = {};
   // eslint-disable-next-line no-unused-vars
   let [formState, formDispatch, context] = [{}, () => {}];
   try {
     [formState, formDispatch, context] = useContext(FormContext);
-  } catch (error) {
-    console.error(error);
-  }
+    // eslint-disable-next-line no-empty
+  } catch (error) {}
   if (context) {
     initialState = {
       [jsonFieldName]: context.form.initialValues[jsonFieldName],
-      [humanReadableFieldName]:
-        context.form.initialValues[humanReadableFieldName]
+      [humanReadableFieldName]: context.form.initialValues[humanReadableFieldName]
     };
   }
   const [state, dispatch] = useReducer(
@@ -45,9 +43,7 @@ const AdditionalFields = ({
     }),
     { jsonFieldName, humanReadableFieldName, fields: [], ...initialState }
   );
-  return (
-    <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
-  );
+  return <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>;
 };
 
 export default AdditionalFields;

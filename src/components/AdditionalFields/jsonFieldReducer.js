@@ -62,10 +62,7 @@ const reducer = (state, action) => {
     case "FIELD/focus":
       return {
         ...state,
-        [state.jsonFieldName]: jsonFieldNameReducer(
-          state[state.jsonFieldName],
-          action
-        )
+        [state.jsonFieldName]: jsonFieldNameReducer(state[state.jsonFieldName], action)
       };
     default:
       return state;
