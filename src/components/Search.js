@@ -11,7 +11,7 @@ const Search = (
     onChange = () => {},
     onKeyDown = () => {},
     onBlur = () => {},
-    style,
+    style = { color: "black" },
     fields = ["Name"],
     component = "input",
     limit = 5,
@@ -70,7 +70,12 @@ const Search = (
     ref,
     name,
     id: name,
-    style,
+    style: {
+      ...style,
+      color: !record.Id ? style.color || "black" : "transparent",
+      textShadow: record.Id ? `0 0 0 ${style.color || "black"}` : "none",
+      cursor: record.Id ? "pointer" : "auto"
+    },
     autoComplete: "new-password",
     onChange: e => {
       if (
