@@ -73,7 +73,11 @@ const Search = (
     style,
     autoComplete: "new-password",
     onChange: e => {
-      if (record && record[searchField] && record[searchField] === displayValue) {
+      if (
+        record &&
+        record[searchField] &&
+        record[searchField] === displayValue
+      ) {
         setRecord({});
       }
       // Fix this as it is causing an issue with displaying

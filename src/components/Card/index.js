@@ -13,25 +13,34 @@ const Card = props => {
     <div
       className={
         cardSize
-          ? `medium-12 medium-order-${Math.floor(props.sort / 2)} large-order-${Math.floor(
-              props.sort / 3
-            )} cell exp-card open`
-          : `medium-6 large-4 medium-order-${Math.floor(props.sort / 2) + 1} large-order-${Math.floor(props.sort / 3) +
+          ? `medium-12 medium-order-${Math.floor(
+              props.sort / 2
+            )} large-order-${Math.floor(props.sort / 3)} cell exp-card open`
+          : `medium-6 large-4 medium-order-${Math.floor(props.sort / 2) +
+              1} large-order-${Math.floor(props.sort / 3) +
               1} cell exp-card close`
       }
     >
-      <button onClick={toggleCard} className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}>
+      <button
+        onClick={toggleCard}
+        className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}
+      >
         <div className="exp-card-plus" />
       </button>
       <div
         className="exp-card-hero"
         style={{
           backgroundImage: `url(${
-            props.experience.Image_URL__c ? props.experience.Image_URL__c : props.experience.default
+            props.experience.Image_URL__c
+              ? props.experience.Image_URL__c
+              : props.experience.default
           })`
         }}
       >
-        <img src={getIcon(props.experience.Experience_Type__c)} alt="Experience type icon" />
+        <img
+          src={getIcon(props.experience.Experience_Type__c)}
+          alt="Experience type icon"
+        />
       </div>
       <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
         <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
@@ -39,7 +48,10 @@ const Card = props => {
             <h2>{props.experience.Strategic_Partner__r.Account__r.Name}</h2>
             <h3>{props.experience.Name}</h3>
           </div>
-          <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: props.experience.content }} />
+          <div
+            className="exp-card-content"
+            dangerouslySetInnerHTML={{ __html: props.experience.content }}
+          />
         </div>
         <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
           <div className="exp-card-keepinmind">

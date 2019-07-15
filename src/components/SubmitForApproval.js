@@ -8,23 +8,26 @@ const SubmitForApproval = ({ objectId }) => {
     <button
       type="button"
       onClick={e => {
-        jsforce.browser.connection.process.approval.submit(objectId, (err, response) => {
-          if (err) {
-            const timeStamp = Date.now();
-            return dispatch(
-              {
-                type: "TOAST/error",
-                payload: {
-                  timeStamp,
-                  name: err.name,
-                  message: err.message,
-                  info: "Triggered by Submitting for Approval"
-                }
-              },
-              3000
-            );
+        jsforce.browser.connection.process.approval.submit(
+          objectId,
+          (err, response) => {
+            if (err) {
+              const timeStamp = Date.now();
+              return dispatch(
+                {
+                  type: "TOAST/error",
+                  payload: {
+                    timeStamp,
+                    name: err.name,
+                    message: err.message,
+                    info: "Triggered by Submitting for Approval"
+                  }
+                },
+                3000
+              );
+            }
           }
-        });
+        );
       }}
     >
       Submit for Approval

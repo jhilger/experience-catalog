@@ -1,6 +1,15 @@
 import React, { useState, useEffect, forwardRef } from "react";
 
-const DropDown = ({ list = [], labelField, hovered, onHover = () => {}, onItemClicked = () => {} }, ref) => {
+const DropDown = (
+  {
+    list = [],
+    labelField,
+    hovered,
+    onHover = () => {},
+    onItemClicked = () => {}
+  },
+  ref
+) => {
   const [currentHover, setCurrentHover] = useState(hovered);
 
   useEffect(() => {

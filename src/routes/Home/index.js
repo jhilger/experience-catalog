@@ -3,7 +3,7 @@ import { CSSTransition } from "react-transition-group";
 import SideNav from "../../components/SideNav";
 import Button from "../../components/Button";
 
-import Card from "../../components/Card/index";
+import Card from "../../components/Card";
 
 import Context from "../../components/Context";
 import TypeAhead from "../../components/TypeAhead";
@@ -66,7 +66,8 @@ const Home = () => {
               formatting={{
                 before: "<ul><li>",
                 between: "</li><li>",
-                field: c => `<label>${c.label}:</label> <span>${c.value}</span>`,
+                field: c =>
+                  `<label>${c.label}:</label> <span>${c.value}</span>`,
                 after: "</li></ul>"
               }}
               // onChange={v => console.log(JSON.stringify(v))}
@@ -96,7 +97,9 @@ const Home = () => {
           </Form>
         </div>
       ) : (
-        <h1 style={{ paddingLeft: "68px" }}>You need to Log in to view this site</h1>
+        <h1 style={{ paddingLeft: "68px" }}>
+          You need to Log in to view this site
+        </h1>
       )}
 
       <SideNav
@@ -112,7 +115,13 @@ const Home = () => {
 
           <div className="grid-x grid-margin-x grid-margin-y">
             {filtered.map((exp, i) => (
-              <CSSTransition key={exp.Id} in={exp.display} timeout={300} classNames="cardanim" unmountOnExit>
+              <CSSTransition
+                key={exp.Id}
+                in={exp.display}
+                timeout={300}
+                classNames="cardanim"
+                unmountOnExit
+              >
                 <Card sort={i} experience={exp} />
               </CSSTransition>
             ))}

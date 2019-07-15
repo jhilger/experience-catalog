@@ -72,7 +72,10 @@ const InputField = ({
                 payload: {
                   value: e.target.value,
                   name: e.target.name,
-                  messages: validate({ value: e.target.value, name: e.target.name }, state)
+                  messages: validate(
+                    { value: e.target.value, name: e.target.name },
+                    state
+                  )
                 }
               });
             dispatch({
@@ -82,7 +85,10 @@ const InputField = ({
                 name: e.target.name
               }
             });
-            (validate({ value: e.target.value, name: e.target.name }, state) || []).forEach(errorObj => {
+            (
+              validate({ value: e.target.value, name: e.target.name }, state) ||
+              []
+            ).forEach(errorObj => {
               dispatchLocal({
                 type: "FIELD/error",
                 payload: {

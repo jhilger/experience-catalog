@@ -1,8 +1,8 @@
 import React, { useReducer } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import Home from "../routes/Home/index";
-import OAuthCallback from "../routes/OAuthCallback/index";
+import Home from "../routes/Home";
+import OAuthCallback from "../routes/OAuthCallback";
 import { Provider } from "./Context";
 import LoginButton from "./LoginButton";
 import Button from "./Button";
@@ -11,7 +11,7 @@ import Toast from "./Toast";
 import theme from "./theme";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
-import GlobalStyle from "./GlobalStyle/index";
+import GlobalStyle from "./GlobalStyle";
 
 const App = ({ value = defaultState }) => {
   const [state, dispatch] = useReducer(reducer, { ...defaultState, ...value });

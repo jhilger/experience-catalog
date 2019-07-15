@@ -15,7 +15,8 @@ const AdditionalFields = ({
     after: ""
   },
   // eslint-disable-next-line no-console
-  onChange = () => console.log("You need to assign an onChange to `AdditionalFields`"),
+  onChange = () =>
+    console.log("You need to assign an onChange to `AdditionalFields`"),
   children
 }) => {
   let initialState = {};
@@ -28,7 +29,8 @@ const AdditionalFields = ({
   if (context) {
     initialState = {
       [jsonFieldName]: context.form.initialValues[jsonFieldName],
-      [humanReadableFieldName]: context.form.initialValues[humanReadableFieldName]
+      [humanReadableFieldName]:
+        context.form.initialValues[humanReadableFieldName]
     };
   }
   const [state, dispatch] = useReducer(
@@ -43,7 +45,9 @@ const AdditionalFields = ({
     }),
     { jsonFieldName, humanReadableFieldName, fields: [], ...initialState }
   );
-  return <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
+  );
 };
 
 export default AdditionalFields;

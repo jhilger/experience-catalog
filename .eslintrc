@@ -6,10 +6,9 @@
     "react/prop-types": ["warn"],
     "prettier/prettier": [
       "error",
+      {},
       {
-        "singleQuote": false,
-        "printWidth": 120,
-        "tabWidth": 2
+        "usePrettierrc": false
       }
     ]
   }

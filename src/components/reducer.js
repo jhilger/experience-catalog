@@ -24,7 +24,10 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         experiences: state.experiences.concat(action.payload),
-        filtered: filterItems(state.filter, state.experiences.concat(action.payload))
+        filtered: filterItems(
+          state.filter,
+          state.experiences.concat(action.payload)
+        )
       };
     case "EXP/filtered":
       return {

@@ -29,8 +29,13 @@ const primaryColor = themed.variants("mode", "variant", {
 const Button = styled.button`
   background-color: ${primaryColor};
   color: ${props =>
-    Color(primaryColor(props)).isDark() ? props.theme.main.white.hex() : props.theme.main.black.darken(0.8).hex()};
-  padding: ${({ theme }) => `${theme.main.padding}px ${theme.main.padding * 2}px`};
+    Color(primaryColor(props)).isDark()
+      ? props.theme.main.white.hex()
+      : props.theme.main.black.darken(0.8).hex()};
+  /* stylelint-disable unit-no-unknown */
+  padding: ${({ theme }) => theme.main.padding}px
+    ${({ theme }) => theme.main.padding * 2}px;
+  /* stylelint-enable  */
   margin: ${({ theme }) => theme.main.padding}px;
   border-radius: ${({ theme }) => theme.main.padding}px !important;
 `;

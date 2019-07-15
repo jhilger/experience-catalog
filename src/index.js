@@ -16,7 +16,8 @@ import * as serviceWorker from "./serviceWorker";
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
-const getUser = () => JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
+const getUser = () =>
+  JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
 
 const toastsRoot = document.getElementById("toasts");
 
