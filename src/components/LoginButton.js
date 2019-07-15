@@ -12,7 +12,7 @@ const LoginButton = () => {
   if (loggedIn || !rendered) return null;
   return (
     <Button
-      variant="primary"
+      variant="warning"
       onClick={e => {
         window.onunload = () => {
           localStorage.removeItem("local_user");

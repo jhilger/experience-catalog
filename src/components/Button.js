@@ -32,6 +32,7 @@ const Button = styled.button`
     Color(primaryColor(props)).isDark()
       ? props.theme.main.white.hex()
       : props.theme.main.black.darken(0.8).hex()};
+
   /* stylelint-disable unit-no-unknown */
   padding: ${({ theme }) => theme.main.padding}px
     ${({ theme }) => theme.main.padding * 2}px;
@@ -54,5 +55,16 @@ Button.Group = styled.div`
 Button.defaultProps = {
   variant: "default"
 };
+
+Button.Group = styled.div`
+  & ${Button} {
+    margin: 0px;
+    border-radius: 0;
+  }
+  display: inline-block;
+  border-radius: ${({ theme }) => theme.main.padding}px;
+  margin: ${({ theme }) => theme.main.padding}px;
+  overflow: hidden;
+`;
 
 export default Button;

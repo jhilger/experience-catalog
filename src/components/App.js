@@ -9,6 +9,9 @@ import LoginButton from "./LoginButton";
 import Button from "./Button";
 import ToastsModal from "./ToastsModal";
 import Toast from "./Toast";
+
+import { ThemeProvider } from "styled-components";
+
 import theme from "./theme";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
