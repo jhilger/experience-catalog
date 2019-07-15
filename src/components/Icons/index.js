@@ -6,10 +6,10 @@ import outdoor from "./outdoor.svg";
 import trophy from "./trophy.svg";
 import home from "./home2.svg";
 
-const getIcon = type => {
+const getIcon = (type, defaultFunction = () => "") => {
   switch (type.toLowerCase()) {
     case "wine":
-      return wine;
+      return "/w.svg";
     case "driving":
     case "cars":
       return cars;
@@ -26,7 +26,7 @@ const getIcon = type => {
     case "home":
       return home;
     default:
-      return "";
+      return defaultFunction();
   }
 };
 
