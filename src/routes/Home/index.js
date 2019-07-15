@@ -1,19 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import SideNav from "../../components/SideNav";
-// import "../scss/foundation.css";
-// import "../scss/fonts.scss";
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-// import "../scss/global.scss";
-// import "../scss/sidenav.scss";
-// import "../scss/cardanimations.scss";
-import Card from "../../components/Card/index";
+import Card from "../../components/Card";
 import SubmitForm from "./submitForm";
-
 import Context from "../../components/Context";
-
-// Experience is in window.experiences
-// SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
   const [{ loggedIn, jsforce, user, filtered }, dispatch] = useContext(Context);
@@ -57,10 +47,13 @@ const Home = () => {
       {loggedIn ? (
         <div style={{ paddingLeft: "68px" }}>
           <h2>Welcome {user.display_name}</h2>
+
           <SubmitForm />
         </div>
       ) : (
-        <h1 style={{ paddingLeft: "68px" }}>You need to Log in to view this site</h1>
+        <h1 style={{ paddingLeft: "68px" }}>
+          You need to Log in to view this site
+        </h1>
       )}
 
       <SideNav
@@ -76,7 +69,13 @@ const Home = () => {
 
           <div className="grid-x grid-margin-x grid-margin-y">
             {filtered.map((exp, i) => (
-              <CSSTransition key={exp.Id} in={exp.display} timeout={300} classNames="cardanim" unmountOnExit>
+              <CSSTransition
+                key={exp.Id}
+                in={exp.display}
+                timeout={300}
+                classNames="cardanim"
+                unmountOnExit
+              >
                 <Card sort={i} experience={exp} />
               </CSSTransition>
             ))}

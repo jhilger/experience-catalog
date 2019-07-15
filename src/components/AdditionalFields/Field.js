@@ -1,7 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import Context from "./Context";
 
-const Field = ({ name, label, placeholder = "", type, styles = {}, classes = {}, className, style }) => {
+const Field = ({
+  name,
+  label,
+  placeholder = "",
+  type,
+  styles = {},
+  classes = {},
+  className,
+  style
+}) => {
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useContext(Context);
   useEffect(() => {

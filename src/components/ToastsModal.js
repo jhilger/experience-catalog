@@ -18,7 +18,16 @@ const Toasts = ({ children }) => {
 
   return el
     ? ReactDOM.createPortal(
-        <div style={{ position: "fixed", top: 0, right: 0, left: 0, display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            right: 0,
+            left: 0,
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
           {children}
         </div>,
         el

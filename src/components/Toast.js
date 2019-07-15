@@ -6,7 +6,13 @@ const Toast = ({ toast }) => {
     children = (
       <div
         className={toast.type}
-        style={{ backgroundColor: "#ddd", borderRadius: 5, padding: 10, paddingBottom: 15, margin: 5 }}
+        style={{
+          backgroundColor: "#ddd",
+          borderRadius: 5,
+          padding: 10,
+          paddingBottom: 15,
+          margin: 5
+        }}
       >
         <h3 style={{ marginBlockStart: 8 }}>{toast.name}</h3>
         <div>{toast.message}</div>
