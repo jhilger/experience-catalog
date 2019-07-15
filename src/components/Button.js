@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import theme from "styled-theming";
+import themed from "styled-theming";
 
 const Color = require("color");
 
-const primaryColor = theme.variants("mode", "variant", {
+const primaryColor = themed.variants("mode", "variant", {
   default: {
     light: ({ theme }) => theme.main.gray.hex(),
     dark: ({ theme }) => theme.main.gray.darken(0.5).hex()
@@ -32,10 +32,24 @@ const Button = styled.button`
     Color(primaryColor(props)).isDark()
       ? props.theme.main.white.hex()
       : props.theme.main.black.darken(0.8).hex()};
-  padding: ${({ theme }) =>
-    `${theme.main.padding * 2}px ${theme.main.padding * 4}px`};
+
+  /* stylelint-disable unit-no-unknown */
+  padding: ${({ theme }) => theme.main.padding}px
+    ${({ theme }) => theme.main.padding * 2}px;
+  /* stylelint-enable  */
   margin: ${({ theme }) => theme.main.padding}px;
-  border-radius: ${({ theme }) => theme.main.padding}px;
+  border-radius: ${({ theme }) => theme.main.padding}px !important;
+`;
+
+Button.Group = styled.div`
+  & ${Button} {
+    margin: 0;
+    border-radius: 0 !important;
+  }
+  overflow: hidden;
+  display: inline-block;
+  margin: ${({ theme }) => theme.main.padding}px;
+  border-radius: ${({ theme }) => theme.main.padding}px !important;
 `;
 
 Button.defaultProps = {

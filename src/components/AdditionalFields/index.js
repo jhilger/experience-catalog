@@ -15,17 +15,17 @@ const AdditionalFields = ({
     after: ""
   },
   onChange = () =>
+    // eslint-disable-next-line no-console
     console.log("You need to assign an onChange to `AdditionalFields`"),
   children
 }) => {
-  let initialState = {}
+  let initialState = {};
   // eslint-disable-next-line no-unused-vars
   let [formState, formDispatch, context] = [{}, () => {}];
   try {
     [formState, formDispatch, context] = useContext(FormContext);
-  } catch (error) {
-    console.error(error);
-  }
+    // eslint-disable-next-line no-empty
+  } catch (error) {}
   if (context) {
     initialState = {
       [jsonFieldName]: context.form.initialValues[jsonFieldName],

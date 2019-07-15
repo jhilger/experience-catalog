@@ -8,20 +8,20 @@
     "color": "^3.1.2",
     "jsforce": "https://github.com/couturecraigj/jsforce.git",
     "jsforce-ajax-proxy": "^1.0.0",
-    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.1",
     "react-transition-group": "^4.0.1",
     "styled-components": "^4.3.2",
-    "styled-theming": "^2.2.0"
+    "styled-theming": "^2.2.0",
+    "wesbos": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:css": "stylelint ./src/**/*.{js,css,scss}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,5 +38,30 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "10.0.1",
+    "eslint": "5.16",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-prettier": "4.1.0",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-config-wesbos": "0.0.19",
+    "eslint-plugin-flowtype": "2.x",
+    "eslint-plugin-html": "5.0.3",
+    "eslint-plugin-import": "2.16.0",
+    "eslint-plugin-jsx-a11y": "6.2.1",
+    "eslint-plugin-prettier": "3.0.1",
+    "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react-hooks": "1.3.0",
+    "node-sass": "^4.12.0",
+    "prettier": "1.16.4",
+    "react-scripts": "^3.0.1",
+    "stylelint": "^10.1.0",
+    "stylelint-config-recommended": "^2.2.0",
+    "stylelint-config-recommended-scss": "^3.3.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-prettier": "^1.1.1",
+    "stylelint-processor-styled-components": "^1.8.0",
+    "stylelint-scss": "^3.9.1"
   }
 }

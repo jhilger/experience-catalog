@@ -7,18 +7,29 @@ const Toasts = ({ children }) => {
   const [el, setEl] = useState();
 
   useEffect(() => {
-    const el = document.createElement("div");
-    context.toastsRoot.appendChild(el);
-    setEl(el);
+    const newEl = document.createElement("div");
+    context.toastsRoot.appendChild(newEl);
+    setEl(newEl);
     return () => {
-      context.toastsRoot.removeChild(el);
+      context.toastsRoot.removeChild(newEl);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return el
     ? ReactDOM.createPortal(
-        <div style={{ position: "fixed", top: 0, right: 0, left: 0, display: 'flex', justifyContent: 'center' }}>{children}</div>,
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            right: 0,
+            left: 0,
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
+          {children}
+        </div>,
         el
       )
     : null;

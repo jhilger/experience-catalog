@@ -3,22 +3,22 @@ import Button from "./Button";
 import Context from "./Context";
 
 const LoginButton = () => {
-  const [context, dispatch] = useContext(Context);
+  const [{ loggedIn, jsforce }, dispatch] = useContext(Context);
   const [rendered, setRendered] = useState(false);
   useEffect(() => {
     setRendered(true);
   }, []);
 
-  if (context.loggedIn || !rendered) return null;
+  if (loggedIn || !rendered) return null;
   return (
     <Button
       variant="warning"
       onClick={e => {
         window.onunload = () => {
           localStorage.removeItem("local_user");
-          context.jsforce.browser.logout();
+          jsforce.browser.logout();
         };
-        context.jsforce.browser.login(
+        jsforce.browser.login(
           {
             loginUrl: window.loginUrl,
             popup: { width: 912, height: 600 }
@@ -37,7 +37,7 @@ const LoginButton = () => {
                 2000
               );
             }
-            context.jsforce.browser.connection
+            jsforce.browser.connection
               .identity()
               .then(payload => {
                 dispatch({ type: "loggedin", payload });
@@ -54,6 +54,7 @@ const LoginButton = () => {
                 );
                 localStorage.setItem("local_user", JSON.stringify(payload));
               })
+              // eslint-disable-next-line no-console
               .catch(console.error);
           }
         );

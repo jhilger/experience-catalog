@@ -1,9 +1,40 @@
 import defaultState from "./defaultState";
 
+const filterItems = (query, experiences) =>
+  experiences.map(exp => {
+    if (query === "home") {
+      exp.display = true;
+    } else {
+      exp.display = exp.Experience_Type__c.toLowerCase() === query;
+    }
+    return exp;
+  });
+
 function reducer(state = defaultState, action) {
   switch (action.type) {
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
+    case "EXP/init":
+      return {
+        ...state,
+        experiences: action.payload,
+        filtered: filterItems(state.filter, action.payload)
+      };
+    case "EXP/add":
+      return {
+        ...state,
+        experiences: state.experiences.concat(action.payload),
+        filtered: filterItems(
+          state.filter,
+          state.experiences.concat(action.payload)
+        )
+      };
+    case "EXP/filtered":
+      return {
+        ...state,
+        filtered: filterItems(action.payload.selected, state.experiences),
+        filter: action.payload.selected
+      };
     case "TOAST/error":
       return {
         ...state,
@@ -36,9 +67,7 @@ function reducer(state = defaultState, action) {
     case "CLEAR":
       return {
         ...state,
-        toasts: state.toasts.filter(
-          v => v.timeOut < action.payload.timeOut
-        )
+        toasts: state.toasts.filter(v => v.timeOut < action.payload.timeOut)
       };
     default:
       return state;

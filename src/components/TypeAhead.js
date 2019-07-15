@@ -8,8 +8,9 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   const ref = useRef();
   const menuRef = useRef();
   const [records, setRecords] = useState();
-  const [record, setRecord] = useState(Id ? { Id } : '');
+  const [record, setRecord] = useState(Id ? { Id } : "");
   const [hovered, setHovered] = useState(null);
+
   // eslint-disable-next-line no-unused-vars
   let [formContext, addedFieldsContext, formDispatch, addedFieldsDispatch] = [
     {},
@@ -19,14 +20,16 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   ];
   try {
     [formContext, formDispatch] = useContext(FormContext);
+    // eslint-disable-next-line no-empty
   } catch (error) {}
   try {
     [addedFieldsContext, addedFieldsDispatch] = useContext(
       AdditionalFieldsContext
     );
+    // eslint-disable-next-line no-empty
   } catch (error) {}
   const clearValues = () => {
-    setRecord({});
+    setRecord("");
     onChange("");
     formDispatch({
       type: "FIELD/change",
@@ -56,18 +59,23 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   const enterKey = e => {
     if (!hovered) return;
     e.preventDefault();
-    const record = records.find(v => v.Id === hovered);
-    setRecord(record);
-    formDispatch({ type: "FIELD/change", payload: { value: record.Id, name } });
+    const newRecord = records.find(v => v.Id === hovered);
+    setRecord(newRecord);
+
+    formDispatch({
+      type: "FIELD/change",
+      payload: { value: newRecord.Id, name }
+    });
     addedFieldsDispatch({
       type: "FIELD/change",
-      payload: { value: record.Name, name }
+      payload: { value: newRecord.Name, name }
     });
     setRecords([]);
     setHovered(null);
   };
   const backspaceKey = e => {
-    if ((typeof record === "string" && record) || record.Id) {
+    if (typeof record === "string" && record) return;
+    if (record.Id) {
       e.preventDefault();
       clearValues();
     }
@@ -79,7 +87,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     setHovered(null);
   };
   const tabKey = e => {
-    console.log(e);
+    // console.log(e);
   };
   useEffect(() => {
     formDispatch({ type: "FIELD/insert", payload: { name, label } });
@@ -96,13 +104,14 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
   return (
     <div style={{ display: "inline-block", position: "relative" }}>
       <div style={{ display: "inline-block" }}>
+        {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor={name}>{label}</label>
         <Search
           ref={ref}
-          onChange={(more, newRecords) => {
+          onChange={(searchValue, more, newRecords) => {
             if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
             setRecords(newRecords);
-            setRecord({});
+            setRecord(searchValue);
           }}
           onBlur={onBlur}
           type="text"
@@ -132,6 +141,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
         />
         {record.Id && (
           <button
+            type="button"
             onClick={() => {
               clearValues();
               ref.current.focus();
@@ -141,28 +151,28 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
           </button>
         )}
       </div>
-      {!record.Id && (
-        <DropDown
-          ref={menuRef}
-          list={records}
-          hovered={hovered}
-          labelField="Name"
-          onHover={setHovered}
-          onItemClicked={item => {
-            setRecord(item);
-            onChange(item);
-            formDispatch({
-              type: "FIELD/change",
-              payload: { value: item.Id, name }
-            });
-            addedFieldsDispatch({
-              type: "FIELD/change",
-              payload: { value: item.Name, name }
-            });
-            ref.current.focus();
-          }}
-        />
-      )}
+
+      <DropDown
+        ref={menuRef}
+        list={records}
+        hovered={hovered}
+        labelField="Name"
+        onHover={setHovered}
+        onItemClicked={newRecord => {
+          setRecords([]);
+          setRecord(newRecord);
+          onChange(newRecord);
+
+          formDispatch({
+            type: "FIELD/change",
+            payload: { value: newRecord.Id, name }
+          });
+          addedFieldsDispatch({
+            type: "FIELD/change",
+            payload: { value: newRecord.Name, name }
+          });
+        }}
+      />
     </div>
   );
 };

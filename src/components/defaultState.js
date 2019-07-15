@@ -2,8 +2,10 @@ const defaultState = {
   user: {
     photos: {}
   },
-  toasts: []
+  toasts: [],
+  experiences: [],
+  filtered: [],
+  filter: "home"
 };
 
 export default defaultState;
-

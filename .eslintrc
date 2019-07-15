@@ -1,0 +1,15 @@
+{
+  "extends": ["wesbos", "react-app"],
+  "rules": {
+    "no-console": 2,
+    "quotes": ["error", "double", { "avoidEscape": true }],
+    "react/prop-types": ["warn"],
+    "prettier/prettier": [
+      "error",
+      {},
+      {
+        "usePrettierrc": false
+      }
+    ]
+  }
+}

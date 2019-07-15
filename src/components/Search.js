@@ -11,7 +11,7 @@ const Search = (
     onChange = () => {},
     onKeyDown = () => {},
     onBlur = () => {},
-    style,
+    style = { color: "black" },
     fields = ["Name"],
     component = "input",
     limit = 5,
@@ -27,6 +27,7 @@ const Search = (
   const [query, setQuery] = useState("");
   const [placeholderValue, setPlaceholderValue] = useState("");
   const [record, setRecord] = useState(typeof value === "object" ? value : {});
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     if (typeof value === "string" && value)
@@ -57,17 +58,24 @@ const Search = (
   useEffect(() => {
     if (query)
       context.jsforce.browser.connection.query(query, (err, result) => {
+        // eslint-disable-next-line no-console
         if (err) console.error(err);
-        onChange(result.done, result.records);
+        setRecords(result.records);
+        onChange(displayValue, result.done, result.records);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, onChange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
   return React.createElement(component, {
     className,
     ref,
     name,
     id: name,
-    style,
+    style: {
+      ...style,
+      color: !record.Id ? style.color || "black" : "transparent",
+      textShadow: record.Id ? `0 0 0 ${style.color || "black"}` : "none",
+      cursor: record.Id ? "pointer" : "auto"
+    },
     autoComplete: "new-password",
     onChange: e => {
       if (
@@ -79,6 +87,7 @@ const Search = (
       }
       // Fix this as it is causing an issue with displaying
       if (!e.target.value && record[searchField]) {
+        onChange("", false, records);
         return setDisplayValue(record[searchField]);
       }
       setDisplayValue(e.target.value);

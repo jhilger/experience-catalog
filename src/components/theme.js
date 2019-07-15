@@ -1,6 +1,6 @@
 const Color = require("color");
 
-const main = {
+const theme = {
   black: Color("#222f3e"),
   white: Color("#fff"),
   yellow: Color("#f1c40f"),
@@ -13,4 +13,4 @@ const main = {
   padding: 4
 };
 
-export default main;
+export default theme;
