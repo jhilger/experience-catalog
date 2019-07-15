@@ -14,29 +14,67 @@ import music from "../img/music.svg";
 import outdoor from "../img/outdoor.svg";
 import trophy from "../img/trophy.svg";
 import home from "../img/home2.svg";
-import Card from "./Card";
 
-import Context from "./Context";
-import TypeAhead from "./components/TypeAhead";
-import AdditionalFields, { Field } from "./components/AdditionalFields";
-import Form, { InputField, Debug } from "./components/Form";
-import SubmitForApproval from "./components/SubmitForApproval";
+import Card from "../components/Card";
+import Context from "../components/Context";
+import Header from "../components/Header";
+import Modal from "../components/Modal";
+import TypeAhead from "../components/TypeAhead";
+import AdditionalFields, { Field } from "../components/AdditionalFields";
+import Form, { InputField, Debug } from "../components/Form";
+import SubmitForApproval from "../components/SubmitForApproval";
 
 //Experience is in window.experiences
 //SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [state] = useContext(Context);
+  const [context, dispatch] = useContext(Context);
 
   const [expanded, setExpanded] = useState(false);
-  const [filtered, setFiltered] = useState(window.experiences);
+  const [filtered, setFiltered] = useState(context.experiences);
   const [rendered, setRendered] = useState(false);
+  const [modal, setModal] = useState("");
+  const [active, setActive] = useState(false);
+
+  //  WORK ON THIS
+  const sideNavFilters = context.experiences.reduce((types, experience) => {
+    if (!types.includes(experience.Experience_Type__c)) {
+      types.push(experience.Experience_Type__c.toLowerCase());
+    }
+    return types;
+  }, []);
 
   useEffect(() => {
     setRendered(true);
   }, []);
+  useEffect(() => {
+    setFiltered(context.experiences);
+  }, [context.experiences]);
+  useEffect(() => {
+    if (rendered && context.loggedIn) {
+      context.jsforce.browser.connection.query(
+        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Partnership_Details_Requirements__c, Image_URL__c " +
+          "FROM Experience__c " +
+          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+        (err, result) => {
+          //console.log("RESULT ", result);
+          //console.error(err);
+          const records = result.records.map(record => {
+            record.display = true;
+            record.default = "img/davisestates3.jpg";
+            return record;
+          });
 
-  const filterItems = query => {
+          dispatch({
+            type: "EXP/init",
+            payload: records
+          });
+        }
+      );
+    }
+  }, [rendered, context]);
+
+  /*const filterItems = query => {
     return window.experiences.map(exp => {
       if (query === "home") {
         exp.display = true;
@@ -45,14 +83,34 @@ const Home = () => {
       }
       return exp;
     });
+  };*/
+
+  const filterItems = query => {
+    return context.experiences.map(exp => {
+      if (query === "home") {
+        exp.display = true;
+      } else {
+        exp.display =
+          exp.Experience_Type__c.toLowerCase() === query ? true : false;
+      }
+      return exp;
+    });
+  };
+
+  const modalContent = type => {
+    setModal(type);
+  };
+
+  const activateModal = toggle => {
+    setActive(toggle);
   };
 
   if (!rendered) return null;
   return (
     <React.Fragment>
-      {state.loggedIn ? (
+      {/*{context.loggedIn ? (
         <div>
-          <h2>Welcome {state.user.display_name}</h2>
+          <h2>Welcome {context.user.display_name}</h2>
           <Form onSubmit={console.log} autoComplete="off">
             <div>
               <SubmitForApproval objectId="001E000000B78SG" />
@@ -96,7 +154,7 @@ const Home = () => {
         </div>
       ) : (
         <h1>You need to Log in to view this site</h1>
-      )}
+      )}*/}
 
       <SideNav
         onSelect={selected => {
@@ -204,15 +262,12 @@ const Home = () => {
         </SideNav.Nav>
       </SideNav>
       <main className={expanded ? "expanded" : ""}>
-        <h1 className="exp-title">
-          Customer Experience <span>Catalog</span>
-        </h1>
-
+        <Header activateModal={activateModal} modalContent={modalContent} />
         <div className="grid-x grid-margin-x grid-margin-y">
           {filtered.map((exp, i) => {
             return (
               <CSSTransition
-                key={exp.id}
+                key={exp.Id}
                 in={exp.display}
                 timeout={300}
                 classNames="cardanim"
@@ -224,6 +279,7 @@ const Home = () => {
           })}
         </div>
       </main>
+      <Modal activateModal={activateModal} active={active} modal={modal} />
     </React.Fragment>
   );
 };

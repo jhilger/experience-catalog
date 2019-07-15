@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, forwardRef } from "react";
-import Context from "../Context";
+import Context from "./Context";
 
 const Search = (
   {
@@ -60,7 +60,7 @@ const Search = (
         if (err) console.error(err);
         onChange(result.done, result.records);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, onChange]);
   return React.createElement(component, {
     className,

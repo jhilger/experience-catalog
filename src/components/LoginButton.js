@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import Context from "../Context";
+import Context from "./Context";
 
 const LoginButton = () => {
   const [context, dispatch] = useContext(Context);
-  console.log(context);
   const [rendered, setRendered] = useState(false);
   useEffect(() => {
     setRendered(true);
@@ -12,21 +11,20 @@ const LoginButton = () => {
   if (context.loggedIn || !rendered) return null;
   return (
     <button
+      className="fancy"
       onClick={e => {
         window.onunload = () => {
           localStorage.removeItem("local_user");
           context.jsforce.browser.logout();
         };
-        console.log(window.loginUrl);
         context.jsforce.browser.login(
           {
             loginUrl: window.loginUrl,
-            popup: { width: 912, height: 600 }
+            popup: { width: 800, height: 600 }
           },
           function(err) {
-            console.log(err);
             if (err) {
-              return dispatch(
+              /*return dispatch(
                 {
                   type: "TOAST/error",
                   payload: {
@@ -36,14 +34,15 @@ const LoginButton = () => {
                   }
                 },
                 2000
-              );
+              );*/
+              console.log("Log in error : ", err);
             }
             context.jsforce.browser.connection
               .identity()
               .then(payload => {
-                console.log(payload);
                 dispatch({ type: "loggedin", payload });
-                dispatch(
+                console.log("Log in successful");
+                /*dispatch(
                   {
                     type: "TOAST/success",
                     payload: {
@@ -53,7 +52,7 @@ const LoginButton = () => {
                     }
                   },
                   3000
-                );
+                );*/
                 localStorage.setItem("local_user", JSON.stringify(payload));
               })
               .catch(console.error);
@@ -61,7 +60,7 @@ const LoginButton = () => {
         );
       }}
     >
-      LoginLoginLoginLoginLoginLoginLoginLoginLoginLoginLogin
+      Login
     </button>
   );
 };

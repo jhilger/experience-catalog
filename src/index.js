@@ -1,7 +1,5 @@
 import React from "react";
-//import ReactDOM from 'react-dom';
 import App from "./components/App";
-
 import { BrowserRouter } from "react-router-dom";
 import { hydrate } from "react-dom";
 import jsforce from "./jsforce";
@@ -9,13 +7,11 @@ import defaultState from "./components/defaultState";
 
 import * as serviceWorker from "./serviceWorker";
 
-//ReactDOM.render(<App />, document.getElementById('root'));
-
 const getUser = () => {
   return JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
 };
 
-const toastsRoot = document.getElementById("toasts");
+//const toastsRoot = document.getElementById("toasts");
 
 hydrate(
   <BrowserRouter>
@@ -23,8 +19,8 @@ hydrate(
       value={{
         jsforce,
         user: getUser(),
-        loggedIn: getUser().display_name ? true : false,
-        toastsRoot
+        loggedIn: getUser().display_name ? true : false
+        //toastsRoot
       }}
     />
   </BrowserRouter>,

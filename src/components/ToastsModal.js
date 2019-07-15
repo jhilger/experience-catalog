@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import ReactDOM from "react-dom";
-import Context from "../Context";
+import Context from "./Context";
 
 const Toasts = ({ children }) => {
   const [context] = useContext(Context);
@@ -18,7 +18,18 @@ const Toasts = ({ children }) => {
 
   return el
     ? ReactDOM.createPortal(
-        <div style={{ position: "fixed", top: 0, right: 0, left: 0, display: 'flex', justifyContent: 'center' }}>{children}</div>,
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            right: 0,
+            left: 0,
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
+          {children}
+        </div>,
         el
       )
     : null;

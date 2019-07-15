@@ -1,0 +1,46 @@
+@import "variables";
+
+/*  HEADER  */
+header {
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+
+header .exp-title {
+  width: 60%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+header .exp-rule {
+  height: 0.25em;
+  width: 30em;
+  background: linear-gradient(
+    to right,
+    rgba($gold-dark, 1) 0%,
+    rgba($gold-light, 1) 47%,
+    rgba($gold-medium, 0) 100%
+  );
+}
+
+header .exp-user {
+  width: 40%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: right;
+}
+
+header .exp-user button {
+  margin: 0.25em;
+}
+
+@media only screen and (max-width: 40em) {
+  header .exp-title {
+    width: 100%;
+  }
+  header .exp-user {
+    width: 100%;
+    text-align: left;
+    margin-top: 1.5rem;
+  }
+}

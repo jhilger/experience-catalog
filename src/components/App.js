@@ -1,11 +1,11 @@
 import React, { useReducer } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./Home";
-import OAuthCallback from "./OAuthCallback/index";
+import Home from "../routes/Home";
+import OAuthCallback from "../routes/OAuthCallback";
 import { Provider } from "./Context";
-import LoginButton from "./components/LoginButton";
-import ToastsModal from "./components/ToastsModal";
-import Toast from "./components/Toast";
+//import LoginButton from "./components/LoginButton";
+//import ToastsModal from "./components/ToastsModal";
+//import Toast from "./components/Toast";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
 
@@ -27,15 +27,7 @@ const App = ({ value = defaultState }) => {
   };
   return (
     <Provider value={[state, newDispatch]}>
-      {!!state.toasts.length && (
-        <ToastsModal>
-          {" "}
-          {state.toasts.map(toast => (
-            <Toast key={toast.timeStamp} toast={toast} />
-          ))}
-        </ToastsModal>
-      )}
-      <LoginButton />
+      {/*<LoginButton />*/}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/oauth/callback" component={OAuthCallback} />
@@ -46,3 +38,16 @@ const App = ({ value = defaultState }) => {
 };
 
 export default App;
+
+/*
+{
+!!state.toasts.length && (
+  <ToastsModal>
+    {" "}
+    {state.toasts.map(toast => (
+      <Toast key={toast.timeStamp} toast={toast} />
+    ))}
+  </ToastsModal>
+)
+}
+*/
