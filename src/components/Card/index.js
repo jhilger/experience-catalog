@@ -31,11 +31,7 @@ const Card = props => {
       <div
         className="exp-card-hero"
         style={{
-          backgroundImage: `url(${
-            props.experience.Image_URL__c
-              ? props.experience.Image_URL__c
-              : props.experience.default
-          })`
+          backgroundImage: `url(${props.experience.Image_URL__c})`
         }}
       >
         <img
