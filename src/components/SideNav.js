@@ -40,7 +40,7 @@ const SideNavigation = ({ onToggle }) => {
               <img
                 className="exp-nav-icon"
                 src={getIcon("wine")}
-                alt="Wine Expeiences"
+                alt="Wine Experiences"
               />
             </NavIcon>
             <NavText>Wine</NavText>

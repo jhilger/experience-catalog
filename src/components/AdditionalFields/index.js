@@ -14,8 +14,8 @@ const AdditionalFields = ({
     field: c => `${c.label}: ${c.value}`,
     after: ""
   },
-  // eslint-disable-next-line no-console
   onChange = () =>
+    // eslint-disable-next-line no-console
     console.log("You need to assign an onChange to `AdditionalFields`"),
   children
 }) => {
