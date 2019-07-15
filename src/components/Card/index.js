@@ -22,6 +22,7 @@ const Card = props => {
       }
     >
       <button
+        type="button"
         onClick={toggleCard}
         className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}
       >
