@@ -23,16 +23,16 @@ import Modal from "../components/Modal";
 // SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [context, dispatch] = useContext(Context);
+  const [{ experiences, loggedIn, jsforce }, dispatch] = useContext(Context);
 
   const [expanded, setExpanded] = useState(false);
-  const [filtered, setFiltered] = useState(context.experiences);
+  const [filtered, setFiltered] = useState(experiences);
   const [rendered, setRendered] = useState(false);
   const [modal, setModal] = useState("");
   const [active, setActive] = useState(false);
 
   //  WORK ON THIS
-  const sideNavFilters = context.experiences.reduce((types, experience) => {
+  const sideNavFilters = experiences.reduce((types, experience) => {
     if (!types.includes(experience.Experience_Type__c)) {
       types.push(experience.Experience_Type__c.toLowerCase());
     }
@@ -43,15 +43,16 @@ const Home = () => {
     setRendered(true);
   }, []);
   useEffect(() => {
-    setFiltered(context.experiences);
-  }, [context.experiences]);
+    setFiltered(experiences);
+  }, [experiences]);
   useEffect(() => {
-    if (rendered && context.loggedIn) {
-      context.jsforce.browser.connection.query(
+    if (rendered && loggedIn) {
+      jsforce.browser.connection.query(
         "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c " +
           "FROM Experience__c " +
           "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
         (err, result) => {
+          // eslint-disable-next-line no-console
           console.error(err);
           const records = result.records.map(record => {
             record.display = true;
@@ -66,10 +67,10 @@ const Home = () => {
         }
       );
     }
-  }, [rendered, context, dispatch]);
+  }, [rendered, dispatch, loggedIn, jsforce.browser]);
 
   const filterItems = query =>
-    context.experiences.map(exp => {
+    experiences.map(exp => {
       if (query === "home") {
         exp.display = true;
       } else {
