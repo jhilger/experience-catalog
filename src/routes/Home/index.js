@@ -8,6 +8,14 @@ import Modal from "../../components/Modal";
 // Experience is in window.experiences
 // SideNavFilters is in window.sideNavFilters
 
+const performQuery = (jsforce, query) =>
+  new Promise((resolve, reject) => {
+    jsforce.browser.connection.query(query, (err, result) => {
+      if (err) return reject(err);
+      return resolve(result);
+    });
+  });
+
 const Home = () => {
   const [{ loggedIn, jsforce, filtered }, dispatch] = useContext(Context);
 
@@ -22,7 +30,8 @@ const Home = () => {
 
   useEffect(() => {
     if (rendered && loggedIn) {
-      jsforce.browser.connection.query(
+      performQuery(
+        jsforce,
         [
           "SELECT",
           [
@@ -42,11 +51,10 @@ const Home = () => {
           ].join(", "),
           "FROM Experience__c",
           // eslint-disable-next-line prettier/prettier
-          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
-        ].join(" "),
-        (err, result) => {
-          // eslint-disable-next-line no-console
-          console.error(err);
+        "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+        ].join(" ")
+      )
+        .then(result => {
           const records = result.records.map(record => {
             record.display = true;
             record.default = "img/davisestates3.jpg";
@@ -57,8 +65,11 @@ const Home = () => {
             type: "EXP/init",
             payload: records
           });
-        }
-      );
+        })
+        .catch(err => {
+          // eslint-disable-next-line no-console
+          console.error(err);
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rendered, loggedIn]);
