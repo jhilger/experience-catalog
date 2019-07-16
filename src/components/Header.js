@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Context from "./Context";
 import LoginButton from "./LoginButton";
+import Modal from "./Modal";
 import "../scss/header.scss";
 
-const Header = props => {
-  const [context] = useContext(Context);
-
-  const sendModalContent = type => {
-    props.modalContent(type);
-    props.activateModal(true);
-  };
+const Header = ({ modalContent, activateModal }) => {
+  const [{ loggedIn, user, tempReqData, tempExpData }] = useContext(Context);
+  const [showReqs, setShowReqs] = useState(false);
+  const [showExps, setShowExps] = useState(false);
 
   return (
     <header>
@@ -20,21 +18,40 @@ const Header = props => {
         <div className="exp-rule" />
       </div>
       <div className="exp-user">
-        {context.loggedIn ? (
+        {loggedIn ? (
           <React.Fragment>
-            <h6>Welcome {context.user.display_name}</h6>
+            <h6>Welcome {user.display_name}</h6>
             <button
+              type="button"
               className="info"
-              onClick={() => sendModalContent("requests")}
+              onClick={() => setShowReqs(!showReqs)}
             >
-              <span>{context.tempReqData.length}</span> Requests
+              <span>{tempReqData.length}</span> Requests
             </button>
             <button
+              type="button"
               className="info"
-              onClick={() => sendModalContent("experiences")}
+              onClick={() => setShowExps(!showExps)}
             >
-              <span>{context.tempExpData.length}</span> Experiences
+              <span>{tempExpData.length}</span> Experiences
             </button>
+
+            <Modal
+              activate={bool =>
+                setShowExps(typeof bool === "boolean" ? bool : !showExps)
+              }
+              active={showExps}
+            >
+              {showExps && <h1>EXPS</h1>}
+            </Modal>
+            <Modal
+              activate={bool =>
+                setShowReqs(typeof bool === "boolean" ? bool : !showReqs)
+              }
+              active={showReqs}
+            >
+              <h1>Reqs</h1>
+            </Modal>
           </React.Fragment>
         ) : (
           <LoginButton />
