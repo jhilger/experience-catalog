@@ -47,7 +47,8 @@ const Home = () => {
             "Experience_Type2__r.Short_Name__c",
             "Experience_Type2__r.Alt_Text__c",
             "Partnership_Details_Requirements__c",
-            "Image_URL__c"
+            // eslint-disable-next-line prettier/prettier
+            "Image_URL__c",
           ].join(", "),
           "FROM Experience__c",
           // eslint-disable-next-line prettier/prettier
