@@ -1,19 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
-import "../scss/foundation.css";
-import "../scss/fonts.scss";
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import "../scss/global.scss";
-import "../scss/sidenav.scss";
-import "../scss/cardanimations.scss";
-import wine from "../img/wine.svg";
-import cars from "../img/cars.svg";
-import art from "../img/art.svg";
-import music from "../img/music.svg";
-import outdoor from "../img/outdoor.svg";
-import trophy from "../img/trophy.svg";
-import home from "../img/home2.svg";
+import { getIcon } from "../components/Icons";
 import Card from "../components/Card";
 import Context from "../components/Context";
 import Header from "../components/Header";
@@ -103,7 +91,7 @@ const Home = () => {
         <SideNav.Nav defaultSelected="home">
           <NavItem eventKey="home">
             <NavIcon>
-              <img className="exp-nav-icon" src={home} alt="Home" />
+              <img className="exp-nav-icon" src={getIcon("home")} alt="Home" />
             </NavIcon>
             <NavText>Home</NavText>
           </NavItem>
@@ -113,7 +101,7 @@ const Home = () => {
               <NavIcon>
                 <img
                   className="exp-nav-icon"
-                  src={wine}
+                  src={getIcon("wine")}
                   alt="Wine Expeiences"
                 />
               </NavIcon>
@@ -128,7 +116,7 @@ const Home = () => {
               <NavIcon>
                 <img
                   className="exp-nav-icon"
-                  src={cars}
+                  src={getIcon("cars")}
                   alt="Driving Expeiences"
                 />
               </NavIcon>
@@ -141,7 +129,11 @@ const Home = () => {
           {sideNavFilters.includes("art") ? (
             <NavItem eventKey="art">
               <NavIcon>
-                <img className="exp-nav-icon" src={art} alt="Art Expeiences" />
+                <img
+                  className="exp-nav-icon"
+                  src={getIcon("art")}
+                  alt="Art Expeiences"
+                />
               </NavIcon>
               <NavText>Art</NavText>
             </NavItem>
@@ -154,7 +146,7 @@ const Home = () => {
               <NavIcon>
                 <img
                   className="exp-nav-icon"
-                  src={music}
+                  src={getIcon("music")}
                   alt="Music Expeiences"
                 />
               </NavIcon>
@@ -169,7 +161,7 @@ const Home = () => {
               <NavIcon>
                 <img
                   className="exp-nav-icon"
-                  src={outdoor}
+                  src={getIcon("outdoor")}
                   alt="Outdoor Expeiences"
                 />
               </NavIcon>
@@ -184,7 +176,7 @@ const Home = () => {
               <NavIcon>
                 <img
                   className="exp-nav-icon"
-                  src={trophy}
+                  src={getIcon("trophy")}
                   alt="Sports Expeiences"
                 />
               </NavIcon>
