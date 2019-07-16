@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import Button from "../components/Button";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
 import "../scss/foundation.css";
@@ -53,12 +54,11 @@ const Home = () => {
   useEffect(() => {
     if (rendered && context.loggedIn) {
       context.jsforce.browser.connection.query(
-        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Partnership_Details_Requirements__c, Image_URL__c " +
+        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c " +
           "FROM Experience__c " +
           "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
         (err, result) => {
-          //console.log("RESULT ", result);
-          //console.error(err);
+          console.error(err);
           const records = result.records.map(record => {
             record.display = true;
             record.default = "img/davisestates3.jpg";
@@ -79,7 +79,7 @@ const Home = () => {
       if (query === "home") {
         exp.display = true;
       } else {
-        exp.display = exp.type === query ? true : false;
+        exp.display = exp.Experience_Type__c.toLowerCase() === query ? true : false;
       }
       return exp;
     });
@@ -149,7 +149,7 @@ const Home = () => {
               />
               <Debug styles={{ color: "#aaa" }} />
             </AdditionalFields>
-            <button type="submit">Submit</button>
+            <Button type="submit">Submit</Button>
           </Form>
         </div>
       ) : (
@@ -174,7 +174,7 @@ const Home = () => {
             <NavText>Home</NavText>
           </NavItem>
 
-          {window.sideNavFilters.includes("wine") ? (
+          {sideNavFilters.includes("wine") ? (
             <NavItem eventKey="wine">
               <NavIcon>
                 <img
@@ -189,7 +189,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("driving") ? (
+          {sideNavFilters.includes("driving") ? (
             <NavItem eventKey="driving">
               <NavIcon>
                 <img
@@ -204,7 +204,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("art") ? (
+          {sideNavFilters.includes("art") ? (
             <NavItem eventKey="art">
               <NavIcon>
                 <img className="exp-nav-icon" src={art} alt="Art Expeiences" />
@@ -215,7 +215,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("music") ? (
+          {sideNavFilters.includes("music") ? (
             <NavItem eventKey="music">
               <NavIcon>
                 <img
@@ -230,7 +230,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("outdoor") ? (
+          {sideNavFilters.includes("outdoor") ? (
             <NavItem eventKey="outdoor">
               <NavIcon>
                 <img
@@ -245,7 +245,7 @@ const Home = () => {
             ""
           )}
 
-          {window.sideNavFilters.includes("sports") ? (
+          {sideNavFilters.includes("sports") ? (
             <NavItem eventKey="sports">
               <NavIcon>
                 <img

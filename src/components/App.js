@@ -8,6 +8,7 @@ import { Provider } from "./Context";
 //import Toast from "./components/Toast";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
+import GlobalStyle from "./GlobalStyle";
 
 const App = ({ value = defaultState }) => {
   const [state, dispatch] = useReducer(reducer, { ...defaultState, ...value });
