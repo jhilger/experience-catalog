@@ -11,8 +11,6 @@ const getUser = () => {
   return JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
 };
 
-//const toastsRoot = document.getElementById("toasts");
-
 hydrate(
   <BrowserRouter>
     <App
@@ -20,7 +18,6 @@ hydrate(
         jsforce,
         user: getUser(),
         loggedIn: getUser().display_name ? true : false
-        //toastsRoot
       }}
     />
   </BrowserRouter>,

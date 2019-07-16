@@ -8,7 +8,6 @@ import { Provider } from "./Context";
 //import Toast from "./components/Toast";
 import reducer from "./reducer";
 import defaultState from "./defaultState";
-import GlobalStyle from "./GlobalStyle";
 
 const App = ({ value = defaultState }) => {
   const [state, dispatch] = useReducer(reducer, { ...defaultState, ...value });
@@ -28,7 +27,6 @@ const App = ({ value = defaultState }) => {
   };
   return (
     <Provider value={[state, newDispatch]}>
-      {/*<LoginButton />*/}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/oauth/callback" component={OAuthCallback} />
@@ -39,16 +37,3 @@ const App = ({ value = defaultState }) => {
 };
 
 export default App;
-
-/*
-{
-!!state.toasts.length && (
-  <ToastsModal>
-    {" "}
-    {state.toasts.map(toast => (
-      <Toast key={toast.timeStamp} toast={toast} />
-    ))}
-  </ToastsModal>
-)
-}
-*/
