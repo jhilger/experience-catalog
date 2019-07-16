@@ -59,7 +59,6 @@ const Home = () => {
     <React.Fragment>
       <SideNav onToggle={() => setExpanded(!expanded)} />
       <main className={expanded ? "expanded" : ""}>
-        {console.log(filtered)}
         <Header activateModal={activateModal} modalContent={modalContent} />
         <div className="grid-x grid-margin-x grid-margin-y">
           {filtered.map((exp, i) => (
