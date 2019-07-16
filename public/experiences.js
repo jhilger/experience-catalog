@@ -1,10 +1,10 @@
-var sideNavFilters = (function(window) {
-  //return ["wine", "driving", "art", "music", "outdoor", "sports" ];
+const sideNavFilters = (function(window) {
+  // return ["wine", "driving", "art", "music", "outdoor", "sports" ];
   return ["wine", "driving"];
 })(window);
 
-var experiencesMap = (function(window) {
-  //return ["wine", "driving", "art", "music", "outdoor", "sports" ];
+const experiencesMap = (function(window) {
+  // return ["wine", "driving", "art", "music", "outdoor", "sports" ];
   return {
     wine: {
       altText: "Wine Tasting",
@@ -21,8 +21,8 @@ var experiencesMap = (function(window) {
   };
 })(window);
 
-var experiences = (function(window) {
-  /*type: wine, driving, art, music, outdoor, sports */
+const experiences = (function(window) {
+  /* type: wine, driving, art, music, outdoor, sports */
   return [
     {
       id: 1000,

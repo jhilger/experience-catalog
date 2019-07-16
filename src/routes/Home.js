@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import Button from "../components/Button";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
 import "../scss/foundation.css";
@@ -16,28 +15,28 @@ import outdoor from "../img/outdoor.svg";
 import trophy from "../img/trophy.svg";
 import home from "../img/home2.svg";
 import Card from "../components/Card";
-
 import Context from "../components/Context";
-import TypeAhead from "../components/TypeAhead";
-import AdditionalFields, { Field } from "../components/AdditionalFields";
-import Form, { InputField, Debug } from "../components/Form";
-import SubmitForApproval from "../components/SubmitForApproval";
+import Header from "../components/Header";
+import Modal from "../components/Modal";
 
-//Experience is in window.experiences
-//SideNavFilters is in window.sideNavFilters
+// Experience is in window.experiences
+// SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
   const [context, dispatch] = useContext(Context);
-  console.log(context);
+
   const [expanded, setExpanded] = useState(false);
   const [filtered, setFiltered] = useState(context.experiences);
   const [rendered, setRendered] = useState(false);
+  const [modal, setModal] = useState("");
+  const [active, setActive] = useState(false);
+
   //  WORK ON THIS
   const sideNavFilters = context.experiences.reduce((types, experience) => {
-    if(!types.includes(experience.Experience_Type__c)) {
-      types.push(experience.Experience_Type__c.toLowerCase())
+    if (!types.includes(experience.Experience_Type__c)) {
+      types.push(experience.Experience_Type__c.toLowerCase());
     }
-    return types
+    return types;
   }, []);
 
   useEffect(() => {
@@ -67,80 +66,36 @@ const Home = () => {
         }
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rendered, context.loggedIn]);
+  }, [rendered, context, dispatch]);
 
-  const filterItems = query => {
-    return context.experiences.map(exp => {
+  const filterItems = query =>
+    context.experiences.map(exp => {
       if (query === "home") {
         exp.display = true;
       } else {
-        exp.display = exp.Experience_Type__c.toLowerCase() === query ? true : false;
+        exp.display = exp.Experience_Type__c.toLowerCase() === query;
       }
       return exp;
     });
+
+  const modalContent = type => {
+    setModal(type);
+  };
+
+  const activateModal = toggle => {
+    setActive(toggle);
   };
 
   if (!rendered) return null;
   return (
     <React.Fragment>
-      {context.loggedIn ? (
-        <div style={{ paddingLeft: "68px" }}>
-          <h2>Welcome {context.user.display_name}</h2>
-          <Form onSubmit={console.log} autoComplete="off">
-            <div>
-              <SubmitForApproval objectId="001E000000B78SG" />
-            </div>
-            <AdditionalFields
-              jsonFieldName="additionalFields__c"
-              humanReadableFieldName="Additional_Information__c"
-              formatting={{
-                before: "<ul><li>",
-                between: "</li><li>",
-                field: c =>
-                  `<label>${c.label}:</label> <span>${c.value}</span>`,
-                after: "</li></ul>"
-              }}
-              onChange={v => console.log(JSON.stringify(v))}
-            >
-              <TypeAhead name="AccountId" label="Account" />
-              <Field name="name" label="Name" />
-              <Field name="phone-number" label="Phone" />
-              <InputField
-                includeInBlob
-                component="textarea"
-                name="Description"
-                label="Details"
-                validate={field => {
-                  if (!field.value)
-                    return [
-                      {
-                        type: "error",
-                        message: "You need to fill in this field",
-                        name: field.name
-                      }
-                    ];
-                  return;
-                }}
-              />
-              <Debug styles={{ color: "#aaa" }} />
-            </AdditionalFields>
-            <Button type="submit">Submit</Button>
-          </Form>
-        </div>
-      ) : (
-        <h1 style={{ paddingLeft: "68px" }}>
-          You need to Log in to view this site
-        </h1>
-      )}
-
       <SideNav
         onSelect={selected => {
           console.log("you selected", selected);
           setFiltered(filterItems(selected));
         }}
-        onToggle={expanded => {
-          setExpanded(expanded);
+        onToggle={newExpanded => {
+          setExpanded(newExpanded);
         }}
       >
         <SideNav.Toggle />
@@ -239,52 +194,25 @@ const Home = () => {
           )}
         </SideNav.Nav>
       </SideNav>
-      {filtered.length && (
-        <main className={expanded ? "expanded" : ""}>
-          <h1 className="exp-title">
-            Customer Experience <span>Catalog</span>
-          </h1>
-
-          <div className="grid-x grid-margin-x grid-margin-y">
-            {filtered.map((exp, i) => {
-              return (
-                <CSSTransition
-                  key={exp.Id}
-                  in={exp.display}
-                  timeout={300}
-                  classNames="cardanim"
-                  unmountOnExit
-                >
-                  <Card sort={i} experience={exp} />
-                </CSSTransition>
-              );
-            })}
-          </div>
-        </main>
-      )}
+      <main className={expanded ? "expanded" : ""}>
+        <Header activateModal={activateModal} modalContent={modalContent} />
+        <div className="grid-x grid-margin-x grid-margin-y">
+          {filtered.map((exp, i) => (
+            <CSSTransition
+              key={exp.Id}
+              in={exp.display}
+              timeout={300}
+              classNames="cardanim"
+              unmountOnExit
+            >
+              <Card sort={i} experience={exp} />
+            </CSSTransition>
+          ))}
+        </div>
+      </main>
+      <Modal activateModal={activateModal} active={active} modal={modal} />
     </React.Fragment>
   );
 };
 
 export default Home;
-
-/*import React, { useState, useEffect } from 'react';
-
-function Example() {
-  const [count, setCount] = useState(0);
-
-  // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
-    // Update the document title using the browser API
-    document.title = `You clicked ${count} times`;
-  });
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}*/

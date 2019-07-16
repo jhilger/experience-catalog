@@ -13,16 +13,10 @@ const fieldsReducer = (oldState = [], action) => {
   }
 };
 
-const reducer = (formatting, onChange) => (
-  oldState,
-  action
-) => {
+const reducer = (formatting, onChange) => (oldState, action) => {
   const newState = {
     ...oldState,
-    ...humanReadableFieldName(
-      jsonFieldName(oldState, action),
-      formatting
-    ),
+    ...humanReadableFieldName(jsonFieldName(oldState, action), formatting),
     fields: fieldsReducer(oldState.fields, action)
   };
   onChange({
