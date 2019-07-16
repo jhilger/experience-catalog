@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
-import { getIcon } from "./Icons";
-import Context from "./Context";
+import "./sidenav.scss";
+import { getIcon } from "../Icons";
+import Context from "../Context";
 
 const SideNavigation = ({ onToggle }) => {
   const [{ experiences }, dispatch] = useContext(Context);
