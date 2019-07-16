@@ -40,7 +40,7 @@ const SideNavigation = ({ onToggle }) => {
               <img
                 className="exp-nav-icon"
                 src={getIcon("wine")}
-                alt="Wine Experiences"
+                alt="Wine Expeiences"
               />
             </NavIcon>
             <NavText>Wine</NavText>
@@ -64,8 +64,8 @@ const SideNavigation = ({ onToggle }) => {
           ""
         )}
 
-        {sideNavFilters.includes("arts") ? (
-          <NavItem eventKey="arts">
+        {sideNavFilters.includes("art") ? (
+          <NavItem eventKey="art">
             <NavIcon>
               <img
                 className="exp-nav-icon"
@@ -122,6 +122,14 @@ const SideNavigation = ({ onToggle }) => {
           </NavItem>
         ) : (
           ""
+        )}
+        {sideNavFilters.includes("arts") && (
+          <NavItem eventKey="art">
+            <NavIcon>
+              <img className="exp-nav-icon" src={getIcon("art")} alt="Art" />
+            </NavIcon>
+            <NavText>Art</NavText>
+          </NavItem>
         )}
       </SideNav.Nav>
     </SideNav>

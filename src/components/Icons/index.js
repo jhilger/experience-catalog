@@ -9,7 +9,7 @@ import home from "./home2.svg";
 const getIcon = (type, defaultFunction = () => "") => {
   switch (type.toLowerCase()) {
     case "wine":
-      return "/w.svg";
+      return wine;
     case "driving":
     case "cars":
       return cars;
