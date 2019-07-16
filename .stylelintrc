@@ -5,6 +5,6 @@
     "stylelint-config-styled-components"
   ],
   "rules": {
-    "unit-whitelist": ["em", "rem", "%", "s", "px", "deg"]
+    "unit-whitelist": ["em", "rem", "%", "s", "px", "deg", "vw", "vh"]
   }
 }
