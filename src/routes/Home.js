@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
-import { getIcon } from "../components/Icons";
+import SideNav from "../components/SideNav";
 import Card from "../components/Card";
 import Context from "../components/Context";
 import Header from "../components/Header";
@@ -78,115 +77,7 @@ const Home = () => {
   if (!rendered) return null;
   return (
     <React.Fragment>
-      <SideNav
-        onSelect={selected => {
-          console.log("you selected", selected);
-          setFiltered(filterItems(selected));
-        }}
-        onToggle={newExpanded => {
-          setExpanded(newExpanded);
-        }}
-      >
-        <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="home">
-          <NavItem eventKey="home">
-            <NavIcon>
-              <img className="exp-nav-icon" src={getIcon("home")} alt="Home" />
-            </NavIcon>
-            <NavText>Home</NavText>
-          </NavItem>
-
-          {sideNavFilters.includes("wine") ? (
-            <NavItem eventKey="wine">
-              <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={getIcon("wine")}
-                  alt="Wine Expeiences"
-                />
-              </NavIcon>
-              <NavText>Wine</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("driving") ? (
-            <NavItem eventKey="driving">
-              <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={getIcon("cars")}
-                  alt="Driving Expeiences"
-                />
-              </NavIcon>
-              <NavText>Driving</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("art") ? (
-            <NavItem eventKey="art">
-              <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={getIcon("art")}
-                  alt="Art Expeiences"
-                />
-              </NavIcon>
-              <NavText>Art</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("music") ? (
-            <NavItem eventKey="music">
-              <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={getIcon("music")}
-                  alt="Music Expeiences"
-                />
-              </NavIcon>
-              <NavText>Music</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("outdoor") ? (
-            <NavItem eventKey="outdoor">
-              <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={getIcon("outdoor")}
-                  alt="Outdoor Expeiences"
-                />
-              </NavIcon>
-              <NavText>Outdoor</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-
-          {sideNavFilters.includes("sports") ? (
-            <NavItem eventKey="sports">
-              <NavIcon>
-                <img
-                  className="exp-nav-icon"
-                  src={getIcon("trophy")}
-                  alt="Sports Expeiences"
-                />
-              </NavIcon>
-              <NavText>Sports</NavText>
-            </NavItem>
-          ) : (
-            ""
-          )}
-        </SideNav.Nav>
-      </SideNav>
+      <SideNav onToggle={() => setExpanded(!expanded)} />
       <main className={expanded ? "expanded" : ""}>
         <Header activateModal={activateModal} modalContent={modalContent} />
         <div className="grid-x grid-margin-x grid-margin-y">
