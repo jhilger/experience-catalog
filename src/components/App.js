@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import Home from "../routes/Home";
@@ -64,4 +65,7 @@ const App = ({ value = defaultState }) => {
   );
 };
 
+App.propTypes = {
+  value: PropTypes.object.isRequired
+};
 export default App;

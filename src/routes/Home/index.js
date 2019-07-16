@@ -25,11 +25,7 @@ const Home = () => {
         (err, result) => {
           // eslint-disable-next-line no-console
           if (err) console.error(err);
-          const records = result.records.map(record => {
-            record.display = true;
-            record.default = "img/davisestates3.jpg";
-            return record;
-          });
+          const { records } = result;
 
           dispatch({
             type: "EXP/init",
