@@ -41,7 +41,8 @@ const Home = () => {
             "Image_URL__c"
           ].join(", "),
           "FROM Experience__c",
-          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'"
+          // eslint-disable-next-line prettier/prettier
+          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
         ].join(" "),
         (err, result) => {
           // eslint-disable-next-line no-console
