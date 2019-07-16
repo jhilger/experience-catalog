@@ -71,7 +71,8 @@ const Home = () => {
         }
       );
     }
-  }, [rendered, context]);
+    // eslint-disable-next-line
+  }, [rendered, context.loggedIn]);
 
   /*const filterItems = query => {
     return window.experiences.map(exp => {
