@@ -23,9 +23,26 @@ const Home = () => {
   useEffect(() => {
     if (rendered && loggedIn) {
       jsforce.browser.connection.query(
-        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c " +
-          "FROM Experience__c " +
-          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+        [
+          "SELECT",
+          [
+            "Id",
+            "Strategic_Partner__r.account__r.Name",
+            "Name",
+            "Experience_Type__c",
+            "Info__c",
+            "Keep_In_Mind__c",
+            "Experience_Type2__r.Id",
+            "Experience_Type2__r.Name",
+            "Experience_Type2__r.Image_Path__c",
+            "Experience_Type2__r.Short_Name__c",
+            "Experience_Type2__r.Alt_Text__c",
+            "Partnership_Details_Requirements__c",
+            "Image_URL__c"
+          ].join(", "),
+          "FROM Experience__c",
+          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'"
+        ].join(" "),
         (err, result) => {
           // eslint-disable-next-line no-console
           console.error(err);
@@ -61,7 +78,7 @@ const Home = () => {
         <Header activateModal={activateModal} modalContent={modalContent} />
         <div className="grid-x grid-margin-x grid-margin-y">
           {filtered.map((exp, i) => (
-            <Card sort={i} experience={exp} />
+            <Card key={exp.Id} sort={i} experience={exp} />
           ))}
         </div>
       </main>
