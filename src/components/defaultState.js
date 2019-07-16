@@ -2,6 +2,8 @@ const defaultState = {
   user: {},
   toasts: [],
   experiences: [],
+  filtered: [],
+  filter: "home",
   tempReqData: [
     { id: "100", name: "Request 1", url: "http://thisgoesnowhere.com" },
     { id: "200", name: "Request 2", url: "http://thisgoesnowhere.com" },

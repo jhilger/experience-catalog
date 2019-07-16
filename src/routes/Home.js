@@ -10,28 +10,17 @@ import Modal from "../components/Modal";
 // SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [{ experiences, loggedIn, jsforce }, dispatch] = useContext(Context);
+  const [{ loggedIn, jsforce, filtered }, dispatch] = useContext(Context);
 
   const [expanded, setExpanded] = useState(false);
-  const [filtered, setFiltered] = useState(experiences);
   const [rendered, setRendered] = useState(false);
   const [modal, setModal] = useState("");
   const [active, setActive] = useState(false);
 
-  //  WORK ON THIS
-  const sideNavFilters = experiences.reduce((types, experience) => {
-    if (!types.includes(experience.Experience_Type__c)) {
-      types.push(experience.Experience_Type__c.toLowerCase());
-    }
-    return types;
-  }, []);
-
   useEffect(() => {
     setRendered(true);
   }, []);
-  useEffect(() => {
-    setFiltered(experiences);
-  }, [experiences]);
+
   useEffect(() => {
     if (rendered && loggedIn) {
       jsforce.browser.connection.query(
@@ -54,17 +43,8 @@ const Home = () => {
         }
       );
     }
-  }, [rendered, dispatch, loggedIn, jsforce.browser]);
-
-  const filterItems = query =>
-    experiences.map(exp => {
-      if (query === "home") {
-        exp.display = true;
-      } else {
-        exp.display = exp.Experience_Type__c.toLowerCase() === query;
-      }
-      return exp;
-    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rendered, loggedIn]);
 
   const modalContent = type => {
     setModal(type);
@@ -79,6 +59,7 @@ const Home = () => {
     <React.Fragment>
       <SideNav onToggle={() => setExpanded(!expanded)} />
       <main className={expanded ? "expanded" : ""}>
+        {console.log(filtered)}
         <Header activateModal={activateModal} modalContent={modalContent} />
         <div className="grid-x grid-margin-x grid-margin-y">
           {filtered.map((exp, i) => (

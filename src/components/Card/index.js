@@ -39,6 +39,7 @@ const Card = ({ sort, experience }) => {
       >
         <img
           src={getIcon(experience.Experience_Type__c)}
+          data-type={experience.Experience_Type__c}
           alt="Experience type icon"
         />
       </div>
@@ -48,27 +49,19 @@ const Card = ({ sort, experience }) => {
             <h2>{experience.Strategic_Partner__r.Account__r.Name}</h2>
             <h3>{experience.Name}</h3>
           </div>
-          <div
-          // className="exp-card-content"
-          // dangerouslySetInnerHTML={{ __html: experience.content }}
-          />
         </div>
         <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
           <div className="exp-card-keepinmind">
             <h4>Keep In Mind</h4>
             <div
-            // dangerouslySetInnerHTML={{
-            //   __html: experience.Keep_In_Mind__c
-            // }}
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: experience.Keep_In_Mind__c
+              }}
             />
           </div>
           <div className="exp-card-partnerdetails">
             <h5>Partnership Details / Requirements:</h5>
-            <div
-            // dangerouslySetInnerHTML={{
-            //   __html: experience.partnerdetails
-            // }}
-            />
           </div>
         </div>
       </div>

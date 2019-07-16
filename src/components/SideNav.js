@@ -123,6 +123,14 @@ const SideNavigation = ({ onToggle }) => {
         ) : (
           ""
         )}
+        {sideNavFilters.includes("arts") && (
+          <NavItem eventKey="art">
+            <NavIcon>
+              <img className="exp-nav-icon" src={getIcon("art")} alt="Art" />
+            </NavIcon>
+            <NavText>Art</NavText>
+          </NavItem>
+        )}
       </SideNav.Nav>
     </SideNav>
   );
