@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import Button from "../components/Button";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { CSSTransition } from "react-transition-group";
 import "../scss/foundation.css";
