@@ -20,6 +20,11 @@ function reducer(state = defaultState, action) {
         experiences: action.payload,
         filtered: filterItems(state.filter, action.payload)
       };
+    case "REQ/init":
+      return {
+        ...state,
+        requests: action.payload
+      };
     case "EXP/add":
       return {
         ...state,

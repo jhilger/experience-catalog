@@ -72,10 +72,14 @@ const Home = () => {
       ])
         .then(([experience, partnerRequests]) => {
           const { records } = experience;
-          console.log(partnerRequests);
+
           dispatch({
             type: "EXP/init",
             payload: records
+          });
+          dispatch({
+            type: "REQ/init",
+            payload: partnerRequests.records
           });
         })
         .catch(err => {

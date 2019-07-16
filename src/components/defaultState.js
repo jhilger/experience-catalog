@@ -2,6 +2,7 @@ const defaultState = {
   user: {},
   toasts: [],
   experiences: [],
+  requests: [],
   filtered: [],
   filter: "home",
   tempReqData: [
