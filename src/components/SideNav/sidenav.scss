@@ -1,4 +1,4 @@
-@import "variables";
+@import "../../scss/variables.scss";
 
 .exp-nav-icon {
   width: 2.5em;
@@ -13,10 +13,7 @@
   position: fixed;
 }
 
-.sidenav---sidenav-nav---3tvij
-  > .sidenav---sidenav-navitem---uwIJ-
-  > .sidenav---navitem---9uL5T
-  .sidenav---navtext---1AE_f {
+.sidenav---sidenav-nav---3tvij>.sidenav---sidenav-navitem---uwIJ->.sidenav---navitem---9uL5T .sidenav---navtext---1AE_f {
   color: #fff;
   font-family: "Proxima N W01 reg", sans-serif;
   text-transform: uppercase;
@@ -26,9 +23,7 @@
   margin-left: 1em;
 }
 
-.sidenav---sidenav-nav---3tvij
-  > .sidenav---sidenav-navitem---uwIJ-
-  > .sidenav---navitem---9uL5T {
+.sidenav---sidenav-nav---3tvij>.sidenav---sidenav-navitem---uwIJ->.sidenav---navitem---9uL5T {
   line-height: 60px;
   height: 60px;
 }

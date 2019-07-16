@@ -1,16 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CSSTransition } from "react-transition-group";
 import SideNav from "../../components/SideNav";
 import Card from "../../components/Card";
-import SubmitForm from "./submitForm";
 import Context from "../../components/Context";
+import Header from "../../components/Header";
+import Modal from "../../components/Modal";
+
+// Experience is in window.experiences
+// SideNavFilters is in window.sideNavFilters
 
 const Home = () => {
-  const [{ loggedIn, jsforce, user, filtered }, dispatch] = useContext(Context);
+  const [{ loggedIn, jsforce, filtered }, dispatch] = useContext(Context);
+
   const [expanded, setExpanded] = useState(false);
-  // const [filtered, setFiltered] = useState(experiences);
   const [rendered, setRendered] = useState(false);
-  //  WORK ON THIS
+  const [modal, setModal] = useState("");
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     setRendered(true);
@@ -24,8 +28,12 @@ const Home = () => {
           "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
         (err, result) => {
           // eslint-disable-next-line no-console
-          if (err) console.error(err);
-          const { records } = result;
+          console.error(err);
+          const records = result.records.map(record => {
+            record.display = true;
+            record.default = "img/davisestates3.jpg";
+            return record;
+          });
 
           dispatch({
             type: "EXP/init",
@@ -37,47 +45,27 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rendered, loggedIn]);
 
+  const modalContent = type => {
+    setModal(type);
+  };
+
+  const activateModal = toggle => {
+    setActive(toggle);
+  };
+
   if (!rendered) return null;
   return (
     <React.Fragment>
-      {loggedIn ? (
-        <div style={{ paddingLeft: "68px" }}>
-          <h2>Welcome {user.display_name}</h2>
-
-          <SubmitForm />
+      <SideNav onToggle={() => setExpanded(!expanded)} />
+      <main className={expanded ? "expanded" : ""}>
+        <Header activateModal={activateModal} modalContent={modalContent} />
+        <div className="grid-x grid-margin-x grid-margin-y">
+          {filtered.map((exp, i) => (
+            <Card sort={i} experience={exp} />
+          ))}
         </div>
-      ) : (
-        <h1 style={{ paddingLeft: "68px" }}>
-          You need to Log in to view this site
-        </h1>
-      )}
-
-      <SideNav
-        onToggle={newExpanded => {
-          setExpanded(newExpanded);
-        }}
-      />
-      {filtered.length && (
-        <main className={expanded ? "expanded" : ""}>
-          <h1 className="exp-title">
-            Customer Experience <span>Catalog</span>
-          </h1>
-
-          <div className="grid-x grid-margin-x grid-margin-y">
-            {filtered.map((exp, i) => (
-              <CSSTransition
-                key={exp.Id}
-                in={exp.display}
-                timeout={300}
-                classNames="cardanim"
-                unmountOnExit
-              >
-                <Card sort={i} experience={exp} />
-              </CSSTransition>
-            ))}
-          </div>
-        </main>
-      )}
+      </main>
+      <Modal activateModal={activateModal} active={active} modal={modal} />
     </React.Fragment>
   );
 };

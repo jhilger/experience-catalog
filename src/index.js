@@ -3,7 +3,6 @@ import "./scss/foundation.css";
 import "./scss/fonts.scss";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./scss/global.scss";
-import "./scss/sidenav.scss";
 import "./scss/cardanimations.scss";
 
 import { BrowserRouter } from "react-router-dom";
