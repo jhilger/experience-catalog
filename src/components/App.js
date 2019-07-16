@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
+// import { ThemeProvider } from "styled-components";
 import Home from "../routes/Home";
 import OAuthCallback from "../routes/OAuthCallback";
 import { Provider } from "./Context";
@@ -30,7 +30,7 @@ const App = ({ value = defaultState }) => {
   };
   return (
     <Provider value={[state, newDispatch]}>
-      {/*<LoginButton /> */}
+      {/* <LoginButton /> */}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/oauth/callback" component={OAuthCallback} />
@@ -44,16 +44,3 @@ App.propTypes = {
   value: PropTypes.object.isRequired
 };
 export default App;
-
-/*
-{
-!!state.toasts.length && (
-  <ToastsModal>
-    {" "}
-    {state.toasts.map(toast => (
-      <Toast key={toast.timeStamp} toast={toast} />
-    ))}
-  </ToastsModal>
-)
-}
-*/
