@@ -8,7 +8,7 @@ const Card = ({ sort, experience }) => {
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
-
+  console.log(experience);
   return (
     <div
       className={
@@ -62,6 +62,12 @@ const Card = ({ sort, experience }) => {
           </div>
           <div className="exp-card-partnerdetails">
             <h5>Partnership Details / Requirements:</h5>
+            <div
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: experience.Partnership_Details_Requirements__c
+              }}
+            />
           </div>
         </div>
       </div>
