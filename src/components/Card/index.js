@@ -8,7 +8,7 @@ const Card = ({ sort, experience }) => {
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
-  console.log(experience);
+
   return (
     <div
       className={
