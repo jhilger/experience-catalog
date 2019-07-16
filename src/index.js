@@ -18,7 +18,7 @@ import * as serviceWorker from "./serviceWorker";
 const getUser = () =>
   JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
 
-// const toastsRoot = document.getElementById("toasts");
+const modalRoot = document.getElementById("modal");
 
 hydrate(
   <BrowserRouter>
@@ -26,8 +26,8 @@ hydrate(
       value={{
         jsforce,
         user: getUser(),
-        loggedIn: !!getUser().display_name
-        // toastsRoot
+        loggedIn: !!getUser().display_name,
+        modalRoot
       }}
     />
   </BrowserRouter>,

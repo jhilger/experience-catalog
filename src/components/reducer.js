@@ -20,6 +20,11 @@ function reducer(state = defaultState, action) {
         experiences: action.payload,
         filtered: filterItems(state.filter, action.payload)
       };
+    case "REQ/init":
+      return {
+        ...state,
+        requests: action.payload
+      };
     case "EXP/add":
       return {
         ...state,
@@ -64,6 +69,10 @@ function reducer(state = defaultState, action) {
           }
         ]
       };
+    case "ERROR":
+      // eslint-disable-next-line no-console
+      console.error(action.payload);
+      return state;
     case "CLEAR":
       return {
         ...state,
