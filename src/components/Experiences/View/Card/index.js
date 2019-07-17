@@ -73,7 +73,6 @@ const Card = ({ sort, experience, expanded = false }) => {
                 setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
               }}
             >
-              {console.log(experience)}
               <SingleRequest
                 initialValues={{
                   Experience__c: experience.Id,
