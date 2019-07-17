@@ -59,7 +59,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
   ])
     .then(([newExperiences, partnerRequests, contact]) => {
       const { records } = newExperiences;
-      if (contact)
+      if (contact && contact.records[0])
         dispatch({
           type: "CONT/data",
           payload: contact.records[0]
