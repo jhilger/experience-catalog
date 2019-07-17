@@ -13,6 +13,7 @@ const defaultState = {
     total: null,
     size: null
   },
+  contactId: null,
   filtered: [],
   filter: "home",
   tempReqData: [

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Context from "./Context";
 import LoginButton from "./LoginButton";
 import ExperienceModalButton from "./Experiences/ModalButton";
-import RequestModalButton from "./Requests/ModalButton";
+import RequestModalButton from "./Requests/View/ModalButton";
 import "../scss/header.scss";
 
 const Header = () => {

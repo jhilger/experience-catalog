@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../../../Icons";
+import Modal from "../../../Modal";
+import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
+  const [modalOpen, setModalOpen] = useState(false);
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
@@ -57,6 +60,27 @@ const Card = ({ sort, experience, expanded = false }) => {
               <h2>{experience.Strategic_Partner__r.Account__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="info"
+            >
+              Create Request
+            </button>
+            <Modal
+              active={modalOpen}
+              activate={bool => {
+                setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
+              }}
+            >
+              {console.log(experience)}
+              <SingleRequest
+                initialValues={{
+                  Experience__c: experience.Id,
+                  Strategic_Partner_Name__c: experience.Strategic_Partner__c
+                }}
+              />
+            </Modal>
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">

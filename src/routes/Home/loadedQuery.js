@@ -11,6 +11,7 @@ const loadedQuery = (jsforce, { user }, dispatch) =>
           "Strategic_Partner__r.account__r.Name",
           "Name",
           "Experience_Type__c",
+          "Strategic_Partner__c",
           "Info__c",
           "Keep_In_Mind__c",
           "Experience_Type2__r.Id",
@@ -20,7 +21,7 @@ const loadedQuery = (jsforce, { user }, dispatch) =>
           "Experience_Type2__r.Alt_Text__c",
           "Partnership_Details_Requirements__c",
           // eslint-disable-next-line prettier/prettier
-      "Image_URL__c",
+          "Image_URL__c",
         ].join(", "),
         "FROM Experience__c",
         // eslint-disable-next-line prettier/prettier

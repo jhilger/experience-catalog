@@ -5,7 +5,6 @@ import Modal from "./Modal";
 const ModalWrapper = ({ active, activate, children }) => {
   const [hideContent, setHideContent] = useState(!active);
   useEffect(() => {
-    console.log({ active, hideContent });
     if (!active && !hideContent) {
       setTimeout(() => setHideContent(true), 1000);
     } else if (active && hideContent) {
