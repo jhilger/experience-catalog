@@ -7,7 +7,6 @@ import ExperienceList from "./List";
 const ExperienceModalButton = ({ history }) => {
   const [showExps, setShowExps] = useState(false);
   const [{ experiences }] = useContext(Context);
-  console.log(history);
   return (
     <React.Fragment>
       <button
@@ -22,8 +21,6 @@ const ExperienceModalButton = ({ history }) => {
       </button>
       <Modal
         activate={bool => {
-          if (bool === false || showExps)
-            history.push(history.location.pathname);
           setShowExps(typeof bool === "boolean" ? bool : !showExps);
         }}
         active={showExps}

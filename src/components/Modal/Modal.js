@@ -10,23 +10,28 @@ const Modal = ({ children, className, activate, active, history }) => {
 
   useEffect(() => {
     const newEl = document.createElement("div");
-    const newActive = active;
-    const closeModal = ev => {
-      if (ev.target === newEl) {
-        activate(false);
-      }
-    };
     newEl.className = className;
-    newEl.addEventListener("click", activate);
-    if (newActive) window.addEventListener("click", closeModal);
     context.modalRoot.appendChild(newEl);
 
     setEl(newEl);
     return () => {
-      newEl.removeEventListener("click", activate);
-      if (newActive) window.removeEventListener("click", closeModal);
       context.modalRoot.removeChild(newEl);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (el) {
+      const newEl = el;
+      const closeModal = ev => {
+        if (ev.target === newEl) {
+          activate(false);
+        }
+      };
+      if (active) window.addEventListener("click", closeModal);
+      return () => {
+        window.removeEventListener("click", closeModal);
+      };
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
