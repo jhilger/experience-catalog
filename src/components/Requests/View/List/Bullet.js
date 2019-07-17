@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Context from "../Context";
+import Context from "../../../Context";
 
 const RequestList = () => {
   const [{ requests }] = useContext(Context);
@@ -7,14 +7,16 @@ const RequestList = () => {
     <div>
       <h2>Requests</h2>
       {requests.records.map(
-        ({ Name, Id, Contact_to_Invite__r, Event_Date__c }, i) => {
-          const event = new Date(`${Event_Date__c}T00:00:00`);
+        (
+          { Name, Id, Contact_to_Invite__r: contact, Event_Date__c: eventDate },
+          i
+        ) => {
+          const event = new Date(`${eventDate}T00:00:00`);
           const offset = event.getTimezoneOffset() / 60;
           const duration = `${event}-${offset}:00`;
           return (
             <div key={Id}>
-              {Name}-{Contact_to_Invite__r.Name}-
-              {new Date(duration).toLocaleDateString()}
+              {Name}-{contact.Name}-{new Date(duration).toLocaleDateString()}
             </div>
           );
         }
