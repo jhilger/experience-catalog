@@ -3,7 +3,6 @@ import "./scss/foundation.css";
 import "./scss/fonts.scss";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./scss/global.scss";
-import "./scss/sidenav.scss";
 import "./scss/cardanimations.scss";
 
 import { BrowserRouter } from "react-router-dom";
@@ -19,7 +18,7 @@ import * as serviceWorker from "./serviceWorker";
 const getUser = () =>
   JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
 
-const toastsRoot = document.getElementById("toasts");
+const modalRoot = document.getElementById("modal");
 
 hydrate(
   <BrowserRouter>
@@ -28,7 +27,7 @@ hydrate(
         jsforce,
         user: getUser(),
         loggedIn: !!getUser().display_name,
-        toastsRoot
+        modalRoot
       }}
     />
   </BrowserRouter>,

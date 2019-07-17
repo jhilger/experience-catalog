@@ -1,16 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CSSTransition } from "react-transition-group";
 import SideNav from "../../components/SideNav";
 import Card from "../../components/Card";
-import SubmitForm from "./submitForm";
 import Context from "../../components/Context";
+import Header from "../../components/Header";
+
+// Experience is in window.experiences
+// SideNavFilters is in window.sideNavFilters
+
+const performQuery = (jsforce, query) =>
+  new Promise((resolve, reject) => {
+    jsforce.browser.connection.query(query, (err, result) => {
+      if (err) return reject(err);
+      return resolve(result);
+    });
+  });
 
 const Home = () => {
-  const [{ loggedIn, jsforce, user, filtered }, dispatch] = useContext(Context);
+  const [{ loggedIn, jsforce, experiences, user }, dispatch] = useContext(
+    Context
+  );
+
   const [expanded, setExpanded] = useState(false);
-  // const [filtered, setFiltered] = useState(experiences);
   const [rendered, setRendered] = useState(false);
-  //  WORK ON THIS
 
   useEffect(() => {
     setRendered(true);
@@ -18,21 +29,73 @@ const Home = () => {
 
   useEffect(() => {
     if (rendered && loggedIn) {
-      jsforce.browser.connection.query(
-        "SELECT Id, Strategic_Partner__r.account__r.Name, Name, Experience_Type__c, Info__c, Keep_In_Mind__c, Partnership_Details_Requirements__c, Image_URL__c " +
-          "FROM Experience__c " +
-          "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
-        (err, result) => {
-          // eslint-disable-next-line no-console
-          if (err) console.error(err);
-          const { records } = result;
-
+      Promise.all([
+        performQuery(
+          jsforce,
+          [
+            "SELECT",
+            [
+              "Id",
+              "Strategic_Partner__r.account__r.Name",
+              "Name",
+              "Experience_Type__c",
+              "Info__c",
+              "Keep_In_Mind__c",
+              "Experience_Type2__r.Id",
+              "Experience_Type2__r.Name",
+              "Experience_Type2__r.Image_Path__c",
+              "Experience_Type2__r.Short_Name__c",
+              "Experience_Type2__r.Alt_Text__c",
+              "Partnership_Details_Requirements__c",
+              // eslint-disable-next-line prettier/prettier
+            "Image_URL__c",
+            ].join(", "),
+            "FROM Experience__c",
+            // eslint-disable-next-line prettier/prettier
+        "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+          ].join(" ")
+        ),
+        performQuery(
+          jsforce,
+          [
+            "SELECT",
+            [
+              "Id",
+              "Status__c",
+              "Contact_to_Invite__r.Name",
+              "Event_Date__c",
+              // eslint-disable-next-line prettier/prettier
+              "Name",
+            ].join(", "),
+            "FROM Strategic_Partner_Request__c",
+            "WHERE",
+            [`Requester__c = '${user.user_id}'`].join(" AND ")
+          ].join(" ")
+        )
+      ])
+        .then(([newExperiences, partnerRequests]) => {
+          const { records } = newExperiences;
+          console.log(partnerRequests);
           dispatch({
             type: "EXP/init",
-            payload: records
+            payload: { records, total: newExperiences.totalSize }
           });
-        }
-      );
+          dispatch({
+            type: "REQ/init",
+            payload: {
+              records: partnerRequests.records,
+              total: partnerRequests.totalSize
+            }
+          });
+        })
+        .catch(err => {
+          // eslint-disable-next-line no-console
+          console.error(err);
+          dispatch({
+            type: "ERROR",
+            payload: err
+          });
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rendered, loggedIn]);
@@ -40,44 +103,15 @@ const Home = () => {
   if (!rendered) return null;
   return (
     <React.Fragment>
-      {loggedIn ? (
-        <div style={{ paddingLeft: "68px" }}>
-          <h2>Welcome {user.display_name}</h2>
-
-          <SubmitForm />
+      <SideNav onToggle={() => setExpanded(!expanded)} />
+      <main className={expanded ? "expanded" : ""}>
+        <Header />
+        <div className="grid-x grid-margin-x grid-margin-y">
+          {experiences.filtered.map((exp, i) => (
+            <Card key={exp.Id} sort={i} experience={exp} />
+          ))}
         </div>
-      ) : (
-        <h1 style={{ paddingLeft: "68px" }}>
-          You need to Log in to view this site
-        </h1>
-      )}
-
-      <SideNav
-        onToggle={newExpanded => {
-          setExpanded(newExpanded);
-        }}
-      />
-      {filtered.length && (
-        <main className={expanded ? "expanded" : ""}>
-          <h1 className="exp-title">
-            Customer Experience <span>Catalog</span>
-          </h1>
-
-          <div className="grid-x grid-margin-x grid-margin-y">
-            {filtered.map((exp, i) => (
-              <CSSTransition
-                key={exp.Id}
-                in={exp.display}
-                timeout={300}
-                classNames="cardanim"
-                unmountOnExit
-              >
-                <Card sort={i} experience={exp} />
-              </CSSTransition>
-            ))}
-          </div>
-        </main>
-      )}
+      </main>
     </React.Fragment>
   );
 };
