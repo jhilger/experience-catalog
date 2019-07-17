@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
-import Modal from "../Modal";
-import Context from "../Context";
-import RequestList from "./List";
+import Modal from "../../Modal";
+import Context from "../../Context";
+import RequestList from "./List/Bullet";
 
 const ExperienceModalButton = ({ history }) => {
   const [showReqs, setShowReqs] = useState(false);

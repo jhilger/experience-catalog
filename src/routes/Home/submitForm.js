@@ -44,7 +44,7 @@ const SubmitForm = () => (
       />
       <Debug styles={{ color: "#aaa" }} />
     </AdditionalFields>
-    <Button type="submit">Submit</Button>
+    <button type="submit">Submit</button>
   </Form>
 );
 

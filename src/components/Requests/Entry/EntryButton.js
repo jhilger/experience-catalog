@@ -6,7 +6,6 @@ import NewEntry from "./NewEntry";
 
 const EntryModalButton = ({ history, experience }) => {
   const [showReqs, setShowReqs] = useState(false);
-  const [{ requests }] = useContext(Context);
   return (
     <>
       <button

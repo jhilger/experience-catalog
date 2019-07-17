@@ -12,6 +12,18 @@ const filterItems = (query, experiences) =>
 
 function reducer(state = defaultState, action) {
   switch (action.type) {
+    case "CONT/data": {
+      console.log(action);
+      const newState = {
+        ...state,
+        contacts: {
+          ...state.contacts,
+          data: { ...state.contacts.data, [action.payload.Id]: action.payload }
+        }
+      };
+      console.log(newState);
+      return newState;
+    }
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
     case "EXP/init": {
@@ -21,7 +33,9 @@ function reducer(state = defaultState, action) {
         experiences: {
           ...state.experiences,
           records: experiences,
-          // data: ,
+          data: {
+            [action.payload.Id]: action.payload
+          },
           filtered: filterItems(state.experiences.filter, experiences),
           size: experiences.length,
           total: action.payload.total

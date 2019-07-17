@@ -11,7 +11,10 @@ const FormWrapper = ({
   children,
   ...props
 }) => {
-  const [state, dispatch] = useReducer(reducer, { initialValues });
+  const [state, dispatch] = useReducer(reducer, {
+    initialValues,
+    values: initialValues
+  });
   return (
     <Context.Provider
       value={[state, dispatch, { form: { handleSubmit, initialValues } }]}
