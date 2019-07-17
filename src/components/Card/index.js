@@ -10,7 +10,6 @@ const Card = ({ sort, experience }) => {
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
-
   return (
     <CSSTransition
       key={experience.Id}
@@ -61,7 +60,6 @@ const Card = ({ sort, experience }) => {
             <div>
               <p>{experience.Info__c}</p>
             </div>
-            <EntryButton experience={experience} />
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">

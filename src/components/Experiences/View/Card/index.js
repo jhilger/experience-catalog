@@ -60,26 +60,30 @@ const Card = ({ sort, experience, expanded = false }) => {
               <h2>{experience.Strategic_Partner__r.Account__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
-            <button
-              type="button"
-              onClick={() => setModalOpen(true)}
-              className="info"
-            >
-              Create Request
-            </button>
-            <Modal
-              active={modalOpen}
-              activate={bool => {
-                setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
-              }}
-            >
-              <SingleRequest
-                initialValues={{
-                  Experience__c: experience.Id,
-                  Strategic_Partner_Name__c: experience.Strategic_Partner__c
-                }}
-              />
-            </Modal>
+            {cardSize && (
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(true)}
+                  className="info"
+                >
+                  Create Request
+                </button>
+                <Modal
+                  active={modalOpen}
+                  activate={bool => {
+                    setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
+                  }}
+                >
+                  <SingleRequest
+                    initialValues={{
+                      Experience__c: experience.Id,
+                      Strategic_Partner_Name__c: experience.Strategic_Partner__c
+                    }}
+                  />
+                </Modal>
+              </div>
+            )}
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">

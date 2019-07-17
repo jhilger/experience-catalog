@@ -1,5 +1,8 @@
 const defaultState = {
   user: {},
+  contacts: {
+    data: {}
+  },
   toasts: [],
   experiences: {
     records: [],

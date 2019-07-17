@@ -6,8 +6,8 @@ import RequestModalButton from "./Requests/View/ModalButton";
 import "../scss/header.scss";
 
 const Header = () => {
-  const [{ loggedIn, user }] = useContext(Context);
-
+  const [{ loggedIn, user, contacts, contactId }] = useContext(Context);
+  const contact = contacts.data[contactId];
   return (
     <header>
       <div className="exp-title">
@@ -20,6 +20,7 @@ const Header = () => {
         {loggedIn ? (
           <React.Fragment>
             <h6>Welcome {user.display_name}</h6>
+            {contact && <h6>Inviting {contact.Name}</h6>}
             <RequestModalButton />
             <ExperienceModalButton />
           </React.Fragment>

@@ -1,6 +1,6 @@
 import { performQuery } from "../../utils/jsforce";
 
-const loadedQuery = (jsforce, { user }, dispatch) =>
+const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
   Promise.all([
     performQuery(
       jsforce,
@@ -44,10 +44,26 @@ const loadedQuery = (jsforce, { user }, dispatch) =>
         "WHERE",
         [`Requester__c = '${user.user_id}'`].join(" AND ")
       ].join(" ")
-    )
+    ),
+    contactId &&
+      performQuery(
+        jsforce,
+        [
+          "SELECT",
+          ["Id", "Name"].join(", "),
+          "FROM Contact",
+          // eslint-disable-next-line prettier/prettier
+        `WHERE ID = '${contactId}'`,
+        ].join(" ")
+      )
   ])
-    .then(([newExperiences, partnerRequests]) => {
+    .then(([newExperiences, partnerRequests, contact]) => {
       const { records } = newExperiences;
+      if (contact)
+        dispatch({
+          type: "CONT/data",
+          payload: contact.records[0]
+        });
       dispatch({
         type: "EXP/init",
         payload: { records, total: newExperiences.totalSize }
