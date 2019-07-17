@@ -6,7 +6,7 @@ const RequestList = () => {
   return (
     <div>
       <h2>Requests</h2>
-      {requests.map(({ Name, Id }, i) => (
+      {requests.records.map(({ Name, Id }, i) => (
         <div key={Id}>{Name}</div>
       ))}
     </div>

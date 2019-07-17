@@ -14,31 +14,57 @@ function reducer(state = defaultState, action) {
   switch (action.type) {
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
-    case "EXP/init":
+    case "EXP/init": {
+      const experiences = action.payload.records;
       return {
         ...state,
-        experiences: action.payload,
-        filtered: filterItems(state.filter, action.payload)
+        experiences: {
+          ...state.experiences,
+          records: experiences,
+          // data: ,
+          filtered: filterItems(state.experiences.filter, experiences),
+          size: experiences.length,
+          total: action.payload.total
+        }
       };
-    case "REQ/init":
+    }
+    case "REQ/init": {
+      const requests = action.payload.records;
       return {
         ...state,
-        requests: action.payload
+        requests: {
+          records: requests,
+          size: requests.length,
+          total: action.payload.total
+        }
       };
-    case "EXP/add":
+    }
+    case "EXP/add": {
+      const experiences = state.experiences.records.concat(
+        action.payload.records
+      );
       return {
         ...state,
-        experiences: state.experiences.concat(action.payload),
-        filtered: filterItems(
-          state.filter,
-          state.experiences.concat(action.payload)
-        )
+        experiences: {
+          ...state.experiences,
+          records: experiences,
+          filtered: filterItems(state.experiences.filter, experiences),
+          size: experiences.length,
+          total: action.payload.total
+        }
       };
+    }
     case "EXP/filtered":
       return {
         ...state,
-        filtered: filterItems(action.payload.selected, state.experiences),
-        filter: action.payload.selected
+        experiences: {
+          ...state.experiences,
+          filtered: filterItems(
+            action.payload.selected,
+            state.experiences.records
+          ),
+          filter: action.payload.selected
+        }
       };
     case "TOAST/error":
       return {

@@ -16,7 +16,9 @@ const performQuery = (jsforce, query) =>
   });
 
 const Home = () => {
-  const [{ loggedIn, jsforce, filtered, user }, dispatch] = useContext(Context);
+  const [{ loggedIn, jsforce, experiences, user }, dispatch] = useContext(
+    Context
+  );
 
   const [expanded, setExpanded] = useState(false);
   const [rendered, setRendered] = useState(false);
@@ -70,16 +72,19 @@ const Home = () => {
           ].join(" ")
         )
       ])
-        .then(([experience, partnerRequests]) => {
-          const { records } = experience;
-
+        .then(([newExperiences, partnerRequests]) => {
+          const { records } = newExperiences;
+          console.log(newExperiences);
           dispatch({
             type: "EXP/init",
-            payload: records
+            payload: { records, total: newExperiences.totalSize }
           });
           dispatch({
             type: "REQ/init",
-            payload: partnerRequests.records
+            payload: {
+              records: partnerRequests.records,
+              total: partnerRequests.totalSize
+            }
           });
         })
         .catch(err => {
@@ -101,7 +106,7 @@ const Home = () => {
       <main className={expanded ? "expanded" : ""}>
         <Header />
         <div className="grid-x grid-margin-x grid-margin-y">
-          {filtered.map((exp, i) => (
+          {experiences.filtered.map((exp, i) => (
             <Card key={exp.Id} sort={i} experience={exp} />
           ))}
         </div>
