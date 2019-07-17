@@ -4,7 +4,7 @@ import Form from "../../Form";
 import TypeAhead from "../../TypeAhead";
 
 const SingleRequestCreate = ({ initialValues = {} }) => {
-  const [{ user, contactId, contacts }] = useContext(Context);
+  const [{ user, contactId, contacts }, dispatch] = useContext(Context);
   const contact = contacts.data[contactId];
   return (
     <Form
@@ -15,15 +15,22 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
         Requester__c: user.user_id
       }}
     >
-      {!contactId && (
-        <TypeAhead
-          name="Contact_to_Invite__c"
-          label="Contact"
-          sObject="Contact"
-          value={contact}
-        />
-      )}
-
+      <TypeAhead
+        name="Contact_to_Invite__c"
+        label="Contact"
+        sObject="Contact"
+        onChange={record => {
+          dispatch({
+            type: "CONT/data",
+            payload: record
+          });
+          dispatch({
+            type: "CONT/Id",
+            payload: record
+          });
+        }}
+        value={contact}
+      />
       <button type="submit">Submit</button>
     </Form>
   );

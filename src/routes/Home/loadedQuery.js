@@ -55,7 +55,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           // eslint-disable-next-line prettier/prettier
         `WHERE ID = '${contactId}'`,
         ].join(" ")
-      )
+      ).catch(e => {})
   ])
     .then(([newExperiences, partnerRequests, contact]) => {
       const { records } = newExperiences;
@@ -63,6 +63,10 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
         dispatch({
           type: "CONT/data",
           payload: contact.records[0]
+        });
+      else
+        dispatch({
+          type: "CONT/remove"
         });
       dispatch({
         type: "EXP/init",
