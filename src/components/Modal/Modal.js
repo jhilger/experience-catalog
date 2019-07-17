@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
+import { withRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
 // import delayUnmounting from "./delayUnmounting";
 import Context from "../Context";
 
-const Modal = ({ children, className, activate, active }) => {
+const Modal = ({ children, className, activate, active, history }) => {
   const [context] = useContext(Context);
   const [el, setEl] = useState();
 
   useEffect(() => {
     const newEl = document.createElement("div");
+    const newActive = active;
     const closeModal = ev => {
       if (ev.target === newEl) {
         activate(false);
@@ -16,13 +18,13 @@ const Modal = ({ children, className, activate, active }) => {
     };
     newEl.className = className;
     newEl.addEventListener("click", activate);
-    window.addEventListener("click", closeModal);
+    if (newActive) window.addEventListener("click", closeModal);
     context.modalRoot.appendChild(newEl);
 
     setEl(newEl);
     return () => {
       newEl.removeEventListener("click", activate);
-      window.removeEventListener("click", closeModal);
+      if (newActive) window.removeEventListener("click", closeModal);
       context.modalRoot.removeChild(newEl);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,4 +52,4 @@ const Modal = ({ children, className, activate, active }) => {
     : null;
 };
 
-export default Modal;
+export default withRouter(Modal);

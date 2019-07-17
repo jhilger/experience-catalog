@@ -61,20 +61,21 @@ const Home = () => {
             "SELECT",
             [
               "Id",
+              "Status__c",
+              "Contact_to_Invite__r.Name",
+              "Event_Date__c",
               // eslint-disable-next-line prettier/prettier
               "Name",
             ].join(", "),
             "FROM Strategic_Partner_Request__c",
             "WHERE",
-            ["Status__c = 'Draft'", `Requester__c = '${user.user_id}'`].join(
-              " AND "
-            )
+            [`Requester__c = '${user.user_id}'`].join(" AND ")
           ].join(" ")
         )
       ])
         .then(([newExperiences, partnerRequests]) => {
           const { records } = newExperiences;
-          console.log(newExperiences);
+          console.log(partnerRequests);
           dispatch({
             type: "EXP/init",
             payload: { records, total: newExperiences.totalSize }
