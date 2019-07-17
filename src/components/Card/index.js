@@ -3,6 +3,7 @@ import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../Icons";
 import "./card.scss";
+import EntryButton from "../Requests/Entry/EntryButton";
 
 const Card = ({ sort, experience }) => {
   const [cardSize, setCardSize] = useState(false);
@@ -57,6 +58,10 @@ const Card = ({ sort, experience }) => {
               <h2>{experience.Strategic_Partner__r.Account__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
+            <div>
+              <p>{experience.Info__c}</p>
+            </div>
+            <EntryButton experience={experience} />
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">
