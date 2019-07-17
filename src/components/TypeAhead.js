@@ -4,7 +4,13 @@ import DropDown from "./DropDown";
 import FormContext from "./Form/Context";
 import AdditionalFieldsContext from "./AdditionalFields/Context";
 
-const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
+const TypeAhead = ({
+  value: Id,
+  onChange = () => {},
+  name,
+  label,
+  sObject
+}) => {
   const ref = useRef();
   const menuRef = useRef();
   const [records, setRecords] = useState();
@@ -107,6 +113,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor={name}>{label}</label>
         <Search
+          sObject={sObject}
           ref={ref}
           onChange={(searchValue, more, newRecords) => {
             if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
