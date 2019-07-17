@@ -16,7 +16,6 @@ const SideNavigation = ({ onToggle }) => {
   return (
     <SideNav
       onSelect={selected => {
-        console.log("you selected", selected);
         dispatch({
           type: "EXP/filtered",
           payload: {
