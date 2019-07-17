@@ -11,15 +11,19 @@ const DropDown = (
   ref
 ) => {
   const [currentHover, setCurrentHover] = useState(hovered);
+
   useEffect(() => {
     setCurrentHover(hovered);
   }, [hovered]);
+
   return (
     <div
       style={{ position: "absolute", backgroundColor: "#ffffff" }}
       ref={ref}
       onMouseOver={() => (ref.current.mouseOver = true)}
+      onFocus={() => (ref.current.mouseOver = true)}
       onMouseOut={() => (ref.current.mouseOver = false)}
+      onBlur={() => (ref.current.mouseOver = false)}
     >
       {list.map(item => (
         <a
@@ -30,6 +34,10 @@ const DropDown = (
             backgroundColor: currentHover === item.Id ? "#ccc" : ""
           }}
           onMouseOver={() => {
+            setCurrentHover(item.Id);
+            onHover(item.Id);
+          }}
+          onFocus={() => {
             setCurrentHover(item.Id);
             onHover(item.Id);
           }}

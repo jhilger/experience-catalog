@@ -30,7 +30,7 @@ const fieldReducer = (state = {}, action, originalValue) => {
         ...state,
         focus: false,
         touched: true,
-        dirty: state.value !== (originalValue || ''),
+        dirty: state.value !== (originalValue || ""),
         messages: []
       };
     case "FIELD/focus":

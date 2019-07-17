@@ -20,10 +20,11 @@ const Field = ({
         type: "FIELD/remove",
         payload: { name }
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
   return (
     <div className={className} style={style}>
+      {/* eslint-disable-next-line jsx-a11y/label-has-for */}
       <label style={styles.label} className={classes.label} htmlFor={name}>
         {label}
       </label>
