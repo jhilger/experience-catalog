@@ -14,7 +14,7 @@ const Card = ({ sort, experience }) => {
     <CSSTransition
       key={experience.Id}
       in={experience.display}
-      timeout={300}
+      timeout={500}
       classNames="cardanim"
       unmountOnExit
     >
