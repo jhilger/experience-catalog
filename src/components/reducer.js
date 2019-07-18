@@ -1,14 +1,16 @@
 import defaultState from "./defaultState";
 
-const filterItems = (query, experiences) =>
-  experiences.map(exp => {
+const filterItems = (query, experiences) => {
+  console.log(query, experiences);
+  return experiences.map(exp => {
     if (query === "home") {
       exp.display = true;
     } else {
-      exp.display = exp.Experience_Type__c.toLowerCase() === query;
+      exp.display = exp.Experience_Type2__r.Short_Name__c === query;
     }
     return exp;
   });
+};
 
 function reducer(state = defaultState, action) {
   switch (action.type) {

@@ -39,8 +39,11 @@ const SideNavigation = ({ onToggle }) => {
           <NavText>Home</NavText>
         </NavItem>
         {experienceTypes.map(experienceType => (
-          <NavItem key={experienceType.Id}>
-            <NavIcon eventKey={experienceType.Short_Name__c}>
+          <NavItem
+            key={experienceType.Id}
+            eventKey={experienceType.Short_Name__c}
+          >
+            <NavIcon>
               <img
                 className="exp-nav-icon"
                 src={getIcon(experienceType)}
