@@ -7,8 +7,8 @@ import Context from "../Context";
 const SideNavigation = ({ onToggle }) => {
   const [{ experiences }, dispatch] = useContext(Context);
   const sideNavFilters = experiences.reduce((types, experience) => {
-    if (!types.includes(experience.Experience_Type__c.toLowerCase())) {
-      types.push(experience.Experience_Type__c.toLowerCase());
+    if (!types.includes(experience.Experience_Type2__r.Short_Name__c.toLowerCase())) {
+      types.push(experience.Experience_Type2__r.Short_Name__c.toLowerCase());
     }
     return types;
   }, []);

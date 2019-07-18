@@ -13,7 +13,7 @@ const ExperienceModalButton = () => {
         className="info"
         onClick={() => setShowExps(!showExps)}
       >
-        <span>{experiences.length}</span> Experiences
+        <span>{experiences.length}</span>Approved
       </button>
       <Modal
         activate={bool =>

@@ -34,7 +34,7 @@ const Home = () => {
             "SELECT",
             [
               "Id",
-              "Strategic_Partner__r.account__r.Name",
+              "Strategic_Partner__r.Name",
               "Name",
               "Experience_Type__c",
               "Info__c",
@@ -49,8 +49,9 @@ const Home = () => {
             "Image_URL__c",
             ].join(", "),
             "FROM Experience__c",
+            //TODO: (ISAAC) Using ! to filter out disabled experiences, probably needs a field to control this
             // eslint-disable-next-line prettier/prettier
-        "WHERE Strategic_Partner__r.Status__c = 'Current Partner'",
+        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (NOT Name LIKE '!%')",
           ].join(" ")
         ),
         performQuery(

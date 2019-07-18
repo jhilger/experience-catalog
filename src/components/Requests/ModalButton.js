@@ -13,7 +13,7 @@ const ExperienceModalButton = () => {
         className="info"
         onClick={() => setShowReqs(!showReqs)}
       >
-        <span>{requests.length}</span> Requests
+        <span>{requests.length}</span>Pending
       </button>
       <Modal
         activate={bool =>
