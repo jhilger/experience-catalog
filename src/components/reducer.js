@@ -1,8 +1,7 @@
 import defaultState from "./defaultState";
 
-const filterItems = (query, experiences) => {
-  console.log(query, experiences);
-  return experiences.map(exp => {
+const filterItems = (query, experiences) =>
+  experiences.map(exp => {
     if (query === "home") {
       exp.display = true;
     } else {
@@ -10,7 +9,6 @@ const filterItems = (query, experiences) => {
     }
     return exp;
   });
-};
 
 function reducer(state = defaultState, action) {
   switch (action.type) {
