@@ -49,8 +49,8 @@ const Card = ({ sort, experience, expanded = false }) => {
           }}
         >
           <img
-            src={getIcon(experience.Experience_Type__c)}
-            data-type={experience.Experience_Type__c}
+            src={getIcon(experience.Experience_Type2__r)}
+            data-type={experience.Experience_Type2__r.Short_Name__c}
             alt="Experience type icon"
           />
         </div>
