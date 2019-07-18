@@ -5,7 +5,7 @@ const filterItems = (query, experiences) =>
     if (query === "home") {
       exp.display = true;
     } else {
-      exp.display = exp.Experience_Type__c.toLowerCase() === query;
+      exp.display = exp.Experience_Type2__r.Short_Name__c === query;
     }
     return exp;
   });
@@ -13,7 +13,6 @@ const filterItems = (query, experiences) =>
 function reducer(state = defaultState, action) {
   switch (action.type) {
     case "CONT/data": {
-      console.log(action);
       const newState = {
         ...state,
         contacts: {
@@ -21,9 +20,20 @@ function reducer(state = defaultState, action) {
           data: { ...state.contacts.data, [action.payload.Id]: action.payload }
         }
       };
-      console.log(newState);
       return newState;
     }
+    case "CONT/Id": {
+      const newState = {
+        ...state,
+        contactId: action.payload.Id
+      };
+      return newState;
+    }
+    case "CONT/remove":
+      return {
+        ...state,
+        contactId: null
+      };
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
     case "EXP/init": {

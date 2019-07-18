@@ -6,9 +6,14 @@ import Context from "../Context";
 
 const SideNavigation = ({ onToggle }) => {
   const [{ experiences }, dispatch] = useContext(Context);
-  const sideNavFilters = experiences.records.reduce((types, experience) => {
-    if (!types.includes(experience.Experience_Type__c.toLowerCase())) {
-      types.push(experience.Experience_Type__c.toLowerCase());
+  const experienceTypes = experiences.records.reduce((types, experience) => {
+    if (
+      !types.find(
+        experienceType =>
+          experience.Experience_Type2__r.Id === experienceType.Id
+      )
+    ) {
+      types.push(experience.Experience_Type2__r);
     }
     return types;
   }, []);
@@ -33,96 +38,21 @@ const SideNavigation = ({ onToggle }) => {
           </NavIcon>
           <NavText>Home</NavText>
         </NavItem>
-
-        {sideNavFilters.includes("wine") ? (
-          <NavItem eventKey="wine">
+        {experienceTypes.map(experienceType => (
+          <NavItem
+            key={experienceType.Id}
+            eventKey={experienceType.Short_Name__c}
+          >
             <NavIcon>
               <img
                 className="exp-nav-icon"
-                src={getIcon("wine")}
-                alt="Wine Expeiences"
+                src={getIcon(experienceType)}
+                alt={experienceType.Alt_Text__c}
               />
             </NavIcon>
-            <NavText>Wine</NavText>
+            <NavText>{experienceType.Name}</NavText>
           </NavItem>
-        ) : (
-          ""
-        )}
-
-        {sideNavFilters.includes("driving") ? (
-          <NavItem eventKey="driving">
-            <NavIcon>
-              <img
-                className="exp-nav-icon"
-                src={getIcon("cars")}
-                alt="Driving Expeiences"
-              />
-            </NavIcon>
-            <NavText>Driving</NavText>
-          </NavItem>
-        ) : (
-          ""
-        )}
-
-        {sideNavFilters.includes("arts") ? (
-          <NavItem eventKey="arts">
-            <NavIcon>
-              <img
-                className="exp-nav-icon"
-                src={getIcon("art")}
-                alt="Art Expeiences"
-              />
-            </NavIcon>
-            <NavText>Art</NavText>
-          </NavItem>
-        ) : (
-          ""
-        )}
-
-        {sideNavFilters.includes("music") ? (
-          <NavItem eventKey="music">
-            <NavIcon>
-              <img
-                className="exp-nav-icon"
-                src={getIcon("music")}
-                alt="Music Expeiences"
-              />
-            </NavIcon>
-            <NavText>Music</NavText>
-          </NavItem>
-        ) : (
-          ""
-        )}
-
-        {sideNavFilters.includes("outdoor") ? (
-          <NavItem eventKey="outdoor">
-            <NavIcon>
-              <img
-                className="exp-nav-icon"
-                src={getIcon("outdoor")}
-                alt="Outdoor Expeiences"
-              />
-            </NavIcon>
-            <NavText>Outdoor</NavText>
-          </NavItem>
-        ) : (
-          ""
-        )}
-
-        {sideNavFilters.includes("sports") ? (
-          <NavItem eventKey="sports">
-            <NavIcon>
-              <img
-                className="exp-nav-icon"
-                src={getIcon("trophy")}
-                alt="Sports Expeiences"
-              />
-            </NavIcon>
-            <NavText>Sports</NavText>
-          </NavItem>
-        ) : (
-          ""
-        )}
+        ))}
       </SideNav.Nav>
     </SideNav>
   );
