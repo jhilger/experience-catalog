@@ -11,9 +11,9 @@ const RequestList = () => {
         {tempReqData.map(({ id, experience, url, status, contact, date }) => (
         (status === 'pending') ? 
           <li>
-            <a href={url} key={id}>
+            <a targer="_blank" href={url} key={id}>
               <h5>{contact}</h5>              
-              {experience} | {date}
+              {experience}<span class="divider">|</span>{date}
             </a>
           </li> 
           : null
