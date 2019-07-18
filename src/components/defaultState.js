@@ -6,14 +6,12 @@ const defaultState = {
   filtered: [],
   filter: "home",
   tempReqData: [
-    { id: "100", name: "Request 1", url: "http://thisgoesnowhere.com" },
-    { id: "200", name: "Request 2", url: "http://thisgoesnowhere.com" },
-    { id: "300", name: "Request 3", url: "http://thisgoesnowhere.com" }
-  ],
-  tempExpData: [
-    { id: "400", name: "Experience 1", url: "http://thisgoesnowhere.com" },
-    { id: "500", name: "Experience 2", url: "http://thisgoesnowhere.com" },
-    { id: "600", name: "Experinece 3", url: "http://thisgoesnowhere.com" }
+    { id: "100", experience: "Library Tasting", url: "http://thisgoestosalesforce.com", status : "pending" , contact : "George Michael" , date : "7/31/2019" },
+    { id: "100", experience: "VIP Experience", url: "http://thisgoestosalesforce.com", status: "pending", contact: "Michael", date: "8/20/2019" },
+    { id: "100", experience: "Cellarium Experience", url: "http://thisgoestosalesforce.com", status: "approved", contact: "Lucille", date: "9/13/2019" },
+    { id: "100", experience: "Circuit of the Americas", url: "http://thisgoestosalesforce.com", status: "pending", contact: "Tobias", date: "10/9/2019" },
+    { id: "100", experience: "Road America", url: "http://thisgoestosalesforce.com", status: "approved", contact: "GOB", date: "11/1/2019" },
+    { id: "100", experience: "Summit Point", url: "http://thisgoestosalesforce.com", status: "pending", contact: "Lindsay", date: "12/25/2019" },
   ]
 };
 
