@@ -93,7 +93,7 @@ button:hover {
 
 a.info,
 button.info {
-  padding: 0.75em 1.75em;
+  padding: 0.75em 1.5em;
 }
 
 a.info span,
@@ -118,7 +118,7 @@ button.info:hover span {
 
 a.fancy,
 button.fancy {
-  padding: 0.75em 1.75em;
+  padding: 0.75em 1.5em;
 }
 
 a.fancy:before,
@@ -131,10 +131,12 @@ button.fancy:before {
   left: 0;
   z-index: -1;
   margin: 0;
-  background: linear-gradient(to right,
-      rgba($gold-dark, 1) 0%,
-      rgba($gold-light, 1) 47%,
-      rgba($gold-medium, 1) 100%);
+  background: linear-gradient(
+    to right,
+    rgba($gold-dark, 1) 0%,
+    rgba($gold-light, 1) 47%,
+    rgba($gold-medium, 1) 100%
+  );
   transition: 0.5s;
 }
 
@@ -160,6 +162,10 @@ button.fancy:hover {
   transform: rotate(0deg);
   transition: 0.5s;
   background: transparent;
+}
+
+.exp-plus:hover {
+  transform: rotate(180deg);
 }
 
 .exp-plus:before {
