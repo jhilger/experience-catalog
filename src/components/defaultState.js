@@ -1,8 +1,22 @@
 const defaultState = {
   user: {},
+  contacts: {
+    data: {}
+  },
   toasts: [],
-  experiences: [],
-  requests: [],
+  experiences: {
+    records: [],
+    total: null,
+    size: null,
+    filtered: [],
+    filter: "home"
+  },
+  requests: {
+    records: [],
+    total: null,
+    size: null
+  },
+  contactId: null,
   filtered: [],
   filter: "home",
   tempReqData: [

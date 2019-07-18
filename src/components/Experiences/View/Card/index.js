@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
-import { getIcon } from "../Icons";
+import { getIcon } from "../../../Icons";
+import Modal from "../../../Modal";
+import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
-import EntryButton from "../Requests/Entry/EntryButton";
 
-const Card = ({ sort, experience }) => {
-  const [cardSize, setCardSize] = useState(false);
+const Card = ({ sort, experience, expanded = false }) => {
+  const [cardSize, setCardSize] = useState(expanded);
+  const [modalOpen, setModalOpen] = useState(false);
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
+
   return (
     <CSSTransition
       key={experience.Id}
@@ -46,8 +49,8 @@ const Card = ({ sort, experience }) => {
           }}
         >
           <img
-            src={getIcon(experience.Experience_Type__c)}
-            data-type={experience.Experience_Type__c}
+            src={getIcon(experience.Experience_Type2__r)}
+            data-type={experience.Experience_Type2__r.Short_Name__c}
             alt="Experience type icon"
           />
         </div>
@@ -57,9 +60,30 @@ const Card = ({ sort, experience }) => {
               <h2>{experience.Strategic_Partner__r.Account__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
-            <div>
-              <p>{experience.Info__c}</p>
-            </div>
+            {cardSize && (
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(true)}
+                  className="info"
+                >
+                  Create Request
+                </button>
+                <Modal
+                  active={modalOpen}
+                  activate={bool => {
+                    setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
+                  }}
+                >
+                  <SingleRequest
+                    initialValues={{
+                      Experience__c: experience.Id,
+                      Strategic_Partner_Name__c: experience.Strategic_Partner__c
+                    }}
+                  />
+                </Modal>
+              </div>
+            )}
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">
@@ -89,7 +113,8 @@ const Card = ({ sort, experience }) => {
 
 Card.propTypes = {
   sort: PropTypes.number.isRequired,
-  experience: PropTypes.object.isRequired
+  experience: PropTypes.object.isRequired,
+  expanded: PropTypes.bool
 };
 
 export default Card;
