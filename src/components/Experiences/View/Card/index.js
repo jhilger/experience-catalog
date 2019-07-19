@@ -80,6 +80,10 @@ const Card = ({ sort, experience, expanded = false }) => {
                       Experience__c: experience.Id,
                       Strategic_Partner_Name__c: experience.Strategic_Partner__c
                     }}
+                    onSuccess={() => {
+                      setModalOpen(false);
+                      setCardSize(false);
+                    }}
                   />
                 </Modal>
               </div>
