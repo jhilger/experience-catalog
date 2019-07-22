@@ -6,6 +6,7 @@ const RequestList = () => {
   return (
     <React.Fragment>
       <h2>Pending Requests</h2>
+      <div className="exp-req-list">
       <ul>
         {tempReqData.map(({ id, experience, url, status, contact, date }) => (
           (status === 'pending') ?
@@ -18,6 +19,7 @@ const RequestList = () => {
             : null
         ))}
       </ul>
+      </div>
     </React.Fragment>
   );
 };
@@ -26,11 +28,10 @@ export default RequestList;
 
 
 /*
-
+const RequestList = () => {
   const [{ requests }] = useContext(Context);
-
-
-  <div>
+  return (
+    <div>
       <h2>Pending Requests</h2>
       {requests.records.map(
         (
@@ -48,4 +49,6 @@ export default RequestList;
         }
       )}
     </div>
+  );
+};
 */

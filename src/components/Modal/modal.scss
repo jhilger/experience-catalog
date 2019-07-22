@@ -50,16 +50,24 @@
   margin-bottom: 1.5em;
 }
 
-.overlay .content > ul {
-  list-style: outside none none;
-  margin: 1.5em 0;
+.overlay .content .exp-req-list {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  min-height: 20vh;
+  max-height: 70vh;
 }
 
-.overlay .content > ul > li {
+.overlay .exp-req-list > ul {
+  list-style: outside none none;
+  margin: 0;
+}
+
+.overlay .exp-req-list > ul > li {
   margin-bottom: 1em;
 }
 
-.overlay .content > ul > li:last-of-type {
+.overlay .exp-req-list > ul > li:last-of-type {
   margin-bottom: 0;
 }
 
