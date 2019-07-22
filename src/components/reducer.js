@@ -5,11 +5,7 @@ const filterItems = (query, experiences) =>
     if (query === "home") {
       exp.display = true;
     } else {
-<<<<<<< HEAD
-      exp.display = exp.Experience_Type2__r.Short_Name__c.toLowerCase() === query;
-=======
       exp.display = exp.Experience_Type2__r.Short_Name__c === query;
->>>>>>> 88cab87ed3cf1a7b98a8562c2458601d1afb71f9
     }
     return exp;
   });

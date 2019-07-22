@@ -57,13 +57,8 @@ const Card = ({ sort, experience }) => {
               <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
-<<<<<<< HEAD
             <button className="fancy" >Request This Experience</button>
             <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: experience.Info__c }}>
-=======
-            <div>
-              <p>{experience.Info__c}</p>
->>>>>>> 88cab87ed3cf1a7b98a8562c2458601d1afb71f9
             </div>
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
