@@ -17,7 +17,7 @@ const Card = ({ sort, experience, expanded = false }) => {
     <CSSTransition
       key={experience.Id}
       in={experience.display}
-      timeout={300}
+      timeout={500}
       classNames="cardanim"
       unmountOnExit
     >
@@ -36,7 +36,7 @@ const Card = ({ sort, experience, expanded = false }) => {
           onClick={toggleCard}
           className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}
         >
-          <div className="exp-card-plus" />
+          <div className="exp-plus" />
         </button>
         <div
           className="exp-card-hero"

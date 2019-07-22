@@ -17,7 +17,7 @@ const ExperienceModalButton = ({ history }) => {
           setShowReqs(!showReqs);
         }}
       >
-        <span>{requests.total}</span> Requests
+        <span>{requests.total}</span>Pending
       </button>
       <Modal
         activate={bool => {

@@ -19,7 +19,7 @@ const Home = () => {
     setRendered(true);
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (rendered && loggedIn) {
       Promise.all([
         performQuery(
@@ -85,6 +85,13 @@ const Home = () => {
             payload: err
           });
         });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rendered, loggedIn]);*/
+
+  useEffect(() => {
+    if (rendered && loggedIn) {
+      loadedQuery(jsforce, state, dispatch);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rendered, loggedIn]);
