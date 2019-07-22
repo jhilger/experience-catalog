@@ -1,22 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import SideNav from "../../components/SideNav";
-import Card from "../../components/Card";
+import VisualExperienceList from "../../components/Experiences/View/List/Visual";
 import Context from "../../components/Context";
 import Header from "../../components/Header";
+import loadedQuery from "./loadedQuery";
 
 // Experience is in window.experiences
 // SideNavFilters is in window.sideNavFilters
 
-const performQuery = (jsforce, query) =>
-  new Promise((resolve, reject) => {
-    jsforce.browser.connection.query(query, (err, result) => {
-      if (err) return reject(err);
-      return resolve(result);
-    });
-  });
-
 const Home = () => {
-  const [{ loggedIn, jsforce, filtered, user }, dispatch] = useContext(Context);
+  const [state, dispatch] = useContext(Context);
+  const { loggedIn, jsforce } = state;
 
   const [expanded, setExpanded] = useState(false);
   const [rendered, setRendered] = useState(false);
@@ -101,11 +95,7 @@ const Home = () => {
       <SideNav onToggle={() => setExpanded(!expanded)} />
       <main className={expanded ? "expanded" : ""}>
         <Header />
-        <div className="grid-x grid-margin-x grid-margin-y">
-          {filtered.map((exp, i) => (
-            <Card key={exp.Id} sort={i} experience={exp} />
-          ))}
-        </div>
+        <VisualExperienceList />
       </main>
     </React.Fragment>
   );

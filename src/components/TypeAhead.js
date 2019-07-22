@@ -4,11 +4,20 @@ import DropDown from "./DropDown";
 import FormContext from "./Form/Context";
 import AdditionalFieldsContext from "./AdditionalFields/Context";
 
-const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
+const TypeAhead = ({
+  value: Id,
+  onChange = () => {},
+  name,
+  label,
+  sObject
+}) => {
   const ref = useRef();
   const menuRef = useRef();
   const [records, setRecords] = useState();
-  const [record, setRecord] = useState(Id ? { Id } : "");
+  const [record, setRecord] = useState(
+    // eslint-disable-next-line no-nested-ternary
+    Id ? (typeof Id === "string" ? { Id } : Id) : ""
+  );
   const [hovered, setHovered] = useState(null);
 
   // eslint-disable-next-line no-unused-vars
@@ -107,6 +116,7 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
         {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor={name}>{label}</label>
         <Search
+          sObject={sObject}
           ref={ref}
           onChange={(searchValue, more, newRecords) => {
             if (JSON.stringify(newRecords) === JSON.stringify(records)) return;

@@ -14,6 +14,18 @@ import defaultState from "./components/defaultState";
 import * as serviceWorker from "./serviceWorker";
 
 // ReactDOM.render(<App />, document.getElementById('root'));
+// eslint-disable-next-line
+const contactId = location.search
+  .replace("?", "")
+  .split("&")
+  .map(v => v.split("="))
+  .reduce(
+    (p, [key, value]) => ({
+      ...p,
+      [key]: value
+    }),
+    {}
+  ).id;
 
 const getUser = () =>
   JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
@@ -27,7 +39,8 @@ hydrate(
         jsforce,
         user: getUser(),
         loggedIn: !!getUser().display_name,
-        modalRoot
+        modalRoot,
+        contactId
       }}
     />
   </BrowserRouter>,
