@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Context from "./Context";
 import LoginButton from "./LoginButton";
-import ExperienceModalButton from "./Experiences/View/ModalButton";
+//import ExperienceModalButton from "./Experiences/View/ModalButton";
 import RequestModalButton from "./Requests/View/ModalButton";
 import "../scss/header.scss";
 
@@ -21,8 +21,8 @@ const Header = () => {
           <React.Fragment>
             <h6>Welcome {user.display_name}</h6>
             {contact && <h6>Inviting {contact.Name}</h6>}
-            <RequestModalButton />
-            <ExperienceModalButton />
+            <RequestModalButton buttonLabel="Pending" modalLabel="Pending Requests" type="pending" />
+            <RequestModalButton buttonLabel="Approved" modalLabel="Approved Requests" type="approved" />
           </React.Fragment>
         ) : (
           <LoginButton />

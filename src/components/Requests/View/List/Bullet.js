@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import Context from "../../../Context";
 
-const RequestList = () => {  
+const RequestList = ({ label, type }) => {  
   const [{ tempReqData }] = useContext(Context);
   return (
     <React.Fragment>
-      <h2>Pending Requests</h2>
+      <h2>{label}</h2>
       <div className="exp-req-list">
       <ul>
         {tempReqData.map(({ id, experience, url, status, contact, date }) => (
-          (status === 'pending') ?
+          (status === type) ?
             <li key={id}>
               <a targer="_blank" href={url}>
                 <h5>{contact}</h5>

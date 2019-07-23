@@ -160,7 +160,7 @@ button.fancy:hover {
   padding: 0 calc(0.75em - 1px);
   cursor: pointer;
   transform-origin: center center;
-  transform: rotate(0deg);
+  transform: rotate(0deg) scale(1);
   transition: 0.5s;
   background: transparent;
 }
@@ -190,15 +190,15 @@ button.fancy:hover {
 }
 
 .exp-plus.close {
-  transform: rotate(45deg);
+  transform: rotate(45deg) scale(1);
 }
 
 .exp-plus:hover {
-  transform: rotate(90deg);
+  transform: rotate(0) scale(1.05);
 }
 
 .exp-plus.close:hover {
-  transform: rotate(135deg);
+  transform: rotate(45deg) scale(1.05);
 }
 
 h1 {
@@ -273,6 +273,12 @@ main {
 
 main.expanded {
   padding-left: 16rem;
+}
+
+@media only screen and (max-width: 40em) {
+  h1 span {
+    letter-spacing: 0.05em;
+  }
 }
 
 /******************************************************************************/

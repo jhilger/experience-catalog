@@ -4,11 +4,11 @@ import Modal from "../../Modal";
 import Context from "../../Context";
 import RequestList from "./List/Bullet";
 
-const ExperienceModalButton = ({ history }) => {
+const RequestModalButton = ({ history , type, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
   const [{ requests }] = useContext(Context);
   return (
-    <>
+    <React.Fragment>
       <button
         type="button"
         className="info"
@@ -17,7 +17,7 @@ const ExperienceModalButton = ({ history }) => {
           setShowReqs(!showReqs);
         }}
       >
-        <span>{requests.total}</span>Pending
+        <span>{requests.total}</span>{buttonLabel}
       </button>
       <Modal
         activate={bool => {
@@ -27,10 +27,10 @@ const ExperienceModalButton = ({ history }) => {
         }}
         active={showReqs}
       >
-        <RequestList />
+        <RequestList type={type} label={modalLabel}/>
       </Modal>
-    </>
+    </React.Fragment>
   );
 };
 
-export default withRouter(ExperienceModalButton);
+export default withRouter(RequestModalButton);
