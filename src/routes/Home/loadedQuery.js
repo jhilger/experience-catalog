@@ -10,6 +10,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Id",
           "Strategic_Partner__r.account__r.Name",
           "Name",
+          "Strategic_Partner__r.Name",
           "Experience_Type__c",
           "Strategic_Partner__c",
           "Info__c",

@@ -57,33 +57,11 @@ const Card = ({ sort, experience, expanded = false }) => {
         <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-title">
-              <h2>{experience.Strategic_Partner__r.Account__r.Name}</h2>
+              <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
-            {cardSize && (
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setModalOpen(true)}
-                  className="info"
-                >
-                  Create Request
-                </button>
-                <Modal
-                  active={modalOpen}
-                  activate={bool => {
-                    setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
-                  }}
-                >
-                  <SingleRequest
-                    initialValues={{
-                      Experience__c: experience.Id,
-                      Strategic_Partner_Name__c: experience.Strategic_Partner__c
-                    }}
-                  />
-                </Modal>
-              </div>
-            )}
+            <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: experience.Info__c }}>
+            </div>
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">
@@ -118,3 +96,34 @@ Card.propTypes = {
 };
 
 export default Card;
+
+
+
+/*
+
+ {cardSize && (
+  <div>
+    <button
+      type="button"
+      onClick={() => setModalOpen(true)}
+      className="info"
+    >
+      Create Request
+    </button>
+    <Modal
+      active={modalOpen}
+      activate={bool => {
+        setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
+      }}
+    >
+      <SingleRequest
+        initialValues={{
+          Experience__c: experience.Id,
+          Strategic_Partner_Name__c: experience.Strategic_Partner__c
+        }}
+      />
+    </Modal>
+  </div>
+)}
+
+*/

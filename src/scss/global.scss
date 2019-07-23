@@ -106,7 +106,7 @@ button.info span {
   display: inline-block;
   text-align: center;
   line-height: 1.425em;
-  letter-spacing: 1px;
+  letter-spacing: 0;
   margin-right: 0.5em;
   transition: 0.5s;
 }
@@ -160,9 +160,10 @@ button.fancy:hover {
   padding: 0 calc(0.75em - 1px);
   cursor: pointer;
   transform-origin: center center;
-  transform: rotate(0deg) scale(1);
+  transform: rotate(0deg);
   transition: 0.5s;
   background: transparent;
+  overflow: hidden;
 }
 
 .exp-plus:before {
@@ -173,6 +174,7 @@ button.fancy:hover {
   height: 1.5em;
   width: 2px;
   margin: 0;
+  transition: 0.3s;
 }
 
 .exp-plus:after {
@@ -185,20 +187,19 @@ button.fancy:hover {
   top: calc(0.75em - 1px);
   width: 1.5em;
   margin: 0;
-  transform: none;
-  transition: none;
+  transition: 0.3s;
 }
 
 .exp-plus.close {
-  transform: rotate(45deg) scale(1);
+  transform: rotate(45deg);
 }
 
-.exp-plus:hover {
-  transform: rotate(0) scale(1.05);
+.exp-plus:hover:before {
+  background: $gold-medium;
 }
 
-.exp-plus.close:hover {
-  transform: rotate(45deg) scale(1.05);
+.exp-plus:hover:after {
+  background: $gold-medium;
 }
 
 h1 {
