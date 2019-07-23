@@ -22,13 +22,20 @@ const Card = ({ sort, experience, expanded = false }) => {
       unmountOnExit
     >
       <div
-        className={
+        /*className={
           cardSize
             ? `medium-12 medium-order-${Math.floor(
                 sort / 2
               )} large-order-${Math.floor(sort / 3)} cell exp-card open`
             : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
                 1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
+        }*/
+        className={
+          cardSize 
+            ? `medium-12 medium-order-${Math.floor( sort / 2
+            )} large-order-${Math.floor(sort / 3)} cell exp-card open`
+            : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
+            1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
         }
       >
         <button

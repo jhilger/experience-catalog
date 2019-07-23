@@ -154,9 +154,7 @@ button.fancy:hover {
 
 .exp-plus,
 .exp-plus:hover {
-  position: absolute;
-  top: 4em;
-  left: 1.5em;
+  position: relative;
   padding: 0 calc(0.75em - 1px);
   cursor: pointer;
   transform-origin: center center;
