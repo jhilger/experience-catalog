@@ -21,15 +21,7 @@ const Card = ({ sort, experience, expanded = false }) => {
       classNames="cardanim"
       unmountOnExit
     >
-      <div
-        /*className={
-          cardSize
-            ? `medium-12 medium-order-${Math.floor(
-                sort / 2
-              )} large-order-${Math.floor(sort / 3)} cell exp-card open`
-            : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
-                1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
-        }*/
+      <div   
         className={
           cardSize 
             ? `medium-12 medium-order-${Math.floor( sort / 2
@@ -67,6 +59,16 @@ const Card = ({ sort, experience, expanded = false }) => {
               <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="exp-card-request fancy"
+            >
+              Request This Experience
+            </button>
+
+
             <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: experience.Info__c }}>
             </div>
           </div>

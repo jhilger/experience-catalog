@@ -42,6 +42,14 @@
   margin-bottom: 0;
 }
 
+.exp-card .exp-card-request {
+  margin-bottom: 1.75em;
+}
+
+.exp-card.close .exp-card-request {
+  display: none;
+}
+
 .exp-card .exp-card-content {
   max-height: 2000px;
   transition: 0.5s;
