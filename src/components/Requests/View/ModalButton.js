@@ -13,8 +13,6 @@ const RequestModalButton = ({ history , type, buttonLabel, modalLabel }) => {
     return (c.Status__c === type && new Date().getTime() < new Date(c.Event_Date__c).getTime()) ? a + 1 : a;
   };
 
-  console.log('Requests ', requests);
-
   return (
     <React.Fragment>
       <button

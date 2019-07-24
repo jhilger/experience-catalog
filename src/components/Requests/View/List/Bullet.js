@@ -11,7 +11,7 @@ const RequestList = ({ label, type }) => {
           {requests.records.map(({ Status__c : status , Event_Date__c : eventDate, Id, Contact_to_Invite__r : contact, Experience__r : experience}) => {
             return (status === type && new Date().getTime() < new Date(eventDate).getTime()) ?
           <li key={Id}>
-            <a target="_blank" href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}>
+                <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}>
               <h5>{contact.Name}</h5>
               {experience.Name}<span className="divider">|</span>{eventDate}
             </a>
