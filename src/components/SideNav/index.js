@@ -50,7 +50,7 @@ const SideNavigation = ({ onToggle }) => {
                 alt={experienceType.Alt_Text__c}
               />
             </NavIcon>
-            <NavText>{experienceType.Name}</NavText>
+            <NavText>{experienceType.Short_Name__c}</NavText>
           </NavItem>
         ))}
       </SideNav.Nav>

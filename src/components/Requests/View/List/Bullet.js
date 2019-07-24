@@ -1,31 +1,31 @@
 import React, { useContext } from "react";
 import Context from "../../../Context";
 
-const RequestList = ({ label, type }) => {  
-  const [{ tempReqData }] = useContext(Context);
+const RequestList = ({ label, type }) => {
+  const [{ requests }] = useContext(Context);
   return (
-    <React.Fragment>
+    <div>
       <h2>{label}</h2>
       <div className="exp-req-list">
       <ul>
-        {tempReqData.map(({ id, experience, url, status, contact, date }) => (
-          (status === type) ?
-            <li key={id}>
-              <a targer="_blank" href={url}>
-                <h5>{contact}</h5>
-                {experience}<span className="divider">|</span>{date}
-              </a>
-            </li>
-            : null
-        ))}
+          {requests.records.map(({ Status__c : status , Event_Date__c : eventDate, Id, Contact_to_Invite__r : contact, Experience__r : experience}) => {
+            return (status === type && new Date().getTime() < new Date(eventDate).getTime()) ?
+          <li key={Id}>
+            <a target="_blank" href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}>
+              <h5>{contact.Name}</h5>
+              {experience.Name}<span className="divider">|</span>{eventDate}
+            </a>
+          </li>
+          : '';
+        }
+      )}
       </ul>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
 export default RequestList;
-
 
 /*
 const RequestList = () => {

@@ -19,8 +19,8 @@ const Header = () => {
         {loggedIn ? (
           <React.Fragment>
             <h6>Welcome {user.display_name}</h6>   
-            <RequestModalButton buttonLabel="Pending" modalLabel="Pending Requests" type="pending" />
-            <RequestModalButton buttonLabel="Approved" modalLabel="Approved Requests" type="approved" />
+            <RequestModalButton buttonLabel="Submitted" modalLabel="Submitted Requests" type="Submitted" />
+            <RequestModalButton buttonLabel="Approved" modalLabel="Approved Requests" type="Approved" />
           </React.Fragment>
         ) : (
           <LoginButton />
