@@ -14,7 +14,10 @@ const TypeAhead = ({
   const ref = useRef();
   const menuRef = useRef();
   const [records, setRecords] = useState();
-  const [record, setRecord] = useState(Id ? { Id } : "");
+  const [record, setRecord] = useState(
+    // eslint-disable-next-line no-nested-ternary
+    Id ? (typeof Id === "string" ? { Id } : Id) : ""
+  );
   const [hovered, setHovered] = useState(null);
 
   // eslint-disable-next-line no-unused-vars

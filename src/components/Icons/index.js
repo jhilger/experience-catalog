@@ -6,8 +6,9 @@ import outdoor from "./outdoor.svg";
 import trophy from "./trophy.svg";
 import home from "./home2.svg";
 
-const getIcon = (type, defaultFunction = () => "") => {
-  switch (type.toLowerCase()) {
+const getIcon = experienceType => {
+  if (experienceType === "home") return home;
+  switch (experienceType.Short_Name__c.toLowerCase()) {
     case "wine":
       return wine;
     case "driving":
@@ -26,7 +27,7 @@ const getIcon = (type, defaultFunction = () => "") => {
     case "home":
       return home;
     default:
-      return defaultFunction();
+      return experienceType.Image_Path__c;
   }
 };
 
