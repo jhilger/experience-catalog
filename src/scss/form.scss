@@ -25,3 +25,44 @@
   width: 30vw;
   margin-bottom: 1.5rem;
 }
+
+/*  TYPEAHEAD  */
+.exp-typeahead {
+  position: relative;
+}
+
+.exp-typeahead > ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: auto;
+  max-width: 50vw;
+  background: $white;
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-shadow: none;
+  transition: 0.3s;
+}
+
+.exp-typeahead > ul.active {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2), 0 5px 5px rgba(0, 0, 0, 0.22);
+}
+
+.exp-typeahead > ul > li {
+  padding: 0.5em 1.5em;
+  cursor: pointer;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.exp-typeahead > ul > li:hover {
+  background: linear-gradient(
+    to right,
+    rgba($gold-dark, 0.333) 0%,
+    rgba($gold-light, 0.333) 47%,
+    rgba($gold-medium, 0.025) 100%
+  );
+}

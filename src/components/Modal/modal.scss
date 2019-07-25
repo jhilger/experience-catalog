@@ -73,7 +73,7 @@
   margin-bottom: 0;
 }
 
-.overlay .content a {
+.overlay .exp-req-list a {
   position: relative;
   text-transform: none;
   padding: 1.5em;
@@ -84,11 +84,11 @@
   transition: 0.5s;
 }
 
-.overlay .content a:hover {
+.overlay .exp-req-list a:hover {
   transform: translateX(0.5em);
 }
 
-.overlay .content a:after {
+.overlay .exp-req-list a:after {
   content: "";
   position: absolute;
   top: 50%;

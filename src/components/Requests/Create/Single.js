@@ -22,7 +22,7 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
     >
       <label htmlFor="requester">Requester</label><h5 id="requester">{user.display_name}</h5>
       <label htmlFor="experinceName">Experience</label><h5 id="experienceName">{initialValues.ExperienceName}</h5>
-      <label htmlFor="partnerName">Partner</label><h5 id="partnerName">{initialValues.StrategicPartnerName}</h5>
+      <label htmlFor="partnerName">Strategic Partner</label><h5 id="partnerName">{initialValues.StrategicPartnerName}</h5>
       <label htmlFor="requirements">Requirements</label><p id="requirements">{initialValues.Requirements__c}</p>
       <TypeAhead
         name="Contact_to_Invite__c"
@@ -40,8 +40,8 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
         }}
         value=""
       />
-      <label htmlFor="eventDate">Event Date</label><input id="eventDate" name="eventDate" type="date" placeholder="Date of event"/>
-      <label htmlFor="description">Request Details</label><textarea id="description" name="description" placeholder="Request details" ></textarea>
+      <label htmlFor="eventDate">Event Date</label><input id="eventDate" name="eventDate" type="date" placeholder="mm/dd/yyyy" required/>
+      <label htmlFor="description">Request Details</label><textarea id="description" name="description" rows="2" required></textarea>
       <button type="submit" className="fancy">Submit Request</button>
     </Form>
   );
