@@ -12,6 +12,7 @@ const Card = ({ sort, experience, expanded = false }) => {
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
+  const removeTags = (str) => (str.replace(/<\/?[^>]+(>|$)/g, ""));
 
   return (
     <CSSTransition
@@ -34,7 +35,7 @@ const Card = ({ sort, experience, expanded = false }) => {
           type="button"
           onClick={toggleCard}
           className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}
-        >
+        >          
           <div className="exp-plus" />
         </button>
         <div
@@ -68,6 +69,23 @@ const Card = ({ sort, experience, expanded = false }) => {
               Request This Experience
             </button>
 
+            <Modal
+              activate={bool => {
+                setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
+              }}
+              active={modalOpen}
+            >
+              {/* TODO: (Isaac) Might need a short description in the Experience object to pass to the request or the request description is ancilliary info for the request input by the salesperson */}
+              <SingleRequest
+                initialValues={{
+                  Experience__c: experience.Id,
+                  Requirements__c: removeTags(experience.Partnership_Details_Requirements__c),
+                  Strategic_Partner_Name__c: experience.Strategic_Partner__c,
+                  ExperienceName : experience.Name,
+                  StrategicPartnerName: experience.Strategic_Partner__r.Name
+                }}
+              />
+            </Modal>
 
             <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: experience.Info__c }}>
             </div>

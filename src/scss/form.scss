@@ -1,0 +1,27 @@
+@import "variables";
+
+.exp-form {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  min-height: 20vh;
+  max-height: 70vh;
+  min-width: 50vw;
+  max-width: 70vw;
+  padding: 0.25em;
+}
+
+.exp-form p {
+  font-size: 0.875em;
+  font-family: "Proxima N W01 Smbd", sans-serif;
+}
+
+.exp-form input {
+  width: 30vw;
+  margin-bottom: 1.5rem;
+}
+
+.exp-form textarea {
+  width: 30vw;
+  margin-bottom: 1.5rem;
+}
