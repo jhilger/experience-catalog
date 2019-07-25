@@ -9,6 +9,7 @@ const TypeAhead = ({
   onChange = () => {},
   name,
   label,
+  className,
   sObject
 }) => {
   const ref = useRef();
@@ -111,12 +112,11 @@ const TypeAhead = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
   return (
-    <div className="exp-typeahead">
+    <div className={className}>
         <label htmlFor={name}>{label}</label>
         <Search
           sObject={sObject}
           ref={ref}
-          placeholder="Contact to invite..."
           onChange={(searchValue, more, newRecords) => {
             if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
             setRecords(newRecords);
