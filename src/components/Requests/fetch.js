@@ -1,4 +1,8 @@
-import { performQuery, createSObject } from "../../utils/jsforce";
+import {
+  performQuery,
+  createSObject,
+  updateSOjbect
+} from "../../utils/jsforce";
 
 export const fetchAll = () => async (dispatch, getState) => {
   const { jsforce, user } = getState();
@@ -50,6 +54,7 @@ export const createOne = (
   onFailure = () => {}
 ) => async (dispatch, getState) => {
   const { jsforce } = getState();
+  console.log(record);
   dispatch({
     type: "REQ/create_init"
   });
@@ -59,10 +64,52 @@ export const createOne = (
       "Strategic_Partner_Request__c",
       record
     );
+    console.log(newRecord);
     const returnResult = await fetchOne(newRecord.id)(dispatch, getState);
     dispatch({
       type: "REQ/create_success",
       payload: returnResult
+    });
+    onSuccess();
+  } catch (error) {
+    console.error(error);
+    dispatch({
+      type: "REQ/create_failure",
+      payload: {
+        message: error.message
+      }
+    });
+    onFailure();
+  }
+};
+
+export const updateOne = (
+  request,
+  oldRecord,
+  onSuccess = () => {},
+  onFailure = () => {}
+) => async (dispatch, getState) => {
+  const { jsforce } = getState();
+  dispatch({
+    type: "REQ/create_init"
+  });
+  console.log(request);
+  const newRecord = request.Id;
+  try {
+    const updateRecord = await updateSOjbect(
+      jsforce,
+      "Strategic_Partner_Request__c",
+      oldRecord,
+      newRecord
+    );
+
+    const returnUpdatedResult = await fetchOne(updateRecord.id)(
+      dispatch,
+      getState
+    );
+    dispatch({
+      type: "REQ/create_success",
+      payload: returnUpdatedResult
     });
     onSuccess();
   } catch (error) {

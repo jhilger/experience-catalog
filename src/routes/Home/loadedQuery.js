@@ -36,6 +36,9 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Id",
           "Status__c",
           "Contact_to_Invite__r.Name",
+          "Contact_to_Invite__r.Id",
+          "Contact_to_Invite__c",
+          "Customer_Restrictions__c",
           "Event_Date__c",
           // eslint-disable-next-line prettier/prettier
         "Name",

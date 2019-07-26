@@ -13,11 +13,13 @@ const defaultState = {
     filter: "home"
   },
   requests: {
+    data: {},
     records: [],
     total: null,
     size: null
   },
   contactId: null,
+  requestId: null,
   filtered: [],
   filter: "home",
   tempReqData: [

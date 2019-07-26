@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import Modal from "../../../Modal";
-import Single from "./Single";
+import CreateSingleRequest from "./CreateSingleRequest";
 
 const CreatePartnerRequestButton = ({ history, experience }) => {
   const [showReqs, setShowReqs] = useState(false);
@@ -27,7 +27,7 @@ const CreatePartnerRequestButton = ({ history, experience }) => {
         }}
         active={showReqs}
       >
-        <Single experience={experience} />
+        <CreateSingleRequest experience={experience} />
       </Modal>
     </>
   );
