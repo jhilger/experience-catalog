@@ -86,7 +86,8 @@ const Card = ({ sort, experience, expanded = false }) => {
                   Requirements__c: removeTags(experience.Partnership_Details_Requirements__c),
                   Strategic_Partner_Name__c: experience.Strategic_Partner__c,
                   ExperienceName : experience.Name,
-                  StrategicPartnerName: experience.Strategic_Partner__r.Name
+                  StrategicPartnerName: experience.Strategic_Partner__r.Name,
+                  Event_Date__c: (experience.Start_Date__c) ? experience.Start_Date__c : ""
                 }}
               />
             </Modal>

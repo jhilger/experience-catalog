@@ -19,7 +19,6 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
         ...initialValues,
         //Contact_to_Invite__c: contactId,
         Requester__c: user.user_id,
-        Event_Date__c : "",
         Description__c : ""
       }}
     >
@@ -52,6 +51,7 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
         includeInBlob={true}
         type="date"
         required={true}
+        value={initialValues.Event_Date__c}
       />
       < InputField
         name="Description__c"

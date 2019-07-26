@@ -15,7 +15,8 @@ const InputField = ({
   classes = {},
   className,
   rows,
-  style
+  style,
+  value
 }) => {
   // eslint-disable-next-line no-unused-vars
   let [context, state, dispatch, dispatchLocal] = [{}, {}, () => {}, () => {}];
@@ -55,6 +56,7 @@ const InputField = ({
           id: name,
           type,
           name,
+          value : value,
           rows : rows,
           onChange: e => {
             if (includeInBlob)
