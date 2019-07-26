@@ -57,7 +57,7 @@ const Card = ({ sort, experience, expanded = false }) => {
             backgroundImage: `url(${
               experience.Image_URL__c
                 ? experience.Image_URL__c
-                : "/img/davisestates3.jpg"
+                : "/img/default.jpg"
             })`
           }}
         >
