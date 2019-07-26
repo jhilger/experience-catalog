@@ -1,6 +1,11 @@
 const reducer = (
   state,
-  formatting = { before: "", between: "\n", field: c => `${c.label}: ${c.value}`, after: "" }
+  formatting = {
+    before: "",
+    between: "\n",
+    field: c => `${c.label}: ${c.value}`,
+    after: ""
+  }
 ) => ({
   ...state,
   [state.humanReadableFieldName]:

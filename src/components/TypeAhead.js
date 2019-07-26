@@ -4,24 +4,42 @@ import DropDown from "./DropDown";
 import FormContext from "./Form/Context";
 import AdditionalFieldsContext from "./AdditionalFields/Context";
 
-const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
+const TypeAhead = ({
+  value: Id,
+  onChange = () => {},
+  name,
+  label,
+  className,
+  sObject
+}) => {
   const ref = useRef();
   const menuRef = useRef();
   const [records, setRecords] = useState();
-  const [record, setRecord] = useState(Id ? { Id } : "");
+  const [record, setRecord] = useState(
+    // eslint-disable-next-line no-nested-ternary
+    Id ? (typeof Id === "string" ? { Id } : Id) : ""
+  );
   const [hovered, setHovered] = useState(null);
+
   // eslint-disable-next-line no-unused-vars
-  let [formContext, addedFieldsContext, formDispatch, addedFieldsDispatch] = [{}, {}, () => {}, () => {}];
+  let [formContext, addedFieldsContext, formDispatch, addedFieldsDispatch] = [
+    {},
+    {},
+    () => {},
+    () => {}
+  ];
   try {
     [formContext, formDispatch] = useContext(FormContext);
     // eslint-disable-next-line no-empty
   } catch (error) {}
   try {
-    [addedFieldsContext, addedFieldsDispatch] = useContext(AdditionalFieldsContext);
+    [addedFieldsContext, addedFieldsDispatch] = useContext(
+      AdditionalFieldsContext
+    );
     // eslint-disable-next-line no-empty
   } catch (error) {}
   const clearValues = () => {
-    setRecord({});
+    setRecord("");
     onChange("");
     formDispatch({
       type: "FIELD/change",
@@ -42,7 +60,8 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     return setHovered(records[index + 1].Id);
   };
   const upKey = e => {
-    if (typeof hovered !== "string") return setHovered(records[records.length - 1].Id);
+    if (typeof hovered !== "string")
+      return setHovered(records[records.length - 1].Id);
     const index = records.findIndex(v => v.Id === hovered);
     if (!index) return;
     return setHovered(records[index - 1].Id);
@@ -51,8 +70,12 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     if (!hovered) return;
     e.preventDefault();
     const newRecord = records.find(v => v.Id === hovered);
-    setRecord(record);
-    formDispatch({ type: "FIELD/change", payload: { value: newRecord.Id, name } });
+    setRecord(newRecord);
+
+    formDispatch({
+      type: "FIELD/change",
+      payload: { value: newRecord.Id, name }
+    });
     addedFieldsDispatch({
       type: "FIELD/change",
       payload: { value: newRecord.Name, name }
@@ -61,7 +84,8 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     setHovered(null);
   };
   const backspaceKey = e => {
-    if ((typeof record === "string" && record) || record.Id) {
+    if (typeof record === "string" && record) return;
+    if (record.Id) {
       e.preventDefault();
       clearValues();
     }
@@ -88,16 +112,15 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
   return (
-    <div style={{ display: "inline-block", position: "relative" }}>
-      <div style={{ display: "inline-block" }}>
-        {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+    <div className={className}>
         <label htmlFor={name}>{label}</label>
         <Search
+          sObject={sObject}
           ref={ref}
-          onChange={(more, newRecords) => {
+          onChange={(searchValue, more, newRecords) => {
             if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
             setRecords(newRecords);
-            setRecord({});
+            setRecord(searchValue);
           }}
           onBlur={onBlur}
           type="text"
@@ -124,43 +147,108 @@ const TypeAhead = ({ value: Id, onChange = () => {}, name, label }) => {
           }}
           value={record}
           autoComplete="new-password"
-        />
-        {record.Id && (
-          <button
-            type="button"
-            onClick={() => {
-              clearValues();
-              ref.current.focus();
-            }}
-          >
-            X
-          </button>
-        )}
-      </div>
-      {!record.Id && (
-        <DropDown
-          ref={menuRef}
-          list={records}
-          hovered={hovered}
-          labelField="Name"
-          onHover={setHovered}
-          onItemClicked={item => {
-            setRecord(item);
-            onChange(item);
-            formDispatch({
-              type: "FIELD/change",
-              payload: { value: item.Id, name }
-            });
-            addedFieldsDispatch({
-              type: "FIELD/change",
-              payload: { value: item.Name, name }
-            });
-            ref.current.focus();
-          }}
-        />
-      )}
+        />     
+
+      <DropDown
+        ref={menuRef}
+        list={records}
+        hovered={hovered}
+        labelField="Name"
+        onHover={setHovered}
+        onItemClicked={newRecord => {
+          setRecords([]);
+          setRecord(newRecord);
+          onChange(newRecord);
+
+          formDispatch({
+            type: "FIELD/change",
+            payload: { value: newRecord.Id, name }
+          });
+          addedFieldsDispatch({
+            type: "FIELD/change",
+            payload: { value: newRecord.Name, name }
+          });
+        }}
+      />
     </div>
   );
 };
 
 export default TypeAhead;
+
+
+/*return (
+  <div style={{ display: "inline-block", position: "relative" }}>
+    <div style={{ display: "inline-block" }}>
+      
+      <label htmlFor={name}>{label}</label>
+      <Search
+        sObject={sObject}
+        ref={ref}
+        onChange={(searchValue, more, newRecords) => {
+          if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
+          setRecords(newRecords);
+          setRecord(searchValue);
+        }}
+        onBlur={onBlur}
+        type="text"
+        hovered={hovered}
+        inputName={name}
+        onKeyDown={e => {
+          switch (e.keyCode) {
+            case 40:
+              return downKey(e);
+            case 9:
+              return tabKey(e);
+            case 38:
+              return upKey(e);
+            case 13:
+              return enterKey(e);
+            case 27:
+              return escKey(e);
+            case 8:
+            case 46:
+              return backspaceKey(e);
+            default:
+              break;
+          }
+        }}
+        value={record}
+        autoComplete="new-password"
+      />
+      {record.Id && (
+        <button
+          type="button"
+          onClick={() => {
+            clearValues();
+            ref.current.focus();
+          }}
+        >
+          X
+          </button>
+      )}
+    </div>
+
+    <DropDown
+      ref={menuRef}
+      list={records}
+      hovered={hovered}
+      labelField="Name"
+      onHover={setHovered}
+      onItemClicked={newRecord => {
+        setRecords([]);
+        setRecord(newRecord);
+        onChange(newRecord);
+
+        formDispatch({
+          type: "FIELD/change",
+          payload: { value: newRecord.Id, name }
+        });
+        addedFieldsDispatch({
+          type: "FIELD/change",
+          payload: { value: newRecord.Name, name }
+        });
+      }}
+    />
+  </div>
+);*/

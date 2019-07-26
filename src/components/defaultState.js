@@ -1,9 +1,24 @@
 const defaultState = {
-  user: {
-    photos: {}
+  user: {},
+  contacts: {
+    data: {}
   },
   toasts: [],
-  experiences: []
+  experiences: {
+    records: [],
+    total: null,
+    size: null,
+    filtered: [],
+    filter: "home"
+  },
+  requests: {
+    records: [],
+    total: null,
+    size: null
+  },
+  contactId: null,
+  filtered: [],
+  filter: "home",
 };
 
 export default defaultState;

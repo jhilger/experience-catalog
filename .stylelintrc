@@ -1,14 +1,10 @@
 {
-  "processors": [
-    [
-      "stylelint-processor-styled-components",
-      {
-        "ignoreFiles": ["**/*.css"]
-      }
-    ]
-  ],
   "extends": [
     "stylelint-config-recommended",
+    "stylelint-config-recommended-scss",
     "stylelint-config-styled-components"
-  ]
+  ],
+  "rules": {
+    "unit-whitelist": ["em", "rem", "%", "s", "px", "deg", "vw", "vh"]
+  }
 }

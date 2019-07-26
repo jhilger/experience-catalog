@@ -5,10 +5,20 @@ import Debug from "./Debug";
 import Form from "./Form";
 import reducer from "./reducer";
 
-const FormWrapper = ({ onSubmit: handleSubmit, initialValues = {}, children, ...props }) => {
-  const [state, dispatch] = useReducer(reducer, { initialValues });
+const FormWrapper = ({
+  onSubmit: handleSubmit,
+  initialValues = {},
+  children,
+  ...props
+}) => {
+  const [state, dispatch] = useReducer(reducer, {
+    initialValues,
+    values: initialValues
+  });
   return (
-    <Context.Provider value={[state, dispatch, { form: { handleSubmit, initialValues } }]}>
+    <Context.Provider
+      value={[state, dispatch, { form: { handleSubmit, initialValues } }]}
+    >
       <Form {...props}>{children}</Form>
     </Context.Provider>
   );

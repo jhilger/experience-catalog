@@ -1,9 +1,9 @@
 import React from "react";
 
-class Home extends React.Component {
+class OAuthCallback extends React.Component {
   render() {
     return <div />;
   }
 }
 
-export default Home;
+export default OAuthCallback;
