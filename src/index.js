@@ -13,6 +13,10 @@ import defaultState from "./components/defaultState";
 
 import * as serviceWorker from "./serviceWorker";
 
+// TODO: (Isaac) Will not work on IE11 or Edge. Popup for login doesn't send user back to correct screen.
+// TODO: (Isaac) Will not work on mobile emulator in Web Dev Tools. Popup for login doesn't send user back to correct screen.
+// TODO: (Isaac) Probably will need to login automatically since the user will see the ww2.txtav.com login screen first.
+
 // ReactDOM.render(<App />, document.getElementById('root'));
 // eslint-disable-next-line
 const contactId = location.search

@@ -17,7 +17,7 @@ const Home = () => {
 
   useEffect(() => {
     setRendered(true);
-  }, []);
+  }, []); 
 
   useEffect(() => {
     if (rendered && loggedIn) {
