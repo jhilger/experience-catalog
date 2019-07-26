@@ -16,14 +16,40 @@
   font-family: "Proxima N W01 Smbd", sans-serif;
 }
 
-.exp-form input {
+.exp-form input,
+.exp-form textarea {
   width: 30vw;
   margin-bottom: 1.5rem;
 }
 
-.exp-form textarea {
-  width: 30vw;
-  margin-bottom: 1.5rem;
+@media only screen and (max-width: 40em) {
+  .exp-form {
+    min-width: 70vw;
+  }
+  .exp-form input,
+  .exp-form textarea {
+    width: 60vw;
+  }
+}
+@media only screen and (min-width: 40.063em) {
+  .exp-form input,
+  .exp-form textarea {
+    width: 40vw;
+  }
+}
+
+@media only screen and (min-width: 64.063em) {
+  .exp-form input,
+  .exp-form textarea {
+    width: 30vw;
+  }
+}
+
+@media only screen and (min-width: 120.063em) {
+  .exp-form input,
+  .exp-form textarea {
+    width: 30vw;
+  }
 }
 
 /*  TYPEAHEAD  */
