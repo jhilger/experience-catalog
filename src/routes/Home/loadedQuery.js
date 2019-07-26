@@ -21,13 +21,16 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Experience_Type2__r.Short_Name__c",
           "Experience_Type2__r.Alt_Text__c",
           "Partnership_Details_Requirements__c",
+          "Start_Date__c",
+          "End_Date__c",
           // eslint-disable-next-line prettier/prettier
           "Image_URL__c",
+          "Thumbnail_URL__c",
         ].join(", "),
         "FROM Experience__c",
-        //TODO: (ISAAC) Using ! to filter out disabled experiences, probably needs a field to control this
+        //TODO: (ISAAC) Setup boost value for sorting cards to allow hot events to be listed first. Using the Thumbnail URL value as a test.
         // eslint-disable-next-line prettier/prettier
-        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (NOT Name LIKE '!%') ORDER BY Strategic_Partner__r.Name, Name",
+        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (Start_Date__c > TODAY OR Start_Date__c = NULL ) ORDER BY Thumbnail_URL__c NULLS LAST,Strategic_Partner__r.Name, Name",
       ].join(" ")
     ),
     performQuery(

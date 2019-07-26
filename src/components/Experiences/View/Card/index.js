@@ -6,13 +6,16 @@ import Modal from "../../../Modal";
 import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
+//TODO: (Isaac) Add stamp if there is a specific date for event - "Limited Time Frame" , "Limited Dates" then click on "Request this experience" and if there is a start date, it gets put into form. 
+//TODO: (Isaac) Can't change the Stategic Partner in the Experience object.
+
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
   const [modalOpen, setModalOpen] = useState(false);
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
-  const removeTags = (str) => (str.replace(/<\/?[^>]+(>|$)/g, ""));
+  const removeTags = (str) => ((str)? str.replace(/<\/?[^>]+(>|$)/g, "") : "");
 
   return (
     <CSSTransition
@@ -31,6 +34,7 @@ const Card = ({ sort, experience, expanded = false }) => {
             1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
         }
       >
+        <div className={(experience.Start_Date__c)? "exp-card-stamp active" : "exp-card-stamp"}>Limited Dates</div>
         <button
           type="button"
           onClick={toggleCard}

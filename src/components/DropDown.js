@@ -10,6 +10,7 @@ const DropDown = (
   },
   ref
 ) => {
+  // eslint-disable-next-line no-unused-vars
   const [currentHover, setCurrentHover] = useState(hovered);
 
   useEffect(() => {
