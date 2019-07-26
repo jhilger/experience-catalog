@@ -1,31 +1,39 @@
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext } from "react";
+import moment from "moment";
 import Context from "../../Context";
 import Form from "../../Form";
 import InputField from "../../Form/InputField";
 import TypeAhead from "../../TypeAhead";
+import SingleDatePickerWrapper from "../../SingleDatePickerWrapper";
 import "../../../scss/form.scss";
 
 const SingleRequestCreate = ({ initialValues = {} }) => {
   const [{ user }, dispatch] = useContext(Context);
-  //const contact = contacts.data[contactId];
+  // const contact = contacts.data[contactId];
 
-  console.log('User ', user);
-  console.log('Initial Values ', initialValues);
+  console.log("User ", user);
+  console.log("Initial Values ", initialValues);
 
   return (
     <Form
       onSubmit={console.log}
       initialValues={{
         ...initialValues,
-        //Contact_to_Invite__c: contactId,
+        // Contact_to_Invite__c: contactId,
         Requester__c: user.user_id,
-        Description__c : ""
+        Description__c: ""
       }}
     >
-      <label htmlFor="requester">Requester</label><h5 id="requester">{user.display_name}</h5>      
-      <label htmlFor="partnerName">Strategic Partner</label><h5 id="partnerName">{initialValues.StrategicPartnerName}</h5>
-      <label htmlFor="experinceName">Experience</label><h5 id="experienceName">{initialValues.ExperienceName}</h5>
-      <label htmlFor="requirements">Requirements</label><p id="requirements">{initialValues.Requirements__c}</p>
+      <label htmlFor="requester">Requester</label>
+      <h5 id="requester">{user.display_name}</h5>
+      <label htmlFor="partnerName">Strategic Partner</label>
+      <h5 id="partnerName">{initialValues.StrategicPartnerName}</h5>
+      <label htmlFor="experinceName">Experience</label>
+      <h5 id="experienceName">{initialValues.ExperienceName}</h5>
+      <label htmlFor="requirements">Requirements</label>
+      <p id="requirements">{initialValues.Requirements__c}</p>
       <TypeAhead
         name="Contact_to_Invite__c"
         label="Contact"
@@ -42,27 +50,39 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
           });
         }}
         value=""
+        placeholder="contact to invite"
       />
-      < InputField 
+      <SingleDatePickerWrapper
         name="Event_Date__c"
         label="Event Date"
-        placeholder = "mm/dd/yyyy"
-        component = "input"
-        includeInBlob={true}
+        value={moment(initialValues.Event_Date__c)}
+        placeholder="date of requested event"
+      />
+      {/*
+      <InputField
+        name="Event_Date__c"
+        label="Event Date"
+        placeholder="mm/dd/yyyy"
+        component="input"
+        includeInBlob
         type="date"
-        required={true}
+        required
         value={initialValues.Event_Date__c}
       />
-      < InputField
+      */}
+      <InputField
         name="Description__c"
         label="Business Case"
         component="textarea"
         type="text"
-        includeInBlob={true}
+        includeInBlob
         rows={2}
-        required={true}
+        required
+        placeholder="business case for requested event"
       />
-      <button type="submit" className="fancy">Submit Request</button>
+      <button type="submit" className="fancy">
+        Submit Request
+      </button>
     </Form>
   );
 };
@@ -75,7 +95,8 @@ export default SingleRequestCreate;
 
 */
 
-/*const SingleRequestCreate = ({ initialValues = {} }) => {
+/*
+const SingleRequestCreate = ({ initialValues = {} }) => {
   const [{ user, contactId, contacts }, dispatch] = useContext(Context);
   const contact = contacts.data[contactId];
   return (
@@ -106,4 +127,5 @@ export default SingleRequestCreate;
       <button type="submit">Submit</button>
     </Form>
   );
-};*/
+}; 
+*/

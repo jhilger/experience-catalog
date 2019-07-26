@@ -11,7 +11,7 @@ const Search = (
     placeholder,
     onChange = () => {},
     onKeyDown = () => {},
-    onBlur = () => {},  
+    onBlur = () => {},
     fields = ["Name"],
     component = "input",
     limit = 5,
@@ -25,6 +25,7 @@ const Search = (
     typeof value === "object" && value[searchField] ? value[searchField] : ""
   );
   const [query, setQuery] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [placeholderValue, setPlaceholderValue] = useState(placeholder);
   const [record, setRecord] = useState(typeof value === "object" ? value : {});
   const [records, setRecords] = useState([]);
@@ -69,8 +70,8 @@ const Search = (
     className,
     ref,
     name,
-    required : "required",
-    id: name,    
+    required: "required",
+    id: name,
     autoComplete: "new-password",
     onChange: e => {
       if (
@@ -96,7 +97,7 @@ const Search = (
     },
     onBlur,
     onKeyDown,
-    placeholder: placeholderValue,
+    placeholder,
     value: displayValue,
     ...props
   });
@@ -104,7 +105,8 @@ const Search = (
 
 export default forwardRef(Search);
 
-/*return React.createElement(component, {
+/* 
+return React.createElement(component, {
   className,
   ref,
   name,
@@ -143,4 +145,5 @@ export default forwardRef(Search);
   placeholder: placeholderValue,
   value: displayValue,
   ...props
-});*/
+});
+*/

@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-for */
 import React, { useState, useRef, useEffect, useContext } from "react";
 import Search from "./Search";
 import DropDown from "./DropDown";
 import FormContext from "./Form/Context";
 import AdditionalFieldsContext from "./AdditionalFields/Context";
+
+// TODO: (Isaac) Probably a way to show unique contacts listed in dropdown since there are multiple contacts with the same name and possibly same account.
 
 const TypeAhead = ({
   value: Id,
@@ -10,7 +13,8 @@ const TypeAhead = ({
   name,
   label,
   className,
-  sObject
+  sObject,
+  placeholder
 }) => {
   const ref = useRef();
   const menuRef = useRef();
@@ -113,41 +117,42 @@ const TypeAhead = ({
   }, [name, label]);
   return (
     <div className={className}>
-        <label htmlFor={name}>{label}</label>
-        <Search
-          sObject={sObject}
-          ref={ref}
-          onChange={(searchValue, more, newRecords) => {
-            if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
-            setRecords(newRecords);
-            setRecord(searchValue);
-          }}
-          onBlur={onBlur}
-          type="text"
-          hovered={hovered}
-          inputName={name}
-          onKeyDown={e => {
-            switch (e.keyCode) {
-              case 40:
-                return downKey(e);
-              case 9:
-                return tabKey(e);
-              case 38:
-                return upKey(e);
-              case 13:
-                return enterKey(e);
-              case 27:
-                return escKey(e);
-              case 8:
-              case 46:
-                return backspaceKey(e);
-              default:
-                break;
-            }
-          }}
-          value={record}
-          autoComplete="new-password"
-        />     
+      <label htmlFor={name}>{label}</label>
+      <Search
+        sObject={sObject}
+        ref={ref}
+        onChange={(searchValue, more, newRecords) => {
+          if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
+          setRecords(newRecords);
+          setRecord(searchValue);
+        }}
+        onBlur={onBlur}
+        type="text"
+        hovered={hovered}
+        inputName={name}
+        onKeyDown={e => {
+          switch (e.keyCode) {
+            case 40:
+              return downKey(e);
+            case 9:
+              return tabKey(e);
+            case 38:
+              return upKey(e);
+            case 13:
+              return enterKey(e);
+            case 27:
+              return escKey(e);
+            case 8:
+            case 46:
+              return backspaceKey(e);
+            default:
+              break;
+          }
+        }}
+        value={record}
+        autoComplete="new-password"
+        placeholder={placeholder}
+      />
 
       <DropDown
         ref={menuRef}
@@ -176,8 +181,8 @@ const TypeAhead = ({
 
 export default TypeAhead;
 
-
-/*return (
+/*
+return (
   <div style={{ display: "inline-block", position: "relative" }}>
     <div style={{ display: "inline-block" }}>
       
@@ -251,4 +256,5 @@ export default TypeAhead;
       }}
     />
   </div>
-);*/
+); 
+*/

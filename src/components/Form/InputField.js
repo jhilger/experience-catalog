@@ -5,7 +5,7 @@ import FormContext from "./Context";
 const InputField = ({
   name,
   label,
-  placeholder = "",
+  placeholder,
   component = "input",
   includeInBlob,
   validate = () => {},
@@ -16,7 +16,8 @@ const InputField = ({
   className,
   rows,
   style,
-  value
+  value,
+  required
 }) => {
   // eslint-disable-next-line no-unused-vars
   let [context, state, dispatch, dispatchLocal] = [{}, {}, () => {}, () => {}];
@@ -56,8 +57,9 @@ const InputField = ({
           id: name,
           type,
           name,
-          value : value,
-          rows : rows,
+          value,
+          rows,
+          required,
           onChange: e => {
             if (includeInBlob)
               dispatchLocal({
