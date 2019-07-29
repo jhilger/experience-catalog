@@ -1,9 +1,9 @@
-@import "variables";
+@import "../../../../scss/variables";
 
 .exp-card {
   position: relative;
   box-shadow: 0 1px 3px rgba($black, 0.12), 0 1px 2px rgba($black, 0.24);
-  transition: 0.75s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: 1s;
   overflow: hidden;
 }
 
@@ -32,6 +32,27 @@
   padding: 0.75em;
 }
 
+.exp-card .exp-card-stamp {
+  display: none;
+  background: $red;
+  color: $white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.25em;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.093em;
+  font-family: "Proxima N W01 Smbd", sans-serif;
+  font-size: 0.925em;
+  transition: 0.3s;
+}
+
+.exp-card .exp-card-stamp.active {
+  display: block;
+}
+
 .exp-card .exp-card-main {
   padding: 2em;
 }
@@ -44,12 +65,23 @@
   margin-bottom: 0;
 }
 
+.exp-card .exp-card-request {
+  margin-bottom: 1.75em;
+}
+
+.exp-card.close .exp-card-request {
+  display: none;
+}
+
 .exp-card .exp-card-content {
-  display: block;
+  max-height: 2000px;
+  transition: 0.5s;
+  overflow: hidden;
 }
 
 .exp-card.close .exp-card-content {
-  display: none;
+  max-height: 0;
+  transition: 0.5s;
 }
 
 .exp-card .exp-card-tagline {
@@ -111,7 +143,7 @@
   display: block;
   color: #fff;
   font-style: italic;
-  background: #32373e;
+  background: $gray;
   padding: 1.5em;
   margin-right: -2em;
   box-shadow: 10px 5px 10px rgba($black, 0.2), 0 5px 5px rgba($black, 0.22);
@@ -123,12 +155,18 @@
 
 .exp-card .exp-card-toggle {
   position: absolute;
-  top: -3em;
-  right: -3em;
+  top: -3.75em;
+  right: -3.75em;
   background: $white;
   border-radius: 50%;
   width: 7em;
   height: 7em;
+}
+
+.exp-card .exp-card-toggle .exp-plus {
+  position: absolute;
+  top: 4.25em;
+  left: 1.25em;
 }
 
 .exp-card .exp-card-toggle.close .exp-plus {

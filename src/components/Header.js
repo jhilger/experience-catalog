@@ -1,16 +1,12 @@
 import React, { useContext } from "react";
 import Context from "./Context";
 import LoginButton from "./LoginButton";
+//import ExperienceModalButton from "./Experiences/View/ModalButton";
+import RequestModalButton from "./Requests/View/ModalButton";
 import "../scss/header.scss";
 
-const Header = props => {
-  const [context] = useContext(Context);
-
-  const sendModalContent = type => {
-    props.modalContent(type);
-    props.activateModal(true);
-  };
-
+const Header = () => {
+  const [{ loggedIn, user }] = useContext(Context);
   return (
     <header>
       <div className="exp-title">
@@ -20,21 +16,11 @@ const Header = props => {
         <div className="exp-rule" />
       </div>
       <div className="exp-user">
-        {context.loggedIn ? (
+        {loggedIn ? (
           <React.Fragment>
-            <h6>Welcome {context.user.display_name}</h6>
-            <button
-              className="info"
-              onClick={() => sendModalContent("requests")}
-            >
-              <span>{context.tempReqData.length}</span> Requests
-            </button>
-            <button
-              className="info"
-              onClick={() => sendModalContent("experiences")}
-            >
-              <span>{context.tempExpData.length}</span> Experiences
-            </button>
+            <h6>Welcome {user.display_name}</h6>   
+            <RequestModalButton buttonLabel="Submitted" modalLabel="Submitted Requests" type="Submitted" />
+            <RequestModalButton buttonLabel="Approved" modalLabel="Approved Requests" type="Approved" />
           </React.Fragment>
         ) : (
           <LoginButton />
@@ -45,3 +31,35 @@ const Header = props => {
 };
 
 export default Header;
+
+
+/*
+const Header = () => {
+  const [{ loggedIn, user, contacts, contactId }] = useContext(Context);
+  const contact = contacts.data[contactId];
+  return (
+    <header>
+      <div className="exp-title">
+        <h1>
+          Customer Experience <span>Catalog</span>
+        </h1>
+        <div className="exp-rule" />
+      </div>
+      <div className="exp-user">
+        {loggedIn ? (
+          <React.Fragment>
+            <h6>Welcome {user.display_name}</h6>
+            {contact && <h6>Inviting {contact.Name}</h6>}
+            <RequestModalButton buttonLabel="Pending" modalLabel="Pending Requests" type="pending" />
+            <RequestModalButton buttonLabel="Approved" modalLabel="Approved Requests" type="approved" />
+          </React.Fragment>
+        ) : (
+            <LoginButton />
+          )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
+*/

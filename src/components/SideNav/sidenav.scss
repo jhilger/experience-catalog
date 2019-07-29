@@ -1,4 +1,4 @@
-@import "variables";
+@import "../../scss/variables.scss";
 
 .exp-nav-icon {
   width: 2.5em;
@@ -11,6 +11,7 @@
 .sidenav---sidenav---_2tBP {
   background: $gray;
   position: fixed;
+  transition: min-width 0.3s;
 }
 
 .sidenav---sidenav-nav---3tvij

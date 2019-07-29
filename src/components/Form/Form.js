@@ -5,7 +5,7 @@ const Form = ({ onSubmit: handleSubmit = () => {}, children, ...props }) => {
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch, context] = useContext(Context);
   return (
-    <form
+    <form className="exp-form"
       onSubmit={e => {
         e.preventDefault();
         context.form.handleSubmit(e, state.values, context);
