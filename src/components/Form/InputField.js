@@ -5,6 +5,7 @@ import FormContext from "./Context";
 const InputField = ({
   name,
   label,
+  value,
   placeholder = "",
   component = "input",
   includeInBlob,
@@ -34,6 +35,9 @@ const InputField = ({
     [context, dispatchLocal, formData] = useContext(FormContext);
     // eslint-disable-next-line no-empty
   } catch (error) {}
+
+  console.log(formData);
+
   useEffect(() => {
     dispatchLocal({ type: "FIELD/insert", payload: { name, label } });
     dispatch({ type: "FIELD/insert", payload: { name, label } });
@@ -58,6 +62,7 @@ const InputField = ({
         {
           style: styles.input,
           className: classes.input,
+          defaultValue: value,
           id: name,
           type,
           defaultValue: formData.form.initialValues[name],

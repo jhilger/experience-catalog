@@ -15,13 +15,15 @@ const defaultState = {
   requests: {
     data: {},
     records: [],
+    submitted: [],
+    approved: [],
     total: null,
     size: null
   },
   contactId: null,
   requestId: null,
   filtered: [],
-  filter: "home",
+  filter: "home"
 };
 
 export default defaultState;
