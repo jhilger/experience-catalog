@@ -17,7 +17,7 @@ const InputField = ({
   style
 }) => {
   // eslint-disable-next-line no-unused-vars
-  let [context, state, dispatch, dispatchLocal] = [{}, {}, () => {}, () => {}];
+  let [context, state, dispatch, dispatchLocal, formData] = [{}, {}, () => {}, () => {}, {}];
   try {
     [state, dispatch] = useContext(Context);
     // eslint-disable-next-line no-empty
@@ -26,6 +26,8 @@ const InputField = ({
     [context, dispatchLocal] = useContext(FormContext);
     // eslint-disable-next-line no-empty
   } catch (error) {}
+
+  console.log(formData)
 
   useEffect(() => {
     dispatchLocal({ type: "FIELD/insert", payload: { name, label } });
@@ -51,6 +53,7 @@ const InputField = ({
         {
           style: styles.input,
           className: classes.input,
+          defaultValue: 
           id: name,
           type,
           name,

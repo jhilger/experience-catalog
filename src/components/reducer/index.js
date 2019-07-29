@@ -1,4 +1,4 @@
-import defaultState from "./defaultState";
+import defaultState from "../defaultState";
 
 const filterItems = (query, experiences) =>
   experiences.map(exp => {

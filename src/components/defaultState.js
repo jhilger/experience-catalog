@@ -18,7 +18,7 @@ const defaultState = {
   },
   contactId: null,
   filtered: [],
-  filter: "home",
+  filter: "home"
 };
 
 export default defaultState;

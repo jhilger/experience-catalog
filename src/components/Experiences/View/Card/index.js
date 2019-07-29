@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../../../Icons";
-import Modal from "../../../Modal";
-import SingleRequest from "../../../Requests/Create/Single";
+// import Modal from "../../../Modal";
+// import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
@@ -22,20 +22,21 @@ const Card = ({ sort, experience, expanded = false }) => {
       unmountOnExit
     >
       <div
-        /*className={
+        /* className={
           cardSize
             ? `medium-12 medium-order-${Math.floor(
                 sort / 2
               )} large-order-${Math.floor(sort / 3)} cell exp-card open`
             : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
                 1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
-        }*/
+        } */
         className={
-          cardSize 
-            ? `medium-12 medium-order-${Math.floor( sort / 2
-            )} large-order-${Math.floor(sort / 3)} cell exp-card open`
+          cardSize
+            ? `medium-12 medium-order-${Math.floor(
+                sort / 2
+              )} large-order-${Math.floor(sort / 3)} cell exp-card open`
             : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
-            1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
+                1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
         }
       >
         <button
@@ -67,8 +68,10 @@ const Card = ({ sort, experience, expanded = false }) => {
               <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
-            <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: experience.Info__c }}>
-            </div>
+            <div
+              className="exp-card-content"
+              dangerouslySetInnerHTML={{ __html: experience.Info__c }}
+            />
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">
@@ -103,8 +106,6 @@ Card.propTypes = {
 };
 
 export default Card;
-
-
 
 /*
 

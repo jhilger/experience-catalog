@@ -25,7 +25,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Image_URL__c",
         ].join(", "),
         "FROM Experience__c",
-        //TODO: (ISAAC) Using ! to filter out disabled experiences, probably needs a field to control this
+        // TODO: (ISAAC) Using ! to filter out disabled experiences, probably needs a field to control this
         // eslint-disable-next-line prettier/prettier
         "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (NOT Name LIKE '!%') ORDER BY Strategic_Partner__r.Name, Name",
       ].join(" ")
@@ -45,7 +45,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
         ].join(", "),
         "FROM Strategic_Partner_Request__c",
         "WHERE",
-        [`Requester__c = '${user.user_id}'`].join(" AND ")
+        [`Requester__c = '${user.Id}'`].join(" AND ")
       ].join(" ")
     ),
     contactId &&

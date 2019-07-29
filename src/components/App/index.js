@@ -2,11 +2,11 @@ import React, { useReducer } from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 // import { ThemeProvider } from "styled-components";
-import Home from "../routes/Home";
-import OAuthCallback from "../routes/OAuthCallback";
-import { Provider } from "./Context";
-import reducer from "./reducer";
-import defaultState from "./defaultState";
+import Home from "../../routes/Home";
+import OAuthCallback from "../../routes/OAuthCallback";
+import { Provider } from "../Context";
+import reducer from "../reducer";
+import defaultState from "../defaultState";
 
 const App = ({ value = defaultState }) => {
   const [state, dispatch] = useReducer(reducer, { ...defaultState, ...value });
