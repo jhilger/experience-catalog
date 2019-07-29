@@ -16,8 +16,7 @@ const InputField = ({
   classes = {},
   className,
   rows,
-  style,
-  value
+  style
 }) => {
   // eslint-disable-next-line no-unused-vars
   let [context, state, dispatch, dispatchLocal, formData] = [
@@ -67,8 +66,8 @@ const InputField = ({
           type,
           defaultValue: formData.form.initialValues[name],
           name,
-          value : value,
-          rows : rows,
+          value,
+          rows,
           onChange: e => {
             dispatchLocal({
               type: "FIELD/change",

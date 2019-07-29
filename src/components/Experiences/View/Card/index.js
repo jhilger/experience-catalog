@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../../../Icons";
-import Modal from "../../../Modal";
-import SingleRequest from "../../../Requests/Create/Single";
+import Title from "./Title";
+import Info from "./Info";
+import CreatePartnerRequestButton from "../../../Requests/Create/SingleRequest/CreatePartnerRequestButton";
+import KeepInMind from "./KeepInMind";
+import PartnershipDetails from "./PartnershipDetails";
+
 import "./card.scss";
 
 // TODO: (Isaac) Add stamp if there is a specific date for event - "Limited Time Frame" , "Limited Dates" then click on "Request this experience" and if there is a start date, it gets put into form.
