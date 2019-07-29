@@ -14,7 +14,7 @@ const Card = ({ sort, experience }) => {
     <CSSTransition
       key={experience.Id}
       in={experience.display}
-      timeout={300}
+      timeout={500}
       classNames="cardanim"
       unmountOnExit
     >
@@ -33,7 +33,7 @@ const Card = ({ sort, experience }) => {
           onClick={toggleCard}
           className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}
         >
-          <div className="exp-card-plus" />
+          <div className="exp-plus" />
         </button>
         <div
           className="exp-card-hero"
@@ -46,19 +46,19 @@ const Card = ({ sort, experience }) => {
           }}
         >
           <img
-            src={getIcon(experience.Experience_Type__c)}
-            data-type={experience.Experience_Type__c}
+            src={getIcon(experience.Experience_Type2__r.Short_Name__c)}
+            data-type={experience.Experience_Type2__r.Short_Name__c}
             alt="Experience type icon"
           />
         </div>
         <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-title">
-              <h2>{experience.Strategic_Partner__r.Account__r.Name}</h2>
+              <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
-            <div>
-              <p>{experience.Info__c}</p>
+            <button className="fancy" >Request This Experience</button>
+            <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: experience.Info__c }}>
             </div>
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import defaultState from "./defaultState";
+import defaultState from "../defaultState";
 
 export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
   const [hookState, setHookState] = useState(init(initialArg));
@@ -74,10 +74,21 @@ function reducer(state = defaultState, action) {
     }
     case "REQ/init": {
       const requests = action.payload.records;
+      const currentDateTime = new Date().getTime();
       return {
         ...state,
         requests: {
           records: requests,
+          submitted: requests.filter(
+            req =>
+              currentDateTime < new Date(req.Event_Date__c).getTime() &&
+              req.Status__c === "Submitted"
+          ),
+          approved: requests.filter(
+            req =>
+              currentDateTime < new Date(req.Event_Date__c).getTime() &&
+              req.Status__c === "Approved"
+          ),
           size: requests.length,
           total: action.payload.total
         }

@@ -4,7 +4,7 @@ import "./scss/fonts.scss";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./scss/global.scss";
 import "./scss/cardanimations.scss";
-
+import { OAuth } from "forcejs";
 import { BrowserRouter } from "react-router-dom";
 import { hydrate } from "react-dom";
 import App from "./components/App";
@@ -33,14 +33,19 @@ const getUser = () =>
 const modalRoot = document.getElementById("modal");
 
 hydrate(
-  <BrowserRouter>
+  <BrowserRouter basename="/">
     <App
       value={{
         jsforce,
         user: getUser(),
-        loggedIn: !!getUser().display_name,
+        loggedIn: !!getUser().display_name || !!getUser().Name,
         modalRoot,
-        contactId
+        contactId,
+        oAuth: OAuth.createInstance(
+          window.clientId,
+          window.loginUrl,
+          `${window.location.origin}/oauth/callback/`
+        )
       }}
     />
   </BrowserRouter>,
