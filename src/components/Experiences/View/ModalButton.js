@@ -17,7 +17,7 @@ const ExperienceModalButton = ({ history }) => {
           setShowExps(!showExps);
         }}
       >
-        <span>{experiences.total}</span>Approved
+        <span>{experiences.total}</span> Experiences
       </button>
       <Modal
         activate={bool => {

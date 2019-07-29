@@ -4655,11 +4655,6 @@ for-own@^1.0.0:
   dependencies:
     for-in "^1.0.1"
 
-forcejs@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/forcejs/-/forcejs-2.2.1.tgz#2e08df003357b1f0bdf27bae6e0feec24512351e"
-  integrity sha512-/F2iS1qAessy2LYcVKPOzpYGw4CS9oaKHPe16yGMEs6nXZtWDO/dEVkRi1N6MIZ4NOmtMnFwu33HL+hlNXxzQg==
-
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"

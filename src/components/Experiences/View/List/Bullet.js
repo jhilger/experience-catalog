@@ -5,7 +5,7 @@ const ExperienceList = () => {
   const [{ experiences }] = useContext(Context);
   return (
     <div>
-      <h2>Approved Requests</h2>
+      <h2>Experiences</h2>
       {experiences.records.map(({ Name, Id }, i) => (
         <div key={Id}>{Name}</div>
       ))}

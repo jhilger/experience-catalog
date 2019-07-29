@@ -14,7 +14,7 @@ import "./card.scss";
 
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
-  // const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
@@ -24,19 +24,11 @@ const Card = ({ sort, experience, expanded = false }) => {
     <CSSTransition
       key={experience.Id}
       in={experience.display}
-      timeout={500}
+      timeout={300}
       classNames="cardanim"
       unmountOnExit
     >
       <div
-        /* className={
-          cardSize
-            ? `medium-12 medium-order-${Math.floor(
-                sort / 2
-              )} large-order-${Math.floor(sort / 3)} cell exp-card open`
-            : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
-                1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
-        } */
         className={
           cardSize
             ? `medium-12 medium-order-${Math.floor(
@@ -60,7 +52,7 @@ const Card = ({ sort, experience, expanded = false }) => {
           onClick={toggleCard}
           className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}
         >
-          <div className="exp-plus" />
+          <div className="exp-card-plus" />
         </button>
         <Images experience={experience} />
         <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
@@ -91,32 +83,3 @@ Card.propTypes = {
 };
 
 export default Card;
-
-/*
-
- {cardSize && (
-  <div>
-    <button
-      type="button"
-      onClick={() => setModalOpen(true)}
-      className="info"
-    >
-      Create Request
-    </button>
-    <Modal
-      active={modalOpen}
-      activate={bool => {
-        setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
-      }}
-    >
-      <SingleRequest
-        initialValues={{
-          Experience__c: experience.Id,
-          Strategic_Partner_Name__c: experience.Strategic_Partner__c
-        }}
-      />
-    </Modal>
-  </div>
-)}
-
-*/

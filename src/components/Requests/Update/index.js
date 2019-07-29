@@ -1,18 +1,26 @@
 import React, { useContext } from "react";
-import Context from "../../../Context";
-import Form, { InputField, Debug } from "../../../Form";
-import TypeAhead from "../../../TypeAhead";
-import { onContactChange, onSubmit } from "../actionCreators";
+import Context from "../../Context";
+import Form, { InputField, Debug } from "../../Form";
+import TypeAhead from "../../TypeAhead";
+import { onContactChange, onSubmitUpdate } from "../Create/actionCreators";
 
-const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
-  const [{ user, contactId, contacts }, dispatch] = useContext(Context);
+const UpdateSingleRequest = ({ initialValues = {}, onSuccess = () => {} }) => {
+  const [
+    { user, contactId, contacts, requestId, requests },
+    dispatch
+  ] = useContext(Context);
   const contact = contacts.data[contactId];
+  const request = requests.data[requestId];
+  console.log(request);
   return (
     <Form
-      onSubmit={(...args) => dispatch(onSubmit(onSuccess, ...args))}
+      onSubmit={(...args) => {
+        dispatch(onSubmitUpdate(onSuccess, request, ...args));
+        console.log(...args);
+      }}
       initialValues={{
         ...initialValues,
-        Status__c: "Draft",
+        ...request,
         Contact_to_Invite__c: contactId,
         Requester__c: user.user_id
       }}
@@ -23,7 +31,7 @@ const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
         label="Contact"
         sObject="Contact"
         onChange={record => dispatch(onContactChange(record))}
-        value={contact}
+        value={request.Contact_to_Invite__r}
       />
       <InputField
         component="textarea"
@@ -48,4 +56,4 @@ const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
   );
 };
 
-export default SingleRequestCreate;
+export default UpdateSingleRequest;

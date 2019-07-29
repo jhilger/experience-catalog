@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import defaultState from "../defaultState";
+import defaultState from "./defaultState";
 
 export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
   const [hookState, setHookState] = useState(init(initialArg));
@@ -30,7 +30,7 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
-  console.log(action);
+  console.log(action, action.payload);
   let newState = { ...state };
   switch (action.type) {
     case "CONT/data":
@@ -40,6 +40,22 @@ function reducer(state = defaultState, action) {
           ...state.contacts,
           data: { ...state.contacts.data, [action.payload.Id]: action.payload }
         }
+      };
+      break;
+    case "REQ/data":
+      newState = {
+        ...newState,
+        requests: {
+          ...state.requests,
+          data: { ...state.requests.data, [action.payload.Id]: action.payload }
+        },
+        requestId: action.payload.Id
+      };
+      break;
+    case "REQ/Id":
+      newState = {
+        ...newState,
+        requestId: action.payload.Id
       };
       break;
     case "CONT/Id": {
@@ -74,21 +90,28 @@ function reducer(state = defaultState, action) {
     }
     case "REQ/init": {
       const requests = action.payload.records;
-      const currentDateTime = new Date().getTime();
       return {
         ...state,
         requests: {
           records: requests,
-          submitted: requests.filter(
-            req =>
-              currentDateTime < new Date(req.Event_Date__c).getTime() &&
-              req.Status__c === "Submitted"
+          data: requests.reduce(
+            (p, record) => ({
+              ...p,
+              [record.Id]: record
+            }),
+            {}
           ),
-          approved: requests.filter(
-            req =>
-              currentDateTime < new Date(req.Event_Date__c).getTime() &&
-              req.Status__c === "Approved"
-          ),
+          size: requests.length,
+          total: action.payload.total
+        }
+      };
+    }
+    case "REQ/update": {
+      const requests = action.payload.records;
+      return {
+        ...state,
+        requests: {
+          records: requests,
           size: requests.length,
           total: action.payload.total
         }
@@ -175,7 +198,7 @@ function reducer(state = defaultState, action) {
     default:
       return state;
   }
-  console.log(newState);
+  console.log({ oldState: state, newState });
   return newState;
 }
 
