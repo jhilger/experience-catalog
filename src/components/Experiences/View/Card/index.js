@@ -6,7 +6,6 @@ import Modal from "../../../Modal";
 import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
-// TODO: (Isaac) Add stamp if there is a specific date for event - "Limited Time Frame" , "Limited Dates" then click on "Request this experience" and if there is a start date, it gets put into form.
 // TODO: (Isaac) Can't change the Stategic Partner in the Experience object.
 
 const Card = ({ sort, experience, expanded = false }) => {

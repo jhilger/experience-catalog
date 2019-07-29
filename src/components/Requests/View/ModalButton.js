@@ -4,14 +4,17 @@ import Modal from "../../Modal";
 import Context from "../../Context";
 import RequestList from "./List/Bullet";
 
-const RequestModalButton = ({ history , type, buttonLabel, modalLabel }) => {
+const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
   const [{ requests }] = useContext(Context);
 
-  //TODO: (Isaac) Counting Submitted or Approved and removing the ones were the date has passed.  Data should probably auto-exlude past dates
-  const reducer = (a, c) => {
-    return (c.Status__c === type && new Date().getTime() < new Date(c.Event_Date__c).getTime()) ? a + 1 : a;
-  };
+  // TODO: (Isaac) Counting Submitted or Approved and removing the ones were the date has passed.  Data should probably auto-exlude past dates
+
+  const reducer = (a, c) =>
+    c.Status__c === type &&
+    new Date().getTime() < new Date(c.Event_Date__c).getTime()
+      ? a + 1
+      : a;
 
   return (
     <React.Fragment>
@@ -23,7 +26,8 @@ const RequestModalButton = ({ history , type, buttonLabel, modalLabel }) => {
           setShowReqs(!showReqs);
         }}
       >
-        <span>{requests.records.reduce( reducer , 0 )}</span>{buttonLabel}
+        <span>{requests.records.reduce(reducer, 0)}</span>
+        {buttonLabel}
       </button>
       <Modal
         activate={bool => {
@@ -33,7 +37,7 @@ const RequestModalButton = ({ history , type, buttonLabel, modalLabel }) => {
         }}
         active={showReqs}
       >
-        <RequestList type={type} label={modalLabel}/>
+        <RequestList type={type} label={modalLabel} />
       </Modal>
     </React.Fragment>
   );

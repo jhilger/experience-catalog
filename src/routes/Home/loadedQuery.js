@@ -25,10 +25,10 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "End_Date__c",
           // eslint-disable-next-line prettier/prettier
           "Image_URL__c",
-          "Thumbnail_URL__c",
+          "Thumbnail_URL__c"
         ].join(", "),
         "FROM Experience__c",
-        //TODO: (ISAAC) Setup boost value for sorting cards to allow hot events to be listed first. Using the Thumbnail URL value as a test.
+        // TODO: (ISAAC) Setup boost value for sorting cards to allow hot events to be listed first. Using the Thumbnail URL value as a test.
         // eslint-disable-next-line prettier/prettier
         "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (Start_Date__c > TODAY OR Start_Date__c = NULL ) ORDER BY Thumbnail_URL__c NULLS LAST,Strategic_Partner__r.Name, Name",
       ].join(" ")
