@@ -1,7 +1,8 @@
 const defaultState = {
   user: {},
   contacts: {
-    data: {}
+    data: {},
+    loading: false
   },
   toasts: [],
   experiences: {
@@ -13,12 +14,14 @@ const defaultState = {
   },
   requests: {
     records: [],
+    submitted: [],
+    approved: [],
     total: null,
     size: null
   },
   contactId: null,
   filtered: [],
-  filter: "home",
+  filter: "home"
 };
 
 export default defaultState;

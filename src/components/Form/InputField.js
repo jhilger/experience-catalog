@@ -5,6 +5,7 @@ import FormContext from "./Context";
 const InputField = ({
   name,
   label,
+  value,
   placeholder = "",
   component = "input",
   includeInBlob,
@@ -19,7 +20,13 @@ const InputField = ({
   value
 }) => {
   // eslint-disable-next-line no-unused-vars
-  let [context, state, dispatch, dispatchLocal] = [{}, {}, () => {}, () => {}];
+  let [context, state, dispatch, dispatchLocal, formData] = [
+    {},
+    {},
+    () => {},
+    () => {},
+    {}
+  ];
   try {
     [state, dispatch] = useContext(Context);
     // eslint-disable-next-line no-empty
@@ -28,6 +35,8 @@ const InputField = ({
     [context, dispatchLocal] = useContext(FormContext);
     // eslint-disable-next-line no-empty
   } catch (error) {}
+
+  console.log(formData);
 
   useEffect(() => {
     dispatchLocal({ type: "FIELD/insert", payload: { name, label } });
@@ -53,42 +62,43 @@ const InputField = ({
         {
           style: styles.input,
           className: classes.input,
+          defaultValue: value,
           id: name,
           type,
           name,
           value : value,
           rows : rows,
           onChange: e => {
-            if (includeInBlob)
-              dispatchLocal({
-                type: "FIELD/change",
-                payload: { value: e.target.value, name: e.target.name }
-              });
-            dispatch({
+            dispatchLocal({
               type: "FIELD/change",
               payload: { value: e.target.value, name: e.target.name }
             });
+            if (includeInBlob)
+              dispatch({
+                type: "FIELD/change",
+                payload: { value: e.target.value, name: e.target.name }
+              });
           },
           onBlur: e => {
-            if (includeInBlob)
-              dispatchLocal({
-                type: "FIELD/blur",
-                payload: {
-                  value: e.target.value,
-                  name: e.target.name,
-                  messages: validate(
-                    { value: e.target.value, name: e.target.name },
-                    state
-                  )
-                }
-              });
-            dispatch({
+            dispatchLocal({
               type: "FIELD/blur",
               payload: {
                 value: e.target.value,
-                name: e.target.name
+                name: e.target.name,
+                messages: validate(
+                  { value: e.target.value, name: e.target.name },
+                  state
+                )
               }
             });
+            if (includeInBlob)
+              dispatch({
+                type: "FIELD/blur",
+                payload: {
+                  value: e.target.value,
+                  name: e.target.name
+                }
+              });
             (
               validate({ value: e.target.value, name: e.target.name }, state) ||
               []
@@ -104,15 +114,15 @@ const InputField = ({
             });
           },
           onFocus: e => {
-            if (includeInBlob)
-              dispatchLocal({
-                type: "FIELD/focus",
-                payload: { value: e.target.value, name: e.target.name }
-              });
-            dispatch({
+            dispatchLocal({
               type: "FIELD/focus",
               payload: { value: e.target.value, name: e.target.name }
             });
+            if (includeInBlob)
+              dispatch({
+                type: "FIELD/focus",
+                payload: { value: e.target.value, name: e.target.name }
+              });
           },
           placeholder
         },

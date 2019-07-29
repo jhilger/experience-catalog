@@ -1,4 +1,23 @@
-import defaultState from "./defaultState";
+import { useRef, useState } from "react";
+import defaultState from "../defaultState";
+
+export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
+  const [hookState, setHookState] = useState(init(initialArg));
+
+  const state = useRef(hookState);
+  const getState = () => state.current;
+  const setState = newState => {
+    state.current = newState;
+    setHookState(newState);
+  };
+  const reduce = action => reducerFunction(getState(), action);
+  const dispatch = action =>
+    typeof action === "function"
+      ? action(dispatch, getState)
+      : setState(reduce(action));
+
+  return [hookState, dispatch];
+};
 
 const filterItems = (query, experiences) =>
   experiences.map(exp => {
@@ -11,23 +30,24 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
+  console.log(action);
+  let newState = { ...state };
   switch (action.type) {
-    case "CONT/data": {
-      const newState = {
-        ...state,
+    case "CONT/data":
+      newState = {
+        ...newState,
         contacts: {
           ...state.contacts,
           data: { ...state.contacts.data, [action.payload.Id]: action.payload }
         }
       };
-      return newState;
-    }
+      break;
     case "CONT/Id": {
-      const newState = {
-        ...state,
+      newState = {
+        ...newState,
         contactId: action.payload.Id
       };
-      return newState;
+      break;
     }
     case "CONT/remove":
       return {
@@ -54,14 +74,38 @@ function reducer(state = defaultState, action) {
     }
     case "REQ/init": {
       const requests = action.payload.records;
+      const currentDateTime = new Date().getTime();
       return {
         ...state,
         requests: {
           records: requests,
+          submitted: requests.filter(
+            req =>
+              currentDateTime < new Date(req.Event_Date__c).getTime() &&
+              req.Status__c === "Submitted"
+          ),
+          approved: requests.filter(
+            req =>
+              currentDateTime < new Date(req.Event_Date__c).getTime() &&
+              req.Status__c === "Approved"
+          ),
           size: requests.length,
           total: action.payload.total
         }
       };
+    }
+    case "REQ/create_success": {
+      const request = action.payload;
+      newState = {
+        ...state,
+        requests: {
+          ...state.requests,
+          records: state.requests.records.concat(request),
+          size: state.requests.size + 1,
+          total: state.requests.total + 1
+        }
+      };
+      break;
     }
     case "EXP/add": {
       const experiences = state.experiences.records.concat(
@@ -131,6 +175,8 @@ function reducer(state = defaultState, action) {
     default:
       return state;
   }
+  console.log(newState);
+  return newState;
 }
 
 export default reducer;
