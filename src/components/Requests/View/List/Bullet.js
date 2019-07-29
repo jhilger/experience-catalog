@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { withRouter } from "react-router-dom";
 import Context from "../../../Context";
 import Modal from "../../../Modal";
-import UpdateSingleRequest from "../../Create/SingleRequest/UpdateSingleRequest";
+import UpdateSingleRequest from "../../Update";
 import { onRequestCLick } from "../../Create/actionCreators";
 
 const RequestList = ({ history, experience }) => {

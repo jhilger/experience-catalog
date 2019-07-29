@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import Context from "../../../Context";
-import Form, { InputField, Debug } from "../../../Form";
-import TypeAhead from "../../../TypeAhead";
-import { onContactChange, onSubmitUpdate } from "../actionCreators";
+import Context from "../../Context";
+import Form, { InputField, Debug } from "../../Form";
+import TypeAhead from "../../TypeAhead";
+import { onContactChange, onSubmitUpdate } from "../Create/actionCreators";
 
 const UpdateSingleRequest = ({ initialValues = {}, onSuccess = () => {} }) => {
   const [
