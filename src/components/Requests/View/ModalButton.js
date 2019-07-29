@@ -8,13 +8,6 @@ const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
   const [{ requests }] = useContext(Context);
 
-  // TODO: (Isaac) Counting Submitted or Approved and removing the ones were the date has passed.  Data should probably auto-exlude past dates
-  const reducer = (a, c) =>
-    c.Status__c === type &&
-    new Date().getTime() < new Date(c.Event_Date__c).getTime()
-      ? a + 1
-      : a;
-
   return (
     <React.Fragment>
       <button
@@ -25,7 +18,7 @@ const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
           setShowReqs(!showReqs);
         }}
       >
-        <span>{requests.records.reduce(reducer, 0)}</span>
+        <span>{requests[type].length}</span>
         {buttonLabel}
       </button>
       <Modal

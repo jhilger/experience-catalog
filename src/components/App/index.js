@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 // import { ThemeProvider } from "styled-components";
 import Home from "../../routes/Home";
 import OAuthCallback from "../../routes/OAuthCallback";
+import RequestPage from "../../routes/Request";
 import { Provider } from "../Context";
 import reducer from "../reducer";
 import defaultState from "../defaultState";
@@ -29,6 +30,7 @@ const App = ({ value = defaultState }) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/oauth/callback" component={OAuthCallback} />
+        <Route path="/request/single/:id" component={RequestPage} />
         <Route exact path="/ajax/proxy/" component={Home} />
       </Switch>
     </Provider>

@@ -54,10 +54,21 @@ function reducer(state = defaultState, action) {
     }
     case "REQ/init": {
       const requests = action.payload.records;
+      const currentDateTime = new Date().getTime();
       return {
         ...state,
         requests: {
           records: requests,
+          submitted: requests.filter(
+            req =>
+              currentDateTime < new Date(req.Event_Date__c).getTime() &&
+              req.Status__c === "Submitted"
+          ),
+          approved: requests.filter(
+            req =>
+              currentDateTime < new Date(req.Event_Date__c).getTime() &&
+              req.Status__c === "Approved"
+          ),
           size: requests.length,
           total: action.payload.total
         }

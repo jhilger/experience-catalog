@@ -33,7 +33,7 @@ const getUser = () =>
 const modalRoot = document.getElementById("modal");
 
 hydrate(
-  <BrowserRouter>
+  <BrowserRouter basename="/">
     <App
       value={{
         jsforce,

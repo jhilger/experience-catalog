@@ -13,6 +13,8 @@ const defaultState = {
   },
   requests: {
     records: [],
+    submitted: [],
+    approved: [],
     total: null,
     size: null
   },

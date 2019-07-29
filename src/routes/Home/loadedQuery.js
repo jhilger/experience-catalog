@@ -27,7 +27,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
         "FROM Experience__c",
         // TODO: (ISAAC) Using ! to filter out disabled experiences, probably needs a field to control this
         // eslint-disable-next-line prettier/prettier
-        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (NOT Name LIKE '!%') ORDER BY Strategic_Partner__r.Name, Name",
+        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (NOT Name LIKE '!%') ORDER BY Strategic_Partner__r.Name",
       ].join(" ")
     ),
     performQuery(

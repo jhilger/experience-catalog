@@ -22,12 +22,12 @@ const Header = () => {
             <RequestModalButton
               buttonLabel="Submitted"
               modalLabel="Submitted Requests"
-              type="Submitted"
+              type="submitted"
             />
             <RequestModalButton
               buttonLabel="Approved"
               modalLabel="Approved Requests"
-              type="Approved"
+              type="approved"
             />
           </React.Fragment>
         ) : (
