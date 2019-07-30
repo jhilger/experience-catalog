@@ -34,7 +34,7 @@ const App = ({ value = defaultState }) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/oauth/callback" component={OAuthCallback} />
-        <Route path="/request/single/:id" component={RequestPage} />
+        <Route path="/requests/single/:id" component={RequestPage} />
         <Route exact path="/ajax/proxy/" component={Home} />
       </Switch>
     </Provider>

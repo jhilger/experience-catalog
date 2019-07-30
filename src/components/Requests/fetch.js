@@ -72,6 +72,7 @@ export const createOne = (
     });
     onSuccess();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     dispatch({
       type: "REQ/create_failure",
