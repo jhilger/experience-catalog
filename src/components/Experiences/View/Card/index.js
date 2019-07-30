@@ -6,7 +6,7 @@ import Modal from "../../../Modal";
 import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
-// TODO: (Isaac) Can't change the Stategic Partner in the Experience object.
+// TODO: (Isaac) Can't change the Strategic Partner in the Experience object.
 
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
