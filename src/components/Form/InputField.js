@@ -34,8 +34,6 @@ const InputField = ({
     // eslint-disable-next-line no-empty
   } catch (error) {}
 
-  console.log(formData);
-
   useEffect(() => {
     dispatchLocal({ type: "FIELD/insert", payload: { name, label } });
     dispatch({ type: "FIELD/insert", payload: { name, label } });

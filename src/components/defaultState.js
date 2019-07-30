@@ -14,6 +14,7 @@ const defaultState = {
   },
   requests: {
     records: [],
+    data: {},
     submitted: [],
     approved: [],
     total: null,

@@ -1,6 +1,22 @@
 import { useRef, useState } from "react";
 import defaultState from "../defaultState";
 
+const onlyUniqueId = (v, i, recordArray) =>
+  recordArray.findIndex(record => record.Id === v.Id) === i;
+
+const getRecordData = (records, uniqueId) =>
+  records.reduce(
+    (previousObj, record) => ({
+      ...previousObj,
+      [record[uniqueId]]: record
+    }),
+    {}
+  );
+
+const getRecordIds = (records, uniqueId) =>
+  records.filter(onlyUniqueId).map(record => record[uniqueId]);
+
+const getFullRecords = (recordIds, data) => recordIds.map(Id => data[Id]);
 export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
   const [hookState, setHookState] = useState(init(initialArg));
 
@@ -30,7 +46,6 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
-  console.log(action);
   let newState = { ...state };
   switch (action.type) {
     case "CONT/data":
@@ -57,37 +72,57 @@ function reducer(state = defaultState, action) {
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
     case "EXP/init": {
-      const experiences = action.payload.records;
+      const experiences = [
+        ...state.experiences.records,
+        ...action.payload.records
+      ];
+      const experienceData = getRecordData(experiences, "Id");
+      const experienceIds = getRecordIds(experiences, "Id");
       return {
         ...state,
         experiences: {
           ...state.experiences,
-          records: experiences,
-          data: {
-            [action.payload.Id]: action.payload
-          },
-          filtered: filterItems(state.experiences.filter, experiences),
+          records: experienceIds,
+          data: experienceData,
+          filtered: filterItems(
+            state.experiences.filter,
+            getFullRecords(experienceIds, experienceData)
+          ),
           size: experiences.length,
           total: action.payload.total
         }
       };
     }
     case "REQ/init": {
-      const requests = action.payload.records;
+      const requests = [...state.requests.records, ...action.payload.records];
+      const requestsData = getRecordData(requests, "Id");
+      const requestsIds = getRecordIds(requests, "Id");
+
       const currentDateTime = new Date().getTime();
       return {
         ...state,
         requests: {
-          records: requests,
-          submitted: requests.filter(
-            req =>
-              currentDateTime < new Date(req.Event_Date__c).getTime() &&
-              req.Status__c === "Submitted"
+          records: requestsIds,
+          data: requestsData,
+          submitted: getRecordIds(
+            requests
+              .filter(onlyUniqueId)
+              .filter(
+                req =>
+                  currentDateTime < new Date(req.Event_Date__c).getTime() &&
+                  req.Status__c === "Submitted"
+              ),
+            "Id"
           ),
-          approved: requests.filter(
-            req =>
-              currentDateTime < new Date(req.Event_Date__c).getTime() &&
-              req.Status__c === "Approved"
+          approved: getRecordIds(
+            requests
+              .filter(onlyUniqueId)
+              .filter(
+                req =>
+                  currentDateTime < new Date(req.Event_Date__c).getTime() &&
+                  req.Status__c === "Approved"
+              ),
+            "Id"
           ),
           size: requests.length,
           total: action.payload.total
@@ -108,32 +143,39 @@ function reducer(state = defaultState, action) {
       break;
     }
     case "EXP/add": {
-      const experiences = state.experiences.records.concat(
-        action.payload.records
-      );
+      const experiences = [
+        ...state.experiences.records,
+        ...action.payload.records
+      ];
+      const experienceData = getRecordData(experiences, "Id");
+      const experienceIds = getRecordIds(experiences, "Id");
       return {
         ...state,
         experiences: {
           ...state.experiences,
           records: experiences,
-          filtered: filterItems(state.experiences.filter, experiences),
+          filtered: filterItems(
+            state.experiences.filter,
+            getFullRecords(experienceIds, experienceData)
+          ),
           size: experiences.length,
           total: action.payload.total
         }
       };
     }
-    case "EXP/filtered":
+    case "EXP/filtered": {
       return {
         ...state,
         experiences: {
           ...state.experiences,
           filtered: filterItems(
             action.payload.selected,
-            state.experiences.records
+            getFullRecords(state.experiences.records, state.experiences.data)
           ),
           filter: action.payload.selected
         }
       };
+    }
     case "TOAST/error":
       return {
         ...state,
@@ -175,6 +217,7 @@ function reducer(state = defaultState, action) {
     default:
       return state;
   }
+  // eslint-disable-next-line no-console
   console.log(newState);
   return newState;
 }

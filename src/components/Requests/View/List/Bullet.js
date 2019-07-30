@@ -4,13 +4,13 @@ import Context from "../../../Context";
 
 const RequestList = ({ label, type }) => {
   const [{ requests }] = useContext(Context);
-
+  const requestRecords = requests[type].map(record => requests.data[record]);
   return (
     <div>
       <h2>{label}</h2>
       <div className="exp-req-list">
         <ul>
-          {requests[type].map(
+          {requestRecords.map(
             ({
               Event_Date__c: eventDate,
               Id,
@@ -18,7 +18,7 @@ const RequestList = ({ label, type }) => {
               Experience__r: experience
             }) => (
               <li key={Id}>
-                <Link to={`/request/single/${Id}`}>
+                <Link to={`/requests/single/${Id}`}>
                   <h5>{contact.Name}</h5>
                   {experience.Name}
                   <span className="divider">|</span>

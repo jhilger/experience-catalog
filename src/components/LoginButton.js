@@ -3,7 +3,7 @@ import { DataService } from "forcejs";
 import Context from "./Context";
 
 const LoginButton = () => {
-  const [{ loggedIn, jsforce, oAuth }, dispatch] = useContext(Context);
+  const [{ loggedIn, oAuth }, dispatch] = useContext(Context);
   const [rendered, setRendered] = useState(false);
   useEffect(() => {
     setRendered(true);
@@ -17,7 +17,6 @@ const LoginButton = () => {
       onClick={e => {
         window.onunload = () => {
           localStorage.removeItem("local_user");
-          jsforce.browser.logout();
         };
 
         oAuth
