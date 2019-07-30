@@ -99,7 +99,7 @@ const Card = ({ sort, experience, expanded = false }) => {
                   StrategicPartnerName: experience.Strategic_Partner__r.Name,
                   Event_Date__c: experience.Start_Date__c
                     ? experience.Start_Date__c
-                    : ""
+                    : Date.now()
                 }}
               />
             </Modal>
