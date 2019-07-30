@@ -6,8 +6,6 @@ import Modal from "../../../Modal";
 import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
-// TODO: (Isaac) Can't change the Strategic Partner in the Experience object.
-
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
   const [modalOpen, setModalOpen] = useState(false);
@@ -106,6 +104,7 @@ const Card = ({ sort, experience, expanded = false }) => {
 
             <div
               className="exp-card-content"
+              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: experience.Info__c }}
             />
           </div>
