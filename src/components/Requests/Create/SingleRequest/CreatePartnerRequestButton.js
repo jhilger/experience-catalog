@@ -21,13 +21,13 @@ const CreatePartnerRequestButton = ({ history, experience }) => {
       </div>
       <Modal
         activate={bool => {
-          if (bool === false || setShowReqs)
+          if (bool === false || showReqs)
             history.push(history.location.pathname);
-          setShowReqs(typeof bool === "boolean" ? bool : !setShowReqs);
+          setShowReqs(typeof bool === "boolean" ? bool : !showReqs);
         }}
         active={showReqs}
       >
-        <CreateSingleRequest experience={experience} />
+        <CreateSingleRequest onSuccess={() => setShowReqs(false)} />
       </Modal>
     </>
   );

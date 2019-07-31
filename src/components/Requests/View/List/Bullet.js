@@ -5,6 +5,7 @@ import Context from "../../../Context";
 const RequestList = ({ label, type }) => {
   const [{ requests }] = useContext(Context);
   const requestRecords = requests[type].map(record => requests.data[record]);
+  console.log(requestRecords);
   return (
     <div>
       <h2>{label}</h2>
@@ -19,8 +20,8 @@ const RequestList = ({ label, type }) => {
             }) => (
               <li key={Id}>
                 <Link to={`/requests/single/${Id}`}>
-                  <h5>{contact.Name}</h5>
-                  {experience.Name}
+                  <h5>{contact ? contact.Name : "No Contact Name"}</h5>
+                  {experience ? experience.Name : "N/A Experience"}
                   <span className="divider">|</span>
                   {eventDate}
                 </Link>

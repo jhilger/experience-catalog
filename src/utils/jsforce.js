@@ -15,15 +15,14 @@ const performQuery = (jsforce, query) => {
 
 const createSObject = (jsforce, objectName, record) =>
   new Promise((resolve, reject) => {
-    // const service = DataService.getInstance();
-    jsforce.browser.connection
-      .sobject(objectName)
-      .create(record, (err, newRecord) => {
-        console.log(record);
-
-        if (err) return reject(err);
+    const service = DataService.getInstance();
+    service
+      .create(objectName, record)
+      .then(newRecord => {
+        console.log(record, newRecord);
         return resolve(newRecord);
-      });
+      })
+      .catch(err => reject(err));
   });
 
 const updateSOjbect = (jsforce, objectName, oldRecord, newRecord) =>

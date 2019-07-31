@@ -12,6 +12,18 @@ const getRecordData = (records, uniqueId) =>
     }),
     {}
   );
+const requestSubmitted = () => {
+  const currentDateTime = Date.now();
+  return req =>
+    currentDateTime < new Date(req.Event_Date__c).getTime() &&
+    req.Status__c === "Submitted";
+};
+const requestApproved = () => {
+  const currentDateTime = Date.now();
+  return req =>
+    currentDateTime < new Date(req.Event_Date__c).getTime() &&
+    req.Status__c === "Approved";
+};
 
 const getRecordIds = (records, uniqueId) =>
   records.filter(onlyUniqueId).map(record => record[uniqueId]);
@@ -121,23 +133,11 @@ function reducer(state = defaultState, action) {
           records: requestsIds,
           data: requestsData,
           submitted: getRecordIds(
-            requests
-              .filter(onlyUniqueId)
-              .filter(
-                req =>
-                  currentDateTime < new Date(req.Event_Date__c).getTime() &&
-                  req.Status__c === "Submitted"
-              ),
+            requests.filter(onlyUniqueId).filter(requestSubmitted()),
             "Id"
           ),
           approved: getRecordIds(
-            requests
-              .filter(onlyUniqueId)
-              .filter(
-                req =>
-                  currentDateTime < new Date(req.Event_Date__c).getTime() &&
-                  req.Status__c === "Approved"
-              ),
+            requests.filter(onlyUniqueId).filter(requestApproved()),
             "Id"
           ),
           size: requests.length,
@@ -146,11 +146,19 @@ function reducer(state = defaultState, action) {
       };
     }
     case "REQ/create_success": {
-      const request = action.payload;
+      const request = action.payload.records[0];
       newState = {
         ...state,
         requests: {
           ...state.requests,
+          data: {
+            ...state.requests.data,
+            [request.Id]: request
+          },
+          submitted: [
+            ...state.requests.submitted,
+            ...(requestSubmitted()(request) ? [request.Id] : [])
+          ],
           records: state.requests.records.concat(request),
           size: state.requests.size + 1,
           total: state.requests.total + 1

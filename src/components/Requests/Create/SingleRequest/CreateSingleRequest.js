@@ -7,6 +7,7 @@ import { onContactChange, onSubmit } from "../actionCreators";
 const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
   const [{ user, contactId, contacts }, dispatch] = useContext(Context);
   const contact = contacts.data[contactId];
+  console.log(user.Id);
   return (
     <Form
       onSubmit={(...args) => {
@@ -17,7 +18,7 @@ const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
         ...initialValues,
         Status__c: "Draft",
         Contact_to_Invite__c: contactId,
-        Requester__c: user.user_id
+        Requester__c: user.Id
       }}
     >
       <TypeAhead

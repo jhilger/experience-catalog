@@ -23,7 +23,7 @@ export const onRequestCLick = request => (dispatch, getState) => {
 };
 
 export const onSubmit = (onSuccess, ev, record, rest) => dispatch => {
-  console.log(ev, rest);
+  console.log(record, ev, rest);
   dispatch(createOne(record, onSuccess));
 };
 
