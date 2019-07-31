@@ -1,5 +1,5 @@
 import React, { useEffect, useState, forwardRef } from "react";
-import { DataService } from "forcejs";
+import DataService from "forcejs/dist/force.data-service";
 
 const Search = (
   {

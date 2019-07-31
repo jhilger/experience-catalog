@@ -1,10 +1,11 @@
+import "./polyfills";
 import React from "react";
 import "./scss/foundation.css";
 import "./scss/fonts.scss";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./scss/global.scss";
 import "./scss/cardanimations.scss";
-import { OAuth } from "forcejs";
+import OAuth from "forcejs/dist/force.oauth";
 import { BrowserRouter } from "react-router-dom";
 import { hydrate } from "react-dom";
 import App from "./components/App";
@@ -27,6 +28,8 @@ const contactId = location.search
     {}
   ).id;
 
+const getCallbackUrl = () => `${window.location.origin}/oauth/callback/`;
+
 const getUser = () =>
   JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
 
@@ -44,7 +47,7 @@ hydrate(
         oAuth: OAuth.createInstance(
           window.clientId,
           window.loginUrl,
-          `${window.location.origin}/oauth/callback/`
+          getCallbackUrl()
         )
       }}
     />
