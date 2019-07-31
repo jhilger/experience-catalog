@@ -1,5 +1,5 @@
 import React, { useEffect, useState, forwardRef } from "react";
-import { DataService } from "forcejs";
+import DataService from "forcejs/dist/force.data-service";
 
 const Search = (
   {
@@ -39,7 +39,6 @@ const Search = (
       service
         .query(`SELECT ${searchField} FROM ${sObject} WHERE Id = '${value}'`)
         .then(result => {
-          console.log(result);
           if (!result) return;
           if (result.records.length) {
             setDisplayValue(result.records[0][searchField]);

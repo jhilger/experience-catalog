@@ -3,10 +3,10 @@ import React from "react";
 // import Context from "../../components/Context";
 
 const OAuthCallback = () => {
-  const event = new CustomEvent("oauthCallback", {
-    detail: window.location.href
-  });
-  window.opener.document.dispatchEvent(event);
+  window.opener.postMessage(
+    { type: "oauthCallback", url: window.location.href },
+    window.location.origin
+  );
   window.close();
   return <div />;
 };

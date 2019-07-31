@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DataService } from "forcejs";
+import DataService from "forcejs/dist/force.data-service";
 import Context from "./Context";
 
 const LoginButton = () => {
