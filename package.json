@@ -6,7 +6,7 @@
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
     "color": "^3.1.2",
-    "forcejs": "https://github.com/couturecraigj/forcejs.git",
+    "forcejs": "git+https://git@github.com/couturecraigj/forcejs.git",
     "jsforce": "https://github.com/couturecraigj/jsforce.git",
     "jsforce-ajax-proxy": "^1.0.0",
     "prop-types": "^15.7.2",

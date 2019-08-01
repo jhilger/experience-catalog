@@ -4939,9 +4939,9 @@ for-own@^1.0.0:
   dependencies:
     for-in "^1.0.1"
 
-"forcejs@https://github.com/couturecraigj/forcejs.git":
+"forcejs@git+https://git@github.com/couturecraigj/forcejs.git":
   version "2.2.1"
-  resolved "https://github.com/couturecraigj/forcejs.git#f3553ab18677fc009eb29661ee39ab199e7d1764"
+  resolved "git+https://git@github.com/couturecraigj/forcejs.git#f3553ab18677fc009eb29661ee39ab199e7d1764"
 
 forever-agent@~0.6.1:
   version "0.6.1"

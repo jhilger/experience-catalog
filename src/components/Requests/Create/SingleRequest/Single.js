@@ -22,6 +22,10 @@ const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
         name="Contact_to_Invite__c"
         label="Contact"
         sObject="Contact"
+        dropDownItemLabelField={item => (
+          <span>{`${item.Name} at ${item.Account.Name}`}</span>
+        )}
+        fields={["Name", "Account.Name"]}
         onChange={record => dispatch(onContactChange(record))}
         value={contact}
       />

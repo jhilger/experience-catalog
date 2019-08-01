@@ -16,7 +16,7 @@ import * as serviceWorker from "./serviceWorker";
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 // eslint-disable-next-line
-const contactId = location.search
+const {id: contactId} = location.search
   .replace("?", "")
   .split("&")
   .map(v => v.split("="))
@@ -26,12 +26,12 @@ const contactId = location.search
       [key]: value
     }),
     {}
-  ).id;
+  );
 
 const getCallbackUrl = () => `${window.location.origin}/oauth/callback/`;
 
 const getUser = () =>
-  JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
+  JSON.parse(localStorage.getItem("local_user")).Id || defaultState.user;
 
 const modalRoot = document.getElementById("modal");
 

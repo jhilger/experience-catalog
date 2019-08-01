@@ -15,22 +15,9 @@ const App = ({ value = defaultState }) => {
     ...defaultState,
     ...value
   });
-  const newDispatch = (action, timeout, followUpAction) => {
-    dispatch(action);
-    if (typeof timeout === "number") {
-      setTimeout(() => {
-        dispatch({
-          type: "CLEAR",
-          payload: {
-            timeStamp: action.payload.timeStamp,
-            timeOut: timeout + action.payload.timeStamp
-          }
-        });
-      }, timeout);
-    }
-  };
+
   return (
-    <Provider value={[state, newDispatch]}>
+    <Provider value={[state, dispatch]}>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/oauth/callback" component={OAuthCallback} />
