@@ -31,8 +31,11 @@ const {id: contactId} = location.search
 const getCallbackUrl = () => `${window.location.origin}/oauth/callback/`;
 
 const getUser = () =>
-  JSON.parse(localStorage.getItem("local_user")).Id || defaultState.user;
+  JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
 
+const getLoggedIn = () =>
+  (!!getUser().display_name || !!getUser().Name) &&
+  localStorage.getItem("oAuth");
 const modalRoot = document.getElementById("modal");
 
 hydrate(
@@ -41,7 +44,7 @@ hydrate(
       value={{
         jsforce,
         user: getUser(),
-        loggedIn: !!getUser().display_name || !!getUser().Name,
+        loggedIn: getLoggedIn(),
         modalRoot,
         contactId,
         oAuth: OAuth.createInstance(

@@ -20,7 +20,7 @@ const App = ({ value = defaultState }) => {
     <Provider value={[state, dispatch]}>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/oauth/callback" component={OAuthCallback} />
+        {/* <Route exact path="/oauth/callback" component={OAuthCallback} /> */}
         <Route path="/requests/single/:id" component={RequestPage} />
         <Route exact path="/ajax/proxy/" component={Home} />
       </Switch>

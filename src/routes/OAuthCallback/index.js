@@ -3,7 +3,8 @@ import React from "react";
 // import Context from "../../components/Context";
 
 const OAuthCallback = () => {
-  window.opener.postMessage(
+  console.log(window.parent.location.href);
+  window.parent.postMessage(
     { type: "oauthCallback", url: window.location.href },
     window.location.origin
   );

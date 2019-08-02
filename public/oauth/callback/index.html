@@ -2,24 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   </head>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script src="https://polyfill.io/v3/polyfill.js"></script>
     <script>
+      console.log(window.parent.location.href);
+      var type = "oauthCallback";
       if (window.opener)
         window.opener.postMessage(
           {
-            type: "oauthCallback",
+            type: type,
             url: window.location.href
           },
           "*"
         );
+      localStorage.setItem(type, window.location.href);
       window.close();
     </script>
   </body>
