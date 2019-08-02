@@ -10,7 +10,14 @@ import { BrowserRouter } from "react-router-dom";
 import { hydrate } from "react-dom";
 import App from "./components/App";
 import jsforce from "./jsforce";
-import defaultState from "./components/defaultState";
+import {
+  getUser,
+  authNeeded,
+  contactId,
+  getCallbackUrl,
+  loggedIn,
+  modalRoot
+} from "./startup";
 
 import * as serviceWorker from "./serviceWorker";
 
@@ -19,33 +26,15 @@ import * as serviceWorker from "./serviceWorker";
 // TODO: (Isaac) Probably will need to login automatically since the user will see the ww2.txtav.com login screen first.
 
 // ReactDOM.render(<App />, document.getElementById('root'));
-// eslint-disable-next-line
-const contactId = location.search
-  .replace("?", "")
-  .split("&")
-  .map(v => v.split("="))
-  .reduce(
-    (p, [key, value]) => ({
-      ...p,
-      [key]: value
-    }),
-    {}
-  ).id;
-
-const getCallbackUrl = () => `${window.location.origin}/oauth/callback/`;
-
-const getUser = () =>
-  JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
-
-const modalRoot = document.getElementById("modal");
 
 hydrate(
   <BrowserRouter basename="/">
     <App
       value={{
         jsforce,
+        authNeeded: !!authNeeded,
         user: getUser(),
-        loggedIn: !!getUser().display_name || !!getUser().Name,
+        loggedIn: loggedIn(),
         modalRoot,
         contactId,
         oAuth: OAuth.createInstance(

@@ -3,27 +3,26 @@ import DataService from "forcejs/dist/force.data-service";
 import Context from "./Context";
 
 const LoginButton = () => {
-  const [{ loggedIn, oAuth }, dispatch] = useContext(Context);
+  const [{ loggedIn, oAuth, authNeeded }, dispatch] = useContext(Context);
   const [rendered, setRendered] = useState(false);
+  console.log(oAuth);
   useEffect(() => {
     setRendered(true);
   }, []);
 
   if (loggedIn || !rendered) return null;
+  if (!authNeeded) return null;
   return (
     <button
       type="button"
       className="fancy"
       onClick={e => {
-        window.onunload = () => {
-          localStorage.removeItem("local_user");
-        };
-
         oAuth
           .login()
-          .then(oauthResult =>
-            DataService.createInstance(oauthResult, { useProxy: false })
-          )
+          .then(oauthResult => {
+            DataService.createInstance(oauthResult, { useProxy: false });
+            return localStorage.setItem("oAuth", JSON.stringify(oauthResult));
+          })
           .then(() => {
             const service = DataService.getInstance();
             service.retrieve("User", service.getUserId()).then(response => {
