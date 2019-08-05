@@ -7,6 +7,8 @@ import AdditionalFieldsContext from "../AdditionalFields/Context";
 const TypeAhead = ({
   value: Id,
   onChange = () => {},
+  fields = ["Name"],
+  dropDownItemLabelField = item => item.Name,
   name,
   label,
   sObject
@@ -53,6 +55,7 @@ const TypeAhead = ({
     if (menuRef.current && !menuRef.current.mouseOver) return setRecords([]);
   };
   const downKey = e => {
+    if (!records) return;
     if (typeof hovered !== "string") return setHovered(records[0].Id);
     const index = records.findIndex(v => v.Id === hovered);
     if (index === records.length - 1) return;
@@ -117,6 +120,7 @@ const TypeAhead = ({
         <label htmlFor={name}>{label}</label>
         <Search
           sObject={sObject}
+          fields={fields}
           ref={ref}
           onChange={(searchValue, more, newRecords) => {
             if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
@@ -166,7 +170,7 @@ const TypeAhead = ({
         ref={menuRef}
         list={records}
         hovered={hovered}
-        labelField="Name"
+        itemLabelField={dropDownItemLabelField}
         onHover={setHovered}
         onItemClicked={newRecord => {
           setRecords([]);

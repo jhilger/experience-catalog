@@ -16,7 +16,6 @@ const Home = () => {
   const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("oauthCallback", console.log);
     setRendered(true);
   }, []);
 

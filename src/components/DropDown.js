@@ -3,7 +3,7 @@ import React, { useState, useEffect, forwardRef } from "react";
 const DropDown = (
   {
     list = [],
-    labelField,
+    itemLabelField = item => item.Name,
     hovered,
     onHover = () => {},
     onItemClicked = () => {}
@@ -41,8 +41,8 @@ const DropDown = (
             onItemClicked(item);
           }}
         >
-          {item[labelField]}
-        </li>
+          {itemLabelField(item)}
+        </a>
       ))}
     </ul>
   );
