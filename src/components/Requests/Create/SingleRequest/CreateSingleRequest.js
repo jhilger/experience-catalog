@@ -20,7 +20,7 @@ const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
       }}
       initialValues={{
         ...initialValues,
-        Status__c: "Draft",
+        Status__c: "Submitted",
         Contact_to_Invite__c: contactId,
         Requester__c: user.Id,
         Experience__r: expId
