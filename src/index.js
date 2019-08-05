@@ -52,11 +52,7 @@ hydrate(
         jsforce,
         authNeeded: !!authNeeded,
         user: getUser(),
-<<<<<<< HEAD
-        loggedIn: loggedIn(),
-=======
         loggedIn: getLoggedIn(),
->>>>>>> 0580c3a69cf9802dddf268c4d3b0c5f825ec4795
         modalRoot,
         contactId,
         oAuth: OAuth.createInstance(
