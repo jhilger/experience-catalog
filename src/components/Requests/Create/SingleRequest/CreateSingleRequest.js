@@ -26,7 +26,8 @@ const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
         Experience__r: expId
       }}
     >
-      <div>Inviting to {experienceName}</div>
+      <h2>Event:</h2>
+      <h4>{experienceName}</h4>
       <TypeAhead
         required
         name="Contact_to_Invite__c"
