@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import Context from "../../../Context";
 
 const RequestList = ({ label, type }) => {
-  const [{ requests }] = useContext(Context);
+  const [{ requests, experienceId }] = useContext(Context);
   const requestRecords = requests[type].map(record => requests.data[record]);
-  console.log(requestRecords);
   return (
     <div>
       <h2>{label}</h2>

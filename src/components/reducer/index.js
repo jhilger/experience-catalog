@@ -58,6 +58,7 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
+  console.log(action);
   let newState = { ...state };
   switch (action.type) {
     case "CONT/data":
@@ -79,6 +80,25 @@ function reducer(state = defaultState, action) {
         requestId: action.payload.Id
       };
       break;
+    case "EXP/data":
+      newState = {
+        ...newState,
+        experiences: {
+          ...state.experiences,
+          data: {
+            ...state.experiences.data,
+            [action.payload.Id]: action.payload
+          }
+        },
+        experienceId: action.payload.Id
+      };
+      break;
+    case "EXP/remove_data": {
+      return {
+        ...state,
+        experienceId: null
+      };
+    }
     case "REQ/Id":
       newState = {
         ...newState,

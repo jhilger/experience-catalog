@@ -6,6 +6,7 @@ const defaultState = {
   },
   toasts: [],
   experiences: {
+    data: {},
     records: [],
     total: null,
     size: null,
@@ -21,6 +22,7 @@ const defaultState = {
     total: null,
     size: null
   },
+  experienceId: null,
   contactId: null,
   requestId: null,
   filtered: [],

@@ -5,22 +5,28 @@ import TypeAhead from "../../../TypeAhead";
 import { onContactChange, onSubmit } from "../actionCreators";
 
 const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
-  const [{ user, contactId, contacts }, dispatch] = useContext(Context);
+  const [
+    { user, contactId, contacts, experienceId, experiences },
+    dispatch
+  ] = useContext(Context);
   const contact = contacts.data[contactId];
-  console.log(user.Id);
+  const expId = experiences.data[experienceId];
+  const experienceName = experiences.data[expId].Name;
+
   return (
     <Form
       onSubmit={(...args) => {
         dispatch(onSubmit(onSuccess, ...args));
-        console.log(...args);
       }}
       initialValues={{
         ...initialValues,
         Status__c: "Draft",
         Contact_to_Invite__c: contactId,
-        Requester__c: user.Id
+        Requester__c: user.Id,
+        Experience__r: expId
       }}
     >
+      <div>Inviting to {experienceName}</div>
       <TypeAhead
         required
         name="Contact_to_Invite__c"

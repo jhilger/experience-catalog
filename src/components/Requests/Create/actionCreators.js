@@ -15,6 +15,14 @@ export const onContactChange = record => (dispatch, getState) => {
   });
 };
 
+export const onExpClick = experienceId => (dispatch, getState) => {
+  console.log(experienceId);
+  dispatch({
+    type: "EXP/data",
+    payload: experienceId
+  });
+};
+
 export const onRequestCLick = request => (dispatch, getState) => {
   dispatch({
     type: "REQ/data",
