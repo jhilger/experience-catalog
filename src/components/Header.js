@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import Context from "./Context";
 import LoginButton from "./LoginButton";
-//import ExperienceModalButton from "./Experiences/View/ModalButton";
+// import ExperienceModalButton from "./Experiences/View/ModalButton";
 import RequestModalButton from "./Requests/View/ModalButton";
 import "../scss/header.scss";
+
+// TODO: (Isaac) combine status into a single modal with filters
 
 const Header = () => {
   const [{ loggedIn, user }] = useContext(Context);
@@ -18,9 +20,17 @@ const Header = () => {
       <div className="exp-user">
         {loggedIn ? (
           <React.Fragment>
-            <h6>Welcome {user.display_name}</h6>   
-            <RequestModalButton buttonLabel="Submitted" modalLabel="Submitted Requests" type="Submitted" />
-            <RequestModalButton buttonLabel="Approved" modalLabel="Approved Requests" type="Approved" />
+            <h6>Welcome {user.display_name}</h6>
+            <RequestModalButton
+              buttonLabel="Submitted"
+              modalLabel="Submitted Requests"
+              type="Submitted"
+            />
+            <RequestModalButton
+              buttonLabel="Approved"
+              modalLabel="Approved Requests"
+              type="Approved"
+            />
           </React.Fragment>
         ) : (
           <LoginButton />
@@ -31,7 +41,6 @@ const Header = () => {
 };
 
 export default Header;
-
 
 /*
 const Header = () => {

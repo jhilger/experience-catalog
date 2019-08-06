@@ -6,9 +6,6 @@ import Modal from "../../../Modal";
 import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
-// TODO: (Isaac) Add stamp if there is a specific date for event - "Limited Time Frame" , "Limited Dates" then click on "Request this experience" and if there is a start date, it gets put into form.
-// TODO: (Isaac) Can't change the Stategic Partner in the Experience object.
-
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
   const [modalOpen, setModalOpen] = useState(false);
@@ -100,13 +97,14 @@ const Card = ({ sort, experience, expanded = false }) => {
                   StrategicPartnerName: experience.Strategic_Partner__r.Name,
                   Event_Date__c: experience.Start_Date__c
                     ? experience.Start_Date__c
-                    : ""
+                    : Date.now()
                 }}
               />
             </Modal>
 
             <div
               className="exp-card-content"
+              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: experience.Info__c }}
             />
           </div>

@@ -5,7 +5,7 @@ import DropDown from "./DropDown";
 import FormContext from "./Form/Context";
 import AdditionalFieldsContext from "./AdditionalFields/Context";
 
-// TODO: (Isaac) Probably a way to show unique contacts listed in dropdown since there are multiple contacts with the same name and possibly same account.
+// TODO: (Isaac) Probably need a way to show unique contacts listed in dropdown since there are multiple contacts with the same name and possibly same account.
 
 const TypeAhead = ({
   value: Id,
