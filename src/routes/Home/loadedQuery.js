@@ -28,9 +28,9 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Thumbnail_URL__c"
         ].join(", "),
         "FROM Experience__c",
-        // TODO: (ISAAC) Using ! to filter out disabled experiences, probably needs a field to control this
+        // TODO: (ISAAC) Setup boost value for sorting cards to allow hot events to be listed first. Using the Thumbnail URL value as a test.
         // eslint-disable-next-line prettier/prettier
-        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (NOT Name LIKE '!%') ORDER BY Strategic_Partner__r.Name",
+        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (Start_Date__c > TODAY OR Start_Date__c = NULL ) ORDER BY Thumbnail_URL__c NULLS LAST,Strategic_Partner__r.Name, Name",
       ].join(" ")
     ),
     performQuery(
@@ -41,9 +41,6 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Id",
           "Status__c",
           "Contact_to_Invite__r.Name",
-          "Contact_to_Invite__r.Id",
-          "Contact_to_Invite__c",
-          "Customer_Restrictions__c",
           "Event_Date__c",
           "Experience__r.Name",
           // eslint-disable-next-line prettier/prettier
@@ -51,7 +48,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
         ].join(", "),
         "FROM Strategic_Partner_Request__c",
         "WHERE",
-        [`Requester__c = '${user.Id}'`].join(" AND ")
+        [`Requester__c = '${user.user_id}'`].join(" AND ")
       ].join(" ")
     ),
     contactId &&
