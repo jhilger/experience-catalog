@@ -5,26 +5,38 @@ import TypeAhead from "../../../TypeAhead";
 import { onContactChange, onSubmit } from "../actionCreators";
 
 const SingleRequestCreate = ({ initialValues = {}, onSuccess = () => {} }) => {
-  const [{ user, contactId, contacts }, dispatch] = useContext(Context);
+  const [
+    { user, contactId, contacts, experienceId, experiences },
+    dispatch
+  ] = useContext(Context);
   const contact = contacts.data[contactId];
+  const expId = experiences.data[experienceId];
+  const experienceName = experiences.data[expId].Name;
+
   return (
     <Form
       onSubmit={(...args) => {
         dispatch(onSubmit(onSuccess, ...args));
-        console.log(...args);
       }}
       initialValues={{
         ...initialValues,
-        Status__c: "Draft",
+        Status__c: "Submitted",
         Contact_to_Invite__c: contactId,
-        Requester__c: user.user_id
+        Requester__c: user.Id,
+        Experience__r: expId
       }}
     >
+      <h2>Event:</h2>
+      <h4>{experienceName}</h4>
       <TypeAhead
         required
         name="Contact_to_Invite__c"
         label="Contact"
         sObject="Contact"
+        dropDownItemLabelField={item => (
+          <span>{`${item.Name} at ${item.Account.Name}`}</span>
+        )}
+        fields={["Name", "Account.Name"]}
         onChange={record => dispatch(onContactChange(record))}
         value={contact}
       />

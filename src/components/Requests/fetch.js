@@ -20,7 +20,7 @@ export const fetchAll = () => async (dispatch, getState) => {
       ].join(", "),
       "FROM Strategic_Partner_Request__c",
       "WHERE",
-      [`Requester__c = '${user.user_id}'`].join(" AND ")
+      [`Requester__c = '${user.Id}'`].join(" AND ")
     ].join(" ")
   );
   return result;
@@ -42,7 +42,7 @@ export const fetchOne = id => async (dispatch, getState) => {
       ].join(", "),
       "FROM Strategic_Partner_Request__c",
       "WHERE",
-      [`Requester__c = '${user.user_id}'`, `Id = '${id}'`].join(" AND ")
+      [`Requester__c = '${user.Id}'`, `Id = '${id}'`].join(" AND ")
     ].join(" ")
   );
   return result;
@@ -72,6 +72,7 @@ export const createOne = (
     });
     onSuccess();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     dispatch({
       type: "REQ/create_failure",

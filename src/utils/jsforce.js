@@ -1,21 +1,28 @@
-const performQuery = (jsforce, query) =>
-  new Promise((resolve, reject) => {
-    jsforce.browser.connection.query(query, (err, result) => {
-      if (err) return reject(err);
-      return resolve(result);
-    });
-  });
+import DataService from "forcejs/dist/force.data-service";
+
+const performQuery = (jsforce, query) => {
+  // return new Promise((resolve, reject) => {
+
+  //   jsforce.browser.connection.query(query, (err, result) => {
+  //     if (err) return reject(err);
+  //     return resolve(result);
+  //   });
+  // });
+  const service = DataService.getInstance();
+  if (!service) return;
+  return service.query(query);
+};
 
 const createSObject = (jsforce, objectName, record) =>
   new Promise((resolve, reject) => {
-    jsforce.browser.connection
-      .sobject(objectName)
-      .create(record, (err, newRecord) => {
-        console.log(record);
-
-        if (err) return reject(err);
+    const service = DataService.getInstance();
+    service
+      .create(objectName, record)
+      .then(newRecord => {
+        console.log(record, newRecord);
         return resolve(newRecord);
-      });
+      })
+      .catch(err => reject(err));
   });
 
 const updateSOjbect = (jsforce, objectName, oldRecord, newRecord) =>

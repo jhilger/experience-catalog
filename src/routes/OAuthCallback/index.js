@@ -1,9 +1,14 @@
 import React from "react";
+// import { DataService } from "forcejs";
+// import Context from "../../components/Context";
 
-class OAuthCallback extends React.Component {
-  render() {
-    return <div />;
-  }
-}
-
+const OAuthCallback = () => {
+  console.log(window.parent.location.href);
+  window.parent.postMessage(
+    { type: "oauthCallback", url: window.location.href },
+    window.location.origin
+  );
+  window.close();
+  return <div />;
+};
 export default OAuthCallback;

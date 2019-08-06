@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import Context from "./Context";
 import LoginButton from "./LoginButton";
-import ExperienceModalButton from "./Experiences/View/ModalButton";
-import RequestModalButton from "./Requests/View/ModalButton";
+// import ExperienceModalButton from "./Experiences/View/ModalButton";
+import RequestModalButton from "./Requests/View/List/ModalButton";
 import "../scss/header.scss";
 
 const Header = () => {
-  const [{ loggedIn, user, contacts, contactId }] = useContext(Context);
-  const contact = contacts.data[contactId];
+  const [{ loggedIn, user }] = useContext(Context);
   return (
     <header>
       <div className="exp-title">
@@ -19,10 +18,17 @@ const Header = () => {
       <div className="exp-user">
         {loggedIn ? (
           <React.Fragment>
-            <h6>Welcome {user.display_name}</h6>
-            {contact && <h6>Inviting {contact.Name}</h6>}
-            <RequestModalButton />
-            <ExperienceModalButton />
+            <h6>Welcome {user.Name}</h6>
+            <RequestModalButton
+              buttonLabel="Submitted"
+              modalLabel="Submitted Requests"
+              type="submitted"
+            />
+            <RequestModalButton
+              buttonLabel="Approved"
+              modalLabel="Approved Requests"
+              type="approved"
+            />
           </React.Fragment>
         ) : (
           <LoginButton />

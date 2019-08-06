@@ -22,7 +22,7 @@ const UpdateSingleRequest = ({ initialValues = {}, onSuccess = () => {} }) => {
         ...initialValues,
         ...request,
         Contact_to_Invite__c: contactId,
-        Requester__c: user.user_id
+        Requester__c: user.Id
       }}
     >
       <TypeAhead

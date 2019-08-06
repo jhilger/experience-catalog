@@ -1,17 +1,16 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import Search from "./Search";
-import DropDown from "./DropDown";
-import FormContext from "./Form/Context";
-import AdditionalFieldsContext from "./AdditionalFields/Context";
+import Search from "../Search";
+import DropDown from "../DropDown";
+import FormContext from "../Form/Context";
+import AdditionalFieldsContext from "../AdditionalFields/Context";
 
 const TypeAhead = ({
   value: Id,
   onChange = () => {},
-  dropDownItemLabelField = item => item.Name,
   fields = ["Name"],
+  dropDownItemLabelField = item => item.Name,
   name,
   label,
-  className,
   sObject
 }) => {
   const ref = useRef();
@@ -63,7 +62,6 @@ const TypeAhead = ({
     return setHovered(records[index + 1].Id);
   };
   const upKey = e => {
-    if (!records) return;
     if (typeof hovered !== "string")
       return setHovered(records[records.length - 1].Id);
     const index = records.findIndex(v => v.Id === hovered);
@@ -116,7 +114,9 @@ const TypeAhead = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
   return (
-    <div className={className}>
+    <div style={{ display: "inline-block", position: "relative" }}>
+      <div style={{ display: "inline-block" }}>
+        {/* eslint-disable-next-line jsx-a11y/label-has-for */}
         <label htmlFor={name}>{label}</label>
         <Search
           sObject={sObject}
@@ -152,7 +152,19 @@ const TypeAhead = ({
           }}
           value={record}
           autoComplete="new-password"
-        />     
+        />
+        {record.Id && (
+          <button
+            type="button"
+            onClick={() => {
+              clearValues();
+              ref.current.focus();
+            }}
+          >
+            X
+          </button>
+        )}
+      </div>
 
       <DropDown
         ref={menuRef}
@@ -180,80 +192,3 @@ const TypeAhead = ({
 };
 
 export default TypeAhead;
-
-
-/*return (
-  <div style={{ display: "inline-block", position: "relative" }}>
-    <div style={{ display: "inline-block" }}>
-      
-      <label htmlFor={name}>{label}</label>
-      <Search
-        sObject={sObject}
-        ref={ref}
-        onChange={(searchValue, more, newRecords) => {
-          if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
-          setRecords(newRecords);
-          setRecord(searchValue);
-        }}
-        onBlur={onBlur}
-        type="text"
-        hovered={hovered}
-        inputName={name}
-        onKeyDown={e => {
-          switch (e.keyCode) {
-            case 40:
-              return downKey(e);
-            case 9:
-              return tabKey(e);
-            case 38:
-              return upKey(e);
-            case 13:
-              return enterKey(e);
-            case 27:
-              return escKey(e);
-            case 8:
-            case 46:
-              return backspaceKey(e);
-            default:
-              break;
-          }
-        }}
-        value={record}
-        autoComplete="new-password"
-      />
-      {record.Id && (
-        <button
-          type="button"
-          onClick={() => {
-            clearValues();
-            ref.current.focus();
-          }}
-        >
-          X
-          </button>
-      )}
-    </div>
-
-    <DropDown
-      ref={menuRef}
-      list={records}
-      hovered={hovered}
-      labelField="Name"
-      onHover={setHovered}
-      onItemClicked={newRecord => {
-        setRecords([]);
-        setRecord(newRecord);
-        onChange(newRecord);
-
-        formDispatch({
-          type: "FIELD/change",
-          payload: { value: newRecord.Id, name }
-        });
-        addedFieldsDispatch({
-          type: "FIELD/change",
-          payload: { value: newRecord.Name, name }
-        });
-      }}
-    />
-  </div>
-);*/

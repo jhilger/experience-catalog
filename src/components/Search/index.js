@@ -8,10 +8,10 @@ const Search = (
     inputName,
     className,
     name,
-    placeholder,
     onChange = () => {},
     onKeyDown = () => {},
-    onBlur = () => {},  
+    onBlur = () => {},
+    style = { color: "black" },
     fields = ["Name"],
     component = "input",
     limit = 5,
@@ -24,18 +24,13 @@ const Search = (
     typeof value === "object" && value[searchField] ? value[searchField] : ""
   );
   const [query, setQuery] = useState("");
-  const [placeholderValue, setPlaceholderValue] = useState(placeholder);
+  const [placeholderValue, setPlaceholderValue] = useState("");
   const [record, setRecord] = useState(typeof value === "object" ? value : {});
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    const service = DataService.getInstance();
-    if (
-      typeof value === "string" &&
-      value &&
-      [15, 18].includes(value.length) &&
-      !value.split("").includes(" ")
-    ) {
+    if (typeof value === "string" && value && [15, 18].includes(value.length)) {
+      const service = DataService.getInstance();
       service
         .query(`SELECT ${searchField} FROM ${sObject} WHERE Id = '${value}'`)
         .then(result => {
@@ -46,10 +41,8 @@ const Search = (
           }
           setRecord(result.records[0]);
         })
-        .catch(err => {
-          // eslint-disable-next-line no-console
-          console.error(err);
-        });
+        // eslint-disable-next-line no-console
+        .catch(err => console.error(err));
     } else if (typeof value === "object" && value[searchField]) {
       setPlaceholderValue(value[searchField]);
       setRecord(value);
@@ -63,8 +56,8 @@ const Search = (
   }, [value]);
 
   useEffect(() => {
-    const service = DataService.getInstance();
-    if (query)
+    if (query) {
+      const service = DataService.getInstance();
       service
         .query(query)
         .then(result => {
@@ -75,14 +68,20 @@ const Search = (
           // eslint-disable-next-line no-console
           console.error(err);
         });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
   return React.createElement(component, {
     className,
     ref,
     name,
-    required : "required",
-    id: name,    
+    id: name,
+    style: {
+      ...style,
+      color: !record.Id ? style.color || "black" : "transparent",
+      textShadow: record.Id ? `0 0 0 ${style.color || "black"}` : "none",
+      cursor: record.Id ? "pointer" : "auto"
+    },
     autoComplete: "new-password",
     onChange: e => {
       if (
@@ -115,44 +114,3 @@ const Search = (
 };
 
 export default forwardRef(Search);
-
-/*return React.createElement(component, {
-  className,
-  ref,
-  name,
-  id: name,
-  style: {
-    ...style,
-    color: !record.Id ? style.color || "black" : "transparent",
-    textShadow: record.Id ? `0 0 0 ${style.color || "black"}` : "none",
-    cursor: record.Id ? "pointer" : "auto"
-  },
-  autoComplete: "new-password",
-  onChange: e => {
-    if (
-      record &&
-      record[searchField] &&
-      record[searchField] === displayValue
-    ) {
-      setRecord({});
-    }
-    // Fix this as it is causing an issue with displaying
-    if (!e.target.value && record[searchField]) {
-      onChange("", false, records);
-      return setDisplayValue(record[searchField]);
-    }
-    setDisplayValue(e.target.value);
-
-    if (e.target.value)
-      setQuery(
-        `SELECT Id, ${fields.join(
-          ", "
-        )} FROM ${sObject} WHERE ${searchField} LIKE '%${e.target.value.trim()}%' LIMIT ${limit}`
-      );
-  },
-  onBlur,
-  onKeyDown,
-  placeholder: placeholderValue,
-  value: displayValue,
-  ...props
-});*/

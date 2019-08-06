@@ -3,7 +3,7 @@ import React, { useState, useEffect, forwardRef } from "react";
 const DropDown = (
   {
     list = [],
-    labelField,
+    itemLabelField = item => item.Name,
     hovered,
     onHover = () => {},
     onItemClicked = () => {}
@@ -17,8 +17,9 @@ const DropDown = (
     setCurrentHover(hovered);
   }, [hovered]);
 
-  return (    
-  <ul className={ (list.length > 0) ? "active" : "" }   
+  return (
+    <ul
+      className={list.length > 0 ? "active" : ""}
       ref={ref}
       onMouseOver={() => (ref.current.mouseOver = true)}
       onFocus={() => (ref.current.mouseOver = true)}
@@ -26,7 +27,13 @@ const DropDown = (
       onBlur={() => (ref.current.mouseOver = false)}
     >
       {list.map(item => (
-        <li
+        <a
+          href="#clickItem"
+          style={{
+            display: "block",
+            color: "#222",
+            backgroundColor: currentHover === item.Id ? "#ccc" : ""
+          }}
           onMouseOver={() => {
             setCurrentHover(item.Id);
             onHover(item.Id);
@@ -41,8 +48,8 @@ const DropDown = (
             onItemClicked(item);
           }}
         >
-          {item[labelField]}
-        </li>
+          {itemLabelField(item)}
+        </a>
       ))}
     </ul>
   );
@@ -50,8 +57,7 @@ const DropDown = (
 
 export default forwardRef(DropDown);
 
-
-/*return (
+/* return (
   <div
     style={{ position: "absolute", backgroundColor: "#ffffff" }}
     ref={ref}
@@ -87,4 +93,4 @@ export default forwardRef(DropDown);
       </a>
     ))}
   </div>
-);*/
+); */

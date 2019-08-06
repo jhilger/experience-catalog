@@ -1,6 +1,34 @@
 import { useRef, useState } from "react";
-import defaultState from "./defaultState";
+import defaultState from "../defaultState";
 
+const onlyUniqueId = (v, i, recordArray) =>
+  recordArray.findIndex(record => record.Id === v.Id) === i;
+
+const getRecordData = (records, uniqueId) =>
+  records.reduce(
+    (previousObj, record) => ({
+      ...previousObj,
+      [record[uniqueId]]: record
+    }),
+    {}
+  );
+const requestSubmitted = () => {
+  const currentDateTime = Date.now();
+  return req =>
+    currentDateTime < new Date(req.Event_Date__c).getTime() &&
+    req.Status__c === "Submitted";
+};
+const requestApproved = () => {
+  const currentDateTime = Date.now();
+  return req =>
+    currentDateTime < new Date(req.Event_Date__c).getTime() &&
+    req.Status__c === "Approved";
+};
+
+const getRecordIds = (records, uniqueId) =>
+  records.filter(onlyUniqueId).map(record => record[uniqueId]);
+
+const getFullRecords = (recordIds, data) => recordIds.map(Id => data[Id]);
 export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
   const [hookState, setHookState] = useState(init(initialArg));
 
@@ -30,7 +58,7 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
-  console.log(action, action.payload);
+  console.log(action);
   let newState = { ...state };
   switch (action.type) {
     case "CONT/data":
@@ -52,6 +80,25 @@ function reducer(state = defaultState, action) {
         requestId: action.payload.Id
       };
       break;
+    case "EXP/data":
+      newState = {
+        ...newState,
+        experiences: {
+          ...state.experiences,
+          data: {
+            ...state.experiences.data,
+            [action.payload.Id]: action.payload
+          }
+        },
+        experienceId: action.payload.Id
+      };
+      break;
+    case "EXP/remove_data": {
+      return {
+        ...state,
+        experienceId: null
+      };
+    }
     case "REQ/Id":
       newState = {
         ...newState,
@@ -73,56 +120,65 @@ function reducer(state = defaultState, action) {
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
     case "EXP/init": {
-      const experiences = action.payload.records;
+      const experiences = [
+        ...state.experiences.records,
+        ...action.payload.records
+      ];
+      const experienceData = getRecordData(experiences, "Id");
+      const experienceIds = getRecordIds(experiences, "Id");
       return {
         ...state,
         experiences: {
           ...state.experiences,
-          records: experiences,
-          data: {
-            [action.payload.Id]: action.payload
-          },
-          filtered: filterItems(state.experiences.filter, experiences),
+          records: experienceIds,
+          data: experienceData,
+          filtered: filterItems(
+            state.experiences.filter,
+            getFullRecords(experienceIds, experienceData)
+          ),
           size: experiences.length,
           total: action.payload.total
         }
       };
     }
     case "REQ/init": {
-      const requests = action.payload.records;
+      const requests = [...state.requests.records, ...action.payload.records];
+      const requestsData = getRecordData(requests, "Id");
+      const requestsIds = getRecordIds(requests, "Id");
+
+      const currentDateTime = new Date().getTime();
       return {
         ...state,
         requests: {
-          records: requests,
-          data: requests.reduce(
-            (p, record) => ({
-              ...p,
-              [record.Id]: record
-            }),
-            {}
+          records: requestsIds,
+          data: requestsData,
+          submitted: getRecordIds(
+            requests.filter(onlyUniqueId).filter(requestSubmitted()),
+            "Id"
+          ),
+          approved: getRecordIds(
+            requests.filter(onlyUniqueId).filter(requestApproved()),
+            "Id"
           ),
           size: requests.length,
           total: action.payload.total
         }
       };
     }
-    case "REQ/update": {
-      const requests = action.payload.records;
-      return {
-        ...state,
-        requests: {
-          records: requests,
-          size: requests.length,
-          total: action.payload.total
-        }
-      };
-    }
     case "REQ/create_success": {
-      const request = action.payload;
+      const request = action.payload.records[0];
       newState = {
         ...state,
         requests: {
           ...state.requests,
+          data: {
+            ...state.requests.data,
+            [request.Id]: request
+          },
+          submitted: [
+            ...state.requests.submitted,
+            ...(requestSubmitted()(request) ? [request.Id] : [])
+          ],
           records: state.requests.records.concat(request),
           size: state.requests.size + 1,
           total: state.requests.total + 1
@@ -131,32 +187,39 @@ function reducer(state = defaultState, action) {
       break;
     }
     case "EXP/add": {
-      const experiences = state.experiences.records.concat(
-        action.payload.records
-      );
+      const experiences = [
+        ...state.experiences.records,
+        ...action.payload.records
+      ];
+      const experienceData = getRecordData(experiences, "Id");
+      const experienceIds = getRecordIds(experiences, "Id");
       return {
         ...state,
         experiences: {
           ...state.experiences,
           records: experiences,
-          filtered: filterItems(state.experiences.filter, experiences),
+          filtered: filterItems(
+            state.experiences.filter,
+            getFullRecords(experienceIds, experienceData)
+          ),
           size: experiences.length,
           total: action.payload.total
         }
       };
     }
-    case "EXP/filtered":
+    case "EXP/filtered": {
       return {
         ...state,
         experiences: {
           ...state.experiences,
           filtered: filterItems(
             action.payload.selected,
-            state.experiences.records
+            getFullRecords(state.experiences.records, state.experiences.data)
           ),
           filter: action.payload.selected
         }
       };
+    }
     case "TOAST/error":
       return {
         ...state,
@@ -198,7 +261,8 @@ function reducer(state = defaultState, action) {
     default:
       return state;
   }
-  console.log({ oldState: state, newState });
+  // eslint-disable-next-line no-console
+  console.log(newState);
   return newState;
 }
 
