@@ -8,10 +8,10 @@ const Search = (
     inputName,
     className,
     name,
-    placeholder,
     onChange = () => {},
     onKeyDown = () => {},
-    onBlur = () => {},  
+    onBlur = () => {},
+    style = { color: "black" },
     fields = ["Name"],
     component = "input",
     limit = 5,
@@ -24,7 +24,7 @@ const Search = (
     typeof value === "object" && value[searchField] ? value[searchField] : ""
   );
   const [query, setQuery] = useState("");
-  const [placeholderValue, setPlaceholderValue] = useState(placeholder);
+  const [placeholderValue, setPlaceholderValue] = useState("");
   const [record, setRecord] = useState(typeof value === "object" ? value : {});
   const [records, setRecords] = useState([]);
 
@@ -81,8 +81,13 @@ const Search = (
     className,
     ref,
     name,
-    required : "required",
-    id: name,    
+    id: name,
+    style: {
+      ...style,
+      color: !record.Id ? style.color || "black" : "transparent",
+      textShadow: record.Id ? `0 0 0 ${style.color || "black"}` : "none",
+      cursor: record.Id ? "pointer" : "auto"
+    },
     autoComplete: "new-password",
     onChange: e => {
       if (
@@ -115,44 +120,3 @@ const Search = (
 };
 
 export default forwardRef(Search);
-
-/*return React.createElement(component, {
-  className,
-  ref,
-  name,
-  id: name,
-  style: {
-    ...style,
-    color: !record.Id ? style.color || "black" : "transparent",
-    textShadow: record.Id ? `0 0 0 ${style.color || "black"}` : "none",
-    cursor: record.Id ? "pointer" : "auto"
-  },
-  autoComplete: "new-password",
-  onChange: e => {
-    if (
-      record &&
-      record[searchField] &&
-      record[searchField] === displayValue
-    ) {
-      setRecord({});
-    }
-    // Fix this as it is causing an issue with displaying
-    if (!e.target.value && record[searchField]) {
-      onChange("", false, records);
-      return setDisplayValue(record[searchField]);
-    }
-    setDisplayValue(e.target.value);
-
-    if (e.target.value)
-      setQuery(
-        `SELECT Id, ${fields.join(
-          ", "
-        )} FROM ${sObject} WHERE ${searchField} LIKE '%${e.target.value.trim()}%' LIMIT ${limit}`
-      );
-  },
-  onBlur,
-  onKeyDown,
-  placeholder: placeholderValue,
-  value: displayValue,
-  ...props
-});*/

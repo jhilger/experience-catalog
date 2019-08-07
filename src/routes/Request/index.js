@@ -5,7 +5,6 @@ import Context from "../../components/Context";
 const RequestPage = ({ match }) => {
   const [{ requests }] = useContext(Context);
   const requestRecord = requests.data[match.params.id];
-  console.log(requestRecord);
   if (!requestRecord) return <Redirect to="/" />;
   return (
     <div>
