@@ -18,12 +18,16 @@ const RequestList = ({ label, type }) => {
               Experience__r: experience
             }) => (
               <li key={Id}>
-                <Link to={`/requests/single/${Id}`}>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}
+                >
                   <h5>{contact ? contact.Name : "No Contact Name"}</h5>
                   {experience ? experience.Name : "N/A Experience"}
                   <span className="divider">|</span>
                   {eventDate}
-                </Link>
+                </a>
               </li>
             )
           )}

@@ -8,7 +8,7 @@ import Home from "../../routes/Home";
 import OAuthCallback from "../../routes/OAuthCallback";
 import RequestPage from "../../routes/Request";
 import { Provider } from "../Context";
-import reducer, { useThunkReducer } from "../reducer";
+import reducer, { useThunkReducer } from "../reducer/index";
 import defaultState from "../defaultState";
 
 const App = ({ value = defaultState }) => {

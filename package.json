@@ -12,6 +12,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
+    "react-dates": "^20.2.5",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-transition-group": "^4.0.1",
