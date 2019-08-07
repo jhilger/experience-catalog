@@ -2,20 +2,13 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../../../Icons";
-import Title from "./Title";
-import Info from "./Info";
-import CreatePartnerRequestButton from "../../../Requests/Create/SingleRequest/CreatePartnerRequestButton";
-import KeepInMind from "./KeepInMind";
-import PartnershipDetails from "./PartnershipDetails";
-
+import Modal from "../../../Modal";
+import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
-
-// TODO: (Isaac) Add stamp if there is a specific date for event - "Limited Time Frame" , "Limited Dates" then click on "Request this experience" and if there is a start date, it gets put into form.
-// TODO: (Isaac) Can't change the Stategic Partner in the Experience object.
 
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
-  // const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const toggleCard = () => {
     setCardSize(!cardSize);
   };
@@ -30,14 +23,6 @@ const Card = ({ sort, experience, expanded = false }) => {
       unmountOnExit
     >
       <div
-        /* className={
-          cardSize
-            ? `medium-12 medium-order-${Math.floor(
-                sort / 2
-              )} large-order-${Math.floor(sort / 3)} cell exp-card open`
-            : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
-                1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
-        } */
         className={
           cardSize
             ? `medium-12 medium-order-${Math.floor(
@@ -69,7 +54,7 @@ const Card = ({ sort, experience, expanded = false }) => {
             backgroundImage: `url(${
               experience.Image_URL__c
                 ? experience.Image_URL__c
-                : "/img/davisestates3.jpg"
+                : "/img/default.jpg"
             })`
           }}
         >
@@ -80,20 +65,69 @@ const Card = ({ sort, experience, expanded = false }) => {
           />
         </div>
         <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
-          <Title cardSize={cardSize} experience={experience} />
-          {cardSize && <Info cardSize={cardSize} experience={experience} />}
-          {cardSize && (
-            <CreatePartnerRequestButton
-              initialValues={{
-                Experience__c: experience.Id,
-                Strategic_Partner_Name__c: experience.Strategic_Partner__c
+          <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
+            <div className="exp-card-title">
+              <h2>{experience.Strategic_Partner__r.Name}</h2>
+              <h3>{experience.Name}</h3>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="exp-card-request fancy"
+            >
+              Request This Experience
+            </button>
+
+            <Modal
+              activate={bool => {
+                setModalOpen(typeof bool === "boolean" ? bool : !modalOpen);
               }}
+              active={modalOpen}
+            >
+              {/* TODO: (Isaac) Might need a short description in the Experience object to pass to the request or the request description is ancilliary info for the request input by the salesperson */}
+              <SingleRequest
+                initialValues={{
+                  Experience__c: experience.Id,
+                  Requirements__c: removeTags(
+                    experience.Partnership_Details_Requirements__c
+                  ),
+                  Strategic_Partner_Name__c: experience.Strategic_Partner__c,
+                  ExperienceName: experience.Name,
+                  StrategicPartnerName: experience.Strategic_Partner__r.Name,
+                  Event_Date__c: experience.Start_Date__c
+                    ? experience.Start_Date__c
+                    : Date.now()
+                }}
+              />
+            </Modal>
+
+            <div
+              className="exp-card-content"
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: experience.Info__c }}
             />
-          )}
-          {cardSize && (
-            <KeepInMind cardSize={cardSize} experience={experience} />
-          )}
-          <PartnershipDetails experience={experience} />
+          </div>
+          <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
+            <div className="exp-card-keepinmind">
+              <h4>Keep In Mind</h4>
+              <div
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{
+                  __html: experience.Keep_In_Mind__c
+                }}
+              />
+            </div>
+            <div className="exp-card-partnerdetails">
+              <h5>Partnership Details / Requirements:</h5>
+              <div
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{
+                  __html: experience.Partnership_Details_Requirements__c
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </CSSTransition>
