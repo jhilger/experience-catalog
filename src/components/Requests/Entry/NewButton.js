@@ -2,30 +2,21 @@ import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import Modal from "../../Modal";
 import Context from "../../Context";
-import RequestList from "./List/Bullet";
+import NewEntry from "./NewEntry";
 
-const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
+const EntryModalButton = ({ history, experience }) => {
   const [showReqs, setShowReqs] = useState(false);
-  const [{ requests }] = useContext(Context);
-
-  const reducer = (a, c) =>
-    c.Status__c === type &&
-    new Date().getTime() < new Date(c.Event_Date__c).getTime()
-      ? a + 1
-      : a;
-
   return (
-    <React.Fragment>
+    <>
       <button
         type="button"
         className="info"
         onClick={() => {
-          history.push(`${history.location.pathname}#requests`);
+          history.push(`${history.location.pathname}#entry`);
           setShowReqs(!showReqs);
         }}
       >
-        <span>{requests.records.reduce(reducer, 0)}</span>
-        {buttonLabel}
+        Invite Contact
       </button>
       <Modal
         activate={bool => {
@@ -35,10 +26,10 @@ const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
         }}
         active={showReqs}
       >
-        <RequestList type={type} label={modalLabel} />
+        <NewEntry experience={experience} />
       </Modal>
-    </React.Fragment>
+    </>
   );
 };
 
-export default withRouter(RequestModalButton);
+export default withRouter(EntryModalButton);

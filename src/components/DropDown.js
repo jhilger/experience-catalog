@@ -3,7 +3,7 @@ import React, { useState, useEffect, forwardRef } from "react";
 const DropDown = (
   {
     list = [],
-    labelField,
+    itemLabelField = item => item.Name,
     hovered,
     onHover = () => {},
     onItemClicked = () => {}
@@ -17,8 +17,9 @@ const DropDown = (
     setCurrentHover(hovered);
   }, [hovered]);
 
-  return (    
-  <ul className={ (list.length > 0) ? "active" : "" }   
+  return (
+    <ul
+      className={list.length > 0 ? "active" : ""}
       ref={ref}
       onMouseOver={() => (ref.current.mouseOver = true)}
       onFocus={() => (ref.current.mouseOver = true)}
@@ -41,7 +42,7 @@ const DropDown = (
             onItemClicked(item);
           }}
         >
-          {item[labelField]}
+          {itemLabelField(item)}
         </li>
       ))}
     </ul>
@@ -50,8 +51,7 @@ const DropDown = (
 
 export default forwardRef(DropDown);
 
-
-/*return (
+/* return (
   <div
     style={{ position: "absolute", backgroundColor: "#ffffff" }}
     ref={ref}
@@ -87,4 +87,4 @@ export default forwardRef(DropDown);
       </a>
     ))}
   </div>
-);*/
+); */

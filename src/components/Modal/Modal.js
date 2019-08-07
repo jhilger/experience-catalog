@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
+import "./modal.css";
 // import delayUnmounting from "./delayUnmounting";
 import Context from "../Context";
 
 const Modal = ({ children, className, activate, active, history }) => {
-  const [context] = useContext(Context);
+  const [context, dispatch] = useContext(Context);
   const [el, setEl] = useState();
 
   useEffect(() => {
@@ -25,6 +26,9 @@ const Modal = ({ children, className, activate, active, history }) => {
       const closeModal = ev => {
         if (ev.target === newEl) {
           activate(false);
+          dispatch({
+            type: "EXP/remove_data"
+          });
         }
       };
       if (active) window.addEventListener("click", closeModal);

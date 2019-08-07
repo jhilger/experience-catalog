@@ -2,24 +2,35 @@ import React, { useContext } from "react";
 import Context from "../../../Context";
 
 const RequestList = ({ label, type }) => {
-  const [{ requests }] = useContext(Context);
+  const [{ requests, experienceId }] = useContext(Context);
+  const requestRecords = requests[type].map(record => requests.data[record]);
   return (
     <div>
       <h2>{label}</h2>
       <div className="exp-req-list">
-      <ul>
-          {requests.records.map(({ Status__c : status , Event_Date__c : eventDate, Id, Contact_to_Invite__r : contact, Experience__r : experience}) => {
-            return (status === type && new Date().getTime() < new Date(eventDate).getTime()) ?
-          <li key={Id}>
-                <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}>
-              <h5>{contact.Name}</h5>
-              {experience.Name}<span className="divider">|</span>{eventDate}
-            </a>
-          </li>
-          : '';
-        }
-      )}
-      </ul>
+        <ul>
+          {requestRecords.map(
+            ({
+              Event_Date__c: eventDate,
+              Id,
+              Contact_to_Invite__r: contact,
+              Experience__r: experience
+            }) => (
+              <li key={Id}>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}
+                >
+                  <h5>{contact ? contact.Name : "No Contact Name"}</h5>
+                  {experience ? experience.Name : "N/A Experience"}
+                  <span className="divider">|</span>
+                  {eventDate}
+                </a>
+              </li>
+            )
+          )}
+        </ul>
       </div>
     </div>
   );

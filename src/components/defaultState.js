@@ -1,10 +1,12 @@
 const defaultState = {
   user: {},
   contacts: {
-    data: {}
+    data: {},
+    loading: false
   },
   toasts: [],
   experiences: {
+    data: {},
     records: [],
     total: null,
     size: null,
@@ -12,13 +14,18 @@ const defaultState = {
     filter: "home"
   },
   requests: {
+    data: {},
     records: [],
+    submitted: [],
+    approved: [],
     total: null,
     size: null
   },
+  experienceId: null,
   contactId: null,
+  requestId: null,
   filtered: [],
-  filter: "home",
+  filter: "home"
 };
 
 export default defaultState;

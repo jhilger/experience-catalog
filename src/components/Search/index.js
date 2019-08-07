@@ -29,13 +29,8 @@ const Search = (
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    const service = DataService.getInstance();
-    if (
-      typeof value === "string" &&
-      value &&
-      [15, 18].includes(value.length) &&
-      !value.split("").includes(" ")
-    ) {
+    if (typeof value === "string" && value && [15, 18].includes(value.length)) {
+      const service = DataService.getInstance();
       service
         .query(`SELECT ${searchField} FROM ${sObject} WHERE Id = '${value}'`)
         .then(result => {
@@ -46,10 +41,8 @@ const Search = (
           }
           setRecord(result.records[0]);
         })
-        .catch(err => {
-          // eslint-disable-next-line no-console
-          console.error(err);
-        });
+        // eslint-disable-next-line no-console
+        .catch(err => console.error(err));
     } else if (typeof value === "object" && value[searchField]) {
       setPlaceholderValue(value[searchField]);
       setRecord(value);
@@ -63,8 +56,8 @@ const Search = (
   }, [value]);
 
   useEffect(() => {
-    const service = DataService.getInstance();
-    if (query)
+    if (query) {
+      const service = DataService.getInstance();
       service
         .query(query)
         .then(result => {
@@ -75,6 +68,7 @@ const Search = (
           // eslint-disable-next-line no-console
           console.error(err);
         });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
   return React.createElement(component, {
