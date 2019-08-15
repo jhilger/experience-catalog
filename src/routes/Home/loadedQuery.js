@@ -48,7 +48,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
         ].join(", "),
         "FROM Strategic_Partner_Request__c",
         "WHERE",
-        [`Requester__c = '${user.user_id}'`].join(" AND ")
+        [`Requester__c = '${user.Id}'`].join(" AND ")
       ].join(" ")
     ),
     contactId &&

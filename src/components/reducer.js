@@ -11,6 +11,7 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
+  console.log(action.type);
   switch (action.type) {
     case "CONT/data": {
       const newState = {
@@ -57,6 +58,7 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         requests: {
+          ...state.requests,
           records: requests,
           size: requests.length,
           total: action.payload.total

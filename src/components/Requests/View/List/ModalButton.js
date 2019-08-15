@@ -7,6 +7,7 @@ import RequestList from "./Bullet";
 const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
   const [{ requests }] = useContext(Context);
+  console.log(requests);
 
   return (
     <React.Fragment>

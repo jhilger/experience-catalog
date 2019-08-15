@@ -11,7 +11,7 @@ const LoginButton = () => {
   }, []);
 
   if (loggedIn || !rendered) return null;
-  if (!authNeeded) return null;
+  // if (!authNeeded) return null;
   return (
     <button
       type="button"

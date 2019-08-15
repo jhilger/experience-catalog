@@ -11,7 +11,11 @@ const defaultState = {
     total: null,
     size: null,
     filtered: [],
-    filter: "home"
+    filter: "home",
+    types: {
+      data: {},
+      list: []
+    }
   },
   requests: {
     data: {},

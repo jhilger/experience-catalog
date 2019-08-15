@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "../routes/Home";
 import OAuthCallback from "../routes/OAuthCallback";
 import { Provider } from "./Context";
-import reducer from "./reducer";
+import reducer from "./reducer/index";
 import defaultState from "./defaultState";
 
 const App = ({ value = defaultState }) => {

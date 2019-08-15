@@ -5,20 +5,16 @@ import { getIcon } from "../Icons";
 import Context from "../Context";
 
 const SideNavigation = ({ onToggle }) => {
-  const [{ experiences }, dispatch] = useContext(Context);
-  const experienceTypes = experiences.records
-    .map(experienceId => experiences.data[experienceId])
-    .reduce((types, experience) => {
-      if (
-        !types.find(
-          experienceType =>
-            experience.Experience_Type2__r.Id === experienceType.Id
-        )
-      ) {
-        types.push(experience.Experience_Type2__r);
+  const [
+    {
+      experiences: {
+        types: { data, list }
       }
-      return types;
-    }, []);
+    },
+    dispatch
+  ] = useContext(Context);
+
+  const experienceTypes = list.map(experienceId => data[experienceId]);
 
   return (
     <SideNav

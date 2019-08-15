@@ -22,12 +22,12 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
       initialValues={{
         ...initialValues,
         // Contact_to_Invite__c: contactId,
-        Requester__c: user.user_id,
+        Requester__c: user.Id,
         Description__c: ""
       }}
     >
       <label htmlFor="requester">Requester</label>
-      <h5 id="requester">{user.display_name}</h5>
+      <h5 id="requester">{user.Name}</h5>
       <label htmlFor="partnerName">Strategic Partner</label>
       <h5 id="partnerName">{initialValues.StrategicPartnerName}</h5>
       <label htmlFor="experinceName">Experience</label>
@@ -105,7 +105,7 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
       initialValues={{
         ...initialValues,
         Contact_to_Invite__c: contactId,
-        Requester__c: user.user_id
+        Requester__c: user.Id
       }}
     >
       <TypeAhead

@@ -58,7 +58,7 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
-  console.log(action);
+  console.log(JSON.stringify(action.type));
   let newState = { ...state };
   switch (action.type) {
     case "CONT/data":
@@ -124,6 +124,7 @@ function reducer(state = defaultState, action) {
         ...state.experiences.records,
         ...action.payload.records
       ];
+      console.log(action.payload);
       const experienceData = getRecordData(experiences, "Id");
       const experienceIds = getRecordIds(experiences, "Id");
       return {
@@ -137,7 +138,20 @@ function reducer(state = defaultState, action) {
             getFullRecords(experienceIds, experienceData)
           ),
           size: experiences.length,
-          total: action.payload.total
+          total: action.payload.total,
+          types: {
+            data: experiences.reduce(
+              (previous, experience) => ({
+                ...previous,
+                [experience.Experience_Type2__r.Id]:
+                  experience.Experience_Type2__r
+              }),
+              {}
+            ),
+            list: experiences
+              .map(experience => experience.Experience_Type2__r.Id)
+              .filter((Id, i, arr) => arr.findIndex(v => v === Id) === i)
+          }
         }
       };
     }

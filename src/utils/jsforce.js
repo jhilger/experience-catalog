@@ -9,6 +9,7 @@ const performQuery = (jsforce, query) => {
   //   });
   // });
   const service = DataService.getInstance();
+  console.log(service);
   if (!service) return;
   return service.query(query);
 };
