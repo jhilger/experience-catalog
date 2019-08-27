@@ -17,7 +17,7 @@ const RequestList = ({ label }) => {
   };
 
   return (
-    <div>
+    <>
       <h2>{label}</h2>
       <div className="exp-req-filter">
         <button
@@ -49,7 +49,7 @@ const RequestList = ({ label }) => {
           Rejected
         </button>
       </div>
-      <div className="exp-req-list">
+      <div className="exp-list">
         <ul>
           {filterRequests.length ? (
             filterRequests.map(
@@ -82,7 +82,7 @@ const RequestList = ({ label }) => {
           )}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 

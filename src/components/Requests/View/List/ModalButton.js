@@ -10,7 +10,7 @@ const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
   // console.log("Requests ", requests);
 
   return (
-    <React.Fragment>
+    <>
       <button
         type="button"
         className="info"
@@ -32,7 +32,7 @@ const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
       >
         <RequestList label={modalLabel} />
       </Modal>
-    </React.Fragment>
+    </>
   );
 };
 

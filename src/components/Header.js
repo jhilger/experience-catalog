@@ -3,6 +3,7 @@ import Context from "./Context";
 import LoginButton from "./LoginButton";
 // import ExperienceModalButton from "./Experiences/View/ModalButton";
 import RequestModalButton from "./Requests/View/List/ModalButton";
+import TierModalButton from "./TierModalButton";
 import "../scss/header.scss";
 
 const Header = () => {
@@ -17,13 +18,17 @@ const Header = () => {
       </div>
       <div className="exp-user">
         {loggedIn ? (
-          <React.Fragment>
+          <>
             <h6>Welcome {user.Name}</h6>
             <RequestModalButton
               buttonLabel="Track Requests"
               modalLabel="Requests"
             />
-          </React.Fragment>
+            <TierModalButton
+              buttonLabel="Tier Documents"
+              modalLabel="Tier Documents"
+            />
+          </>
         ) : (
           <LoginButton />
         )}
