@@ -1,34 +1,84 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Context from "../../../Context";
 
-const RequestList = ({ label, type }) => {
-  const [{ requests, experienceId }] = useContext(Context);
-  const requestRecords = requests[type].map(record => requests.data[record]);
+const RequestList = ({ label }) => {
+  const [{ requests }] = useContext(Context);
+  const [filterButton, setFilterButton] = useState("all");
+  const [filterRequests, setFilterRequests] = useState(requests.data);
+
+  const filterItems = filter => {
+    setFilterRequests(
+      requests.data.filter(
+        request =>
+          request.Status__c.toLowerCase() === filter || filter === "all"
+      )
+    );
+    setFilterButton(filter);
+  };
+
   return (
     <div>
       <h2>{label}</h2>
+      <div className="exp-req-filter">
+        <button
+          type="button"
+          className={filterButton === "submitted" ? "filter active" : "filter"}
+          onClick={() => filterItems("submitted")}
+        >
+          Submitted
+        </button>
+        <button
+          type="button"
+          className={filterButton === "approved" ? "filter active" : "filter"}
+          onClick={() => filterItems("approved")}
+        >
+          Approved
+        </button>
+        <button
+          type="button"
+          className={filterButton === "rejected" ? "filter active" : "filter"}
+          onClick={() => filterItems("rejected")}
+        >
+          Rejected
+        </button>
+        <button
+          type="button"
+          className={filterButton === "all" ? "filter active" : "filter"}
+          onClick={() => filterItems("all")}
+        >
+          All
+        </button>
+      </div>
       <div className="exp-req-list">
         <ul>
-          {requestRecords.map(
-            ({
-              Event_Date__c: eventDate,
-              Id,
-              Contact_to_Invite__r: contact,
-              Experience__r: experience
-            }) => (
-              <li key={Id}>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}
-                >
-                  <h5>{contact ? contact.Name : "No Contact Name"}</h5>
-                  {experience ? experience.Name : "N/A Experience"}
-                  <span className="divider">|</span>
-                  {eventDate}
-                </a>
-              </li>
+          {filterRequests.length ? (
+            filterRequests.map(
+              ({
+                Event_Date__c: eventDate,
+                Id,
+                Contact_to_Invite__r: contact,
+                Experience__r: experience,
+                Status__c: status
+              }) => (
+                <li key={Id}>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}
+                  >
+                    <h5>
+                      {contact ? contact.Name : "No Contact Name"}
+                      <span>{status}</span>
+                    </h5>
+                    {experience ? experience.Name : "N/A Experience"}
+                    <span className="divider">|</span>
+                    {eventDate}
+                  </a>
+                </li>
+              )
             )
+          ) : (
+            <li>Sorry, no matching requests.</li>
           )}
         </ul>
       </div>

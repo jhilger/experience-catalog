@@ -20,14 +20,8 @@ const Header = () => {
           <React.Fragment>
             <h6>Welcome {user.Name}</h6>
             <RequestModalButton
-              buttonLabel="Submitted"
-              modalLabel="Submitted Requests"
-              type="submitted"
-            />
-            <RequestModalButton
-              buttonLabel="Approved"
-              modalLabel="Approved Requests"
-              type="approved"
+              buttonLabel="Track Requests"
+              modalLabel="Requests"
             />
           </React.Fragment>
         ) : (

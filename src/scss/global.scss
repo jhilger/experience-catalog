@@ -91,6 +91,29 @@ button:hover {
   margin: 0;
 }
 
+a.filter,
+button.filter {
+  /*border-bottom: 2px solid $gray-medium;*/
+  border-bottom: 2px solid transparent;
+  font-family: "Proxima N W01 Reg", sans-serif;
+  letter-spacing: 0.063em;
+  padding-bottom: 0.125em;
+  color: $gray-medium;
+  background: none;
+  text-transform: none;
+}
+
+a.filter:hover,
+button.filter:hover {
+  color: $gray;
+}
+
+a.filter.active,
+button.filter.active {
+  color: $gold-medium;
+  border-bottom: 2px solid $gold-medium;
+}
+
 a.info,
 button.info {
   padding: 0.75em 1.5em;

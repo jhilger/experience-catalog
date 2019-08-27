@@ -47,7 +47,17 @@
 }
 
 .overlay .content h2 {
+  margin-bottom: 1em;
+}
+
+.overlay .exp-req-filter {
+  display: block;
   margin-bottom: 1.5em;
+}
+
+.overlay .exp-req-filter button.filter {
+  display: inline-block;
+  margin-right: 1em;
 }
 
 .overlay .content .exp-req-list {
@@ -106,6 +116,14 @@
   text-transform: none;
   margin-bottom: 0.5em;
   line-height: 1.5;
+}
+
+.overlay .content a h5 span {
+  text-transform: uppercase;
+  margin-left: 1em;
+  font-family: "Proxima N W01 Light", sans-serif;
+  font-size: 0.75em;
+  color: $gold-light;
 }
 
 .overlay .content a .divider {

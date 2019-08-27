@@ -4,10 +4,10 @@ import Modal from "../../../Modal";
 import Context from "../../../Context";
 import RequestList from "./Bullet";
 
-const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
+const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
   const [{ requests }] = useContext(Context);
-  console.log(requests);
+  // console.log("Requests ", requests);
 
   return (
     <React.Fragment>
@@ -19,7 +19,7 @@ const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
           setShowReqs(!showReqs);
         }}
       >
-        <span>{requests[type].length}</span>
+        <span>{requests.data.length || 0}</span>
         {buttonLabel}
       </button>
       <Modal
@@ -30,7 +30,7 @@ const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
         }}
         active={showReqs}
       >
-        <RequestList type={type} label={modalLabel} />
+        <RequestList label={modalLabel} />
       </Modal>
     </React.Fragment>
   );

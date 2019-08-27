@@ -157,15 +157,17 @@ function reducer(state = defaultState, action) {
     }
     case "REQ/init": {
       const requests = [...state.requests.records, ...action.payload.records];
-      const requestsData = getRecordData(requests, "Id");
+      // const requestsData = getRecordData(requests, "Id");
       const requestsIds = getRecordIds(requests, "Id");
 
-      const currentDateTime = new Date().getTime();
       return {
         ...state,
         requests: {
           records: requestsIds,
-          data: requestsData,
+          data: requests.filter(
+            request =>
+              new Date(request.Event_Date__c).getTime() > new Date().getTime()
+          ),
           submitted: getRecordIds(
             requests.filter(onlyUniqueId).filter(requestSubmitted()),
             "Id"
