@@ -22,6 +22,13 @@ const RequestList = ({ label }) => {
       <div className="exp-req-filter">
         <button
           type="button"
+          className={filterButton === "all" ? "filter active" : "filter"}
+          onClick={() => filterItems("all")}
+        >
+          All
+        </button>
+        <button
+          type="button"
           className={filterButton === "submitted" ? "filter active" : "filter"}
           onClick={() => filterItems("submitted")}
         >
@@ -40,13 +47,6 @@ const RequestList = ({ label }) => {
           onClick={() => filterItems("rejected")}
         >
           Rejected
-        </button>
-        <button
-          type="button"
-          className={filterButton === "all" ? "filter active" : "filter"}
-          onClick={() => filterItems("all")}
-        >
-          All
         </button>
       </div>
       <div className="exp-req-list">
