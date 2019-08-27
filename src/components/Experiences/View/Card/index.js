@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../../../Icons";
@@ -9,9 +9,11 @@ import "./card.scss";
 const Card = ({ sort, experience, expanded = false }) => {
   const [cardSize, setCardSize] = useState(expanded);
   const [modalOpen, setModalOpen] = useState(false);
-  const toggleCard = () => {
+
+  const toggleCard = e => {
     setCardSize(!cardSize);
   };
+
   const removeTags = str => (str ? str.replace(/<\/?[^>]+(>|$)/g, "") : "");
 
   return (
@@ -141,6 +143,41 @@ Card.propTypes = {
 };
 
 export default Card;
+
+/* 
+
+<div
+        ref={ref}
+        className={
+          cardSize
+            ? "medium-12 cell exp-card open"
+            : "medium-6 large-4 cell exp-card close"
+        }
+      >
+
+
+className={
+  cardSize
+    ? `medium-12 medium-order-${Math.floor(sort / 2)} large-order-${Math.floor(sort / 3)} cell exp-card open`
+    : `medium-6 large-4 medium-order-${Math.floor(sort / 2) + 1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
+  } 
+
+style={
+          cardSize
+            ? {
+                position: "absolute",
+                zIndex: 1,
+                left: 0,
+                top: height,
+                background: "#fff"
+              }
+            : {}
+        }
+
+
+
+
+  */
 
 /*
 

@@ -1,4 +1,7 @@
-import "./polyfills";
+// import "./polyfills";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "react-app-polyfill/ie11";
 import React from "react";
 import "./scss/foundation.css";
 import "./scss/fonts.scss";
