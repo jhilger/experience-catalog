@@ -5,12 +5,7 @@ import Context from "../../../Context";
 const RequestList = ({ label }) => {
   const [{ requests }] = useContext(Context);
   const [filterButton, setFilterButton] = useState("all");
-  const [count, setCount] = useState(0);
-
-  const filterItems = filter => {
-    setCount(0);
-    setFilterButton(filter);
-  };
+  const [count, setCount] = useState(requests.data.length);
 
   return (
     <>
@@ -19,28 +14,28 @@ const RequestList = ({ label }) => {
         <button
           type="button"
           className={filterButton === "all" ? "filter active" : "filter"}
-          onClick={() => filterItems("all")}
+          onClick={() => setFilterButton("all")}
         >
           All
         </button>
         <button
           type="button"
           className={filterButton === "submitted" ? "filter active" : "filter"}
-          onClick={() => filterItems("submitted")}
+          onClick={() => setFilterButton("submitted")}
         >
           Submitted
         </button>
         <button
           type="button"
           className={filterButton === "approved" ? "filter active" : "filter"}
-          onClick={() => filterItems("approved")}
+          onClick={() => setFilterButton("approved")}
         >
           Approved
         </button>
         <button
           type="button"
           className={filterButton === "rejected" ? "filter active" : "filter"}
-          onClick={() => filterItems("rejected")}
+          onClick={() => setFilterButton("rejected")}
         >
           Rejected
         </button>
@@ -63,7 +58,8 @@ const RequestList = ({ label }) => {
                 }
                 timeout={400}
                 classNames="reqanim"
-                onExited={() => setCount(count + 1)}
+                onEntered={() => setCount(count + 1)}
+                onExited={() => setCount(count - 1)}
               >
                 <li>
                   <a
@@ -83,13 +79,7 @@ const RequestList = ({ label }) => {
               </CSSTransition>
             )
           )}
-          <li
-            className={
-              count === requests.data.length
-                ? "no-results active"
-                : "no-results"
-            }
-          >
+          <li className={count === 0 ? "no-results active" : "no-results"}>
             Sorry, no matches found.
           </li>
         </ul>

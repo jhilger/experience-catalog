@@ -7,6 +7,7 @@
 }
 .cardanim-enter-done {
   transform: scale(1);
+  /*transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);*/
 }
 .cardanim-exit {
   transform: scale(1);
@@ -17,31 +18,34 @@
 }
 .cardanim-exit-done {
   transform: scale(0);
+  /*transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);*/
 }
 
 .reqanim-enter {
   transform: translateX(110%);
   max-height: 0;
 }
-.reqanim-enter.reqanim-enter-active {
+/*.reqanim-enter.reqanim-enter-active {
   transform: translateX(0);
   max-height: 30em;
   transition: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
+}*/
 .reqanim-enter-done {
   transform: translateX(0);
   max-height: 30em;
+  transition: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .reqanim-exit {
   transform: translateX(0);
   max-height: 30em;
 }
-.reqanim-exit.reqanim-exit-active {
+/*.reqanim-exit.reqanim-exit-active {
   transform: translateX(110%);
   max-height: 0;
   transition: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
+}*/
 .reqanim-exit-done {
   transform: translateX(110%);
   max-height: 0;
+  transition: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
