@@ -1,18 +1,14 @@
 import React, { useContext, useState } from "react";
+import { CSSTransition } from "react-transition-group";
 import Context from "../../../Context";
 
 const RequestList = ({ label }) => {
   const [{ requests }] = useContext(Context);
   const [filterButton, setFilterButton] = useState("all");
-  const [filterRequests, setFilterRequests] = useState(requests.data);
+  const [count, setCount] = useState(0);
 
   const filterItems = filter => {
-    setFilterRequests(
-      requests.data.filter(
-        request =>
-          request.Status__c.toLowerCase() === filter || filter === "all"
-      )
-    );
+    setCount(0);
     setFilterButton(filter);
   };
 
@@ -51,16 +47,25 @@ const RequestList = ({ label }) => {
       </div>
       <div className="exp-list">
         <ul>
-          {filterRequests.length ? (
-            filterRequests.map(
-              ({
-                Event_Date__c: eventDate,
-                Id,
-                Contact_to_Invite__r: contact,
-                Experience__r: experience,
-                Status__c: status
-              }) => (
-                <li key={Id}>
+          {requests.data.map(
+            ({
+              Event_Date__c: eventDate,
+              Id,
+              Contact_to_Invite__r: contact,
+              Experience__r: experience,
+              Status__c: status
+            }) => (
+              <CSSTransition
+                key={Id}
+                in={
+                  status.toLowerCase() === filterButton ||
+                  filterButton === "all"
+                }
+                timeout={400}
+                classNames="reqanim"
+                onExited={() => setCount(count + 1)}
+              >
+                <li>
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
@@ -75,11 +80,18 @@ const RequestList = ({ label }) => {
                     {eventDate}
                   </a>
                 </li>
-              )
+              </CSSTransition>
             )
-          ) : (
-            <li>Sorry, no matching requests.</li>
           )}
+          <li
+            className={
+              count === requests.data.length
+                ? "no-results active"
+                : "no-results"
+            }
+          >
+            Sorry, no matches found.
+          </li>
         </ul>
       </div>
     </>

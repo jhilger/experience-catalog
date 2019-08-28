@@ -77,6 +77,7 @@
 
 .overlay .exp-list > ul > li {
   margin-bottom: 1em;
+  overflow: hidden;
 }
 
 .overlay .exp-list > ul > li:last-of-type {
@@ -152,6 +153,14 @@
   right: 1em;
   left: auto;
   bottom: auto;
+}
+
+.overlay .no-results {
+  display: none;
+}
+
+.overlay .no-results.active {
+  display: block;
 }
 
 @media only screen and (max-width: 40em) {
