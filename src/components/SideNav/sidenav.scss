@@ -11,7 +11,7 @@
 .sidenav---sidenav---_2tBP {
   background: $gray;
   position: fixed;
-  transition: min-width 0.3s;
+  transition: 1s;
 }
 
 .sidenav---sidenav-nav---3tvij
@@ -50,7 +50,8 @@
   padding-left: 6px;
 }
 
-.sidenav---sidenav---_2tBP.light .sidenav---sidenav-toggle---1KRjR:hover {
+.sidenav---sidenav---_2tBP.light .sidenav---sidenav-toggle---1KRjR:hover,
+.sidenav---sidenav---_2tBP.light .sidenav---sidenav-toggle---1KRjR:focus {
   background: transparent;
 }
 

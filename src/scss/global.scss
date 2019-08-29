@@ -263,9 +263,29 @@ button.fancy:hover {
   background: $gold-medium;
 }
 
+@media only screen and (max-width: 40em) {
+  a.req,
+  button.req {
+    width: 4.5em;
+    height: 4em;
+  }
+  a.req:after,
+  button.req:after {
+    /*height: 2em;
+    width: 2em;*/
+    font-size: 1.5em;
+    line-height: 1.333em;
+  }
+  a.doc,
+  button.doc {
+    width: 4em;
+    height: 4em;
+  }
+}
+
 h1 {
   font-family: "Proxima N W01 Light", sans-serif;
-  font-size: 3em;
+  font-size: 2em;
   line-height: 1.125;
   letter-spacing: 0.063em;
   margin-bottom: 0.25em;
@@ -339,8 +359,14 @@ main.expanded {
 }
 
 @media only screen and (max-width: 40em) {
+  h1 {
+    font-size: 2.5em;
+  }
   h1 span {
     letter-spacing: 0.05em;
+  }
+  h6 {
+    font-size: 1.5em;
   }
 }
 
