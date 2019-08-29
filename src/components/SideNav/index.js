@@ -16,8 +16,11 @@ const SideNavigation = ({ onToggle }) => {
 
   const experienceTypes = list.map(experienceId => data[experienceId]);
 
+  const theme = "light";
+
   return (
     <SideNav
+      className={theme}
       onSelect={selected => {
         dispatch({
           type: "EXP/filtered",
@@ -32,7 +35,11 @@ const SideNavigation = ({ onToggle }) => {
       <SideNav.Nav defaultSelected="home">
         <NavItem eventKey="home">
           <NavIcon>
-            <img className="exp-nav-icon" src={getIcon("home")} alt="Home" />
+            <img
+              className="exp-nav-icon"
+              src={getIcon("home", theme === "light" ? "gray" : "")}
+              alt="Home"
+            />
           </NavIcon>
           <NavText>Home</NavText>
         </NavItem>
@@ -44,7 +51,10 @@ const SideNavigation = ({ onToggle }) => {
             <NavIcon>
               <img
                 className="exp-nav-icon"
-                src={getIcon(experienceType.Short_Name__c.toLowerCase())}
+                src={getIcon(
+                  experienceType.Short_Name__c.toLowerCase(),
+                  theme === "light" ? "gray" : ""
+                )}
                 alt={experienceType.Alt_Text__c}
               />
             </NavIcon>

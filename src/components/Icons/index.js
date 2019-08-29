@@ -7,7 +7,7 @@ import trophy from "../../img/trophy.svg";
 import gold from "../../img/gold.svg";
 import platinum from "../../img/platinum.svg";
 import diamond from "../../img/diamond.svg";
-import home from "../../img/home2.svg";
+import home from "../../img/home.svg";
 import wineGray from "../../img/wine-gray.svg";
 import carsGray from "../../img/cars-gray.svg";
 import artGray from "../../img/art-gray.svg";
@@ -17,6 +17,7 @@ import trophyGray from "../../img/trophy-gray.svg";
 import goldGray from "../../img/gold-gray.svg";
 import platinumGray from "../../img/platinum-gray.svg";
 import diamondGray from "../../img/diamond-gray.svg";
+import homeGray from "../../img/home-gray.svg";
 
 const getIcon = (experienceType, type) => {
   switch (experienceType) {
@@ -42,7 +43,7 @@ const getIcon = (experienceType, type) => {
     case "diamond":
       return type === "gray" ? diamondGray : diamond;
     case "home":
-      return home;
+      return type === "gray" ? homeGray : home;
     default:
       return experienceType.Image_Path__c;
   }
