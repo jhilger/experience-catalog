@@ -44,7 +44,7 @@ const SideNavigation = ({ onToggle }) => {
             <NavIcon>
               <img
                 className="exp-nav-icon"
-                src={getIcon(experienceType)}
+                src={getIcon(experienceType.Short_Name__c.toLowerCase())}
                 alt={experienceType.Alt_Text__c}
               />
             </NavIcon>

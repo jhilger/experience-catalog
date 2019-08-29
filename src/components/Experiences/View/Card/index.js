@@ -59,14 +59,18 @@ const Card = ({ sort, experience, expanded = false }) => {
                 : "/img/default.jpg"
             })`
           }}
-        >
-          <img
-            src={getIcon(experience.Experience_Type2__r)}
-            data-type={experience.Experience_Type2__r.Short_Name__c}
-            alt="Experience type icon"
-          />
-        </div>
+        />
         <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
+          <div className="medium-12 cell exp-card-cat">
+            <img
+              src={getIcon(
+                experience.Experience_Type2__r.Short_Name__c.toLowerCase(),
+                "gray"
+              )}
+              alt={experience.Experience_Type2__r.Alt_Text__c}
+            />
+          </div>
+
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-title">
               <h2>{experience.Strategic_Partner__r.Name}</h2>
@@ -110,6 +114,7 @@ const Card = ({ sort, experience, expanded = false }) => {
               dangerouslySetInnerHTML={{ __html: experience.Info__c }}
             />
           </div>
+
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">
               <h4>Keep In Mind</h4>
