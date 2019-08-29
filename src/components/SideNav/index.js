@@ -51,6 +51,8 @@ const SideNavigation = ({ onToggle }) => {
             <NavText>{experienceType.Short_Name__c}</NavText>
           </NavItem>
         ))}
+
+        {/* TODO: (Isaac)  Loop through tiers to allow filtering by those tiers */}
       </SideNav.Nav>
     </SideNav>
   );

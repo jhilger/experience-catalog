@@ -69,6 +69,8 @@ const Card = ({ sort, experience, expanded = false }) => {
               )}
               alt={experience.Experience_Type2__r.Alt_Text__c}
             />
+
+            {/* TODO: (Isaac) Show icon that matches tier of experience */}
           </div>
 
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
