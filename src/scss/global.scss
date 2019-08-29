@@ -91,6 +91,45 @@ button:hover {
   margin: 0;
 }
 
+a.req,
+button.req {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-image: url("../img/experience.svg");
+  background-color: transparent;
+  width: 3em;
+  height: 2.5em;
+}
+
+a.req:after,
+button.req:after {
+  content: attr(data-content);
+  position: absolute;
+  bottom: -0.25em;
+  right: -0.25em;
+  border-radius: 50%;
+  height: 1.5em;
+  width: 1.5em;
+  color: $white;
+  text-align: center;
+  line-height: 1.425em;
+  letter-spacing: 0;
+  transition: 0.5s;
+  background: $gold-medium;
+}
+
+a.doc,
+button.doc {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-image: url("../img/tier.svg");
+  background-color: transparent;
+  width: 2.5em;
+  height: 2.5em;
+}
+
 a.filter,
 button.filter {
   /*border-bottom: 2px solid $gray-medium;*/
@@ -280,7 +319,7 @@ h6 {
   line-height: 1;
   letter-spacing: 0.093em;
   margin-bottom: 0.5em;
-  font-size: 1em;
+  font-size: 1.125em;
   text-transform: uppercase;
 }
 

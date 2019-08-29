@@ -13,15 +13,13 @@ const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
     <>
       <button
         type="button"
-        className="info"
+        className="req"
+        data-content={requests.data.length || 0}
         onClick={() => {
           history.push(`${history.location.pathname}#requests`);
           setShowReqs(!showReqs);
         }}
-      >
-        <span>{requests.data.length || 0}</span>
-        {buttonLabel}
-      </button>
+      />
       <Modal
         activate={bool => {
           if (bool === false || setShowReqs)
@@ -37,3 +35,18 @@ const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
 };
 
 export default withRouter(RequestModalButton);
+
+/*
+ <button
+        type="button"
+        className="info"
+        data-content={requests.data.length || 0}
+        onClick={() => {
+          history.push(`${history.location.pathname}#requests`);
+          setShowReqs(!showReqs);
+        }}
+      >
+        <span>{requests.data.length || 0}</span>
+        {buttonLabel}
+      </button>
+*/

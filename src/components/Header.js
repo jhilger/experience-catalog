@@ -19,7 +19,7 @@ const Header = () => {
       <div className="exp-user">
         {loggedIn ? (
           <>
-            <h6>Welcome {user.Name}</h6>
+            <h6>{user.Name}</h6>
             <RequestModalButton
               buttonLabel="Track Requests"
               modalLabel="Requests"

@@ -12,14 +12,12 @@ const TierModalButton = ({ history, buttonLabel, modalLabel }) => {
     <>
       <button
         type="button"
-        className="fancy"
+        className="doc"
         onClick={() => {
           history.push(`${history.location.pathname}#requests`);
           setShowReqs(!showReqs);
         }}
-      >
-        {buttonLabel}
-      </button>
+      />
       <Modal
         activate={bool => {
           if (bool === false || setShowReqs)
