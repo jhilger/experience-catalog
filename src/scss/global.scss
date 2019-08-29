@@ -69,6 +69,97 @@ strong {
   font-family: "Proxima N W01 Bold", sans-serif;
 }
 
+/*  TYPE  */
+
+h1 {
+  font-family: "Proxima N W01 Light", sans-serif;
+  font-size: 2em;
+  line-height: 1.125;
+  letter-spacing: 0.063em;
+  margin-bottom: 0.25em;
+  text-transform: uppercase;
+  margin-top: -0.25em;
+}
+
+h1 span {
+  font-family: "Proxima N W01 Bold", sans-serif;
+  display: block;
+  letter-spacing: 0.15em;
+  font-size: 1.5em;
+}
+
+h2 {
+  font-family: "Proxima N W01 Bold", sans-serif;
+  line-height: 1;
+  letter-spacing: 0.093em;
+  margin-bottom: 0.425em;
+  text-transform: uppercase;
+  font-size: 1.425em;
+}
+
+h3 {
+  font-family: "Proxima N W01 Bold", sans-serif;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  margin-bottom: 0;
+  font-size: 2.125em;
+}
+
+h4 {
+  font-family: "Proxima N W01 Bold", sans-serif;
+  line-height: 1;
+  letter-spacing: 0.093em;
+  margin-bottom: 0.5em;
+  font-size: 1.25em;
+  text-transform: uppercase;
+}
+
+h5 {
+  font-family: "Proxima N W01 Bold", sans-serif;
+  line-height: 1;
+  letter-spacing: 0.063em;
+  margin-bottom: 1em;
+  text-transform: uppercase;
+}
+
+h6 {
+  font-family: "Proxima N W01 Reg", sans-serif;
+  line-height: 1;
+  letter-spacing: 0.093em;
+  margin-bottom: 0.5em;
+  font-size: 1.125em;
+  text-transform: uppercase;
+}
+
+p {
+  line-height: 1.5;
+  margin-bottom: 1em;
+}
+
+main {
+  display: block;
+  padding-left: 6rem;
+  padding-right: 2rem;
+}
+
+main.expanded {
+  padding-left: 16rem;
+}
+
+@media only screen and (max-width: 40em) {
+  h1 {
+    font-size: 2.5em;
+  }
+  h1 span {
+    letter-spacing: 0.05em;
+  }
+  h6 {
+    font-size: 1.5em;
+  }
+}
+
+/*  BUTTONS  */
+
 a,
 a:focus,
 a:hover,
@@ -280,93 +371,6 @@ button.fancy:hover {
   button.doc {
     width: 4em;
     height: 4em;
-  }
-}
-
-h1 {
-  font-family: "Proxima N W01 Light", sans-serif;
-  font-size: 2em;
-  line-height: 1.125;
-  letter-spacing: 0.063em;
-  margin-bottom: 0.25em;
-  text-transform: uppercase;
-  margin-top: -0.25em;
-}
-
-h1 span {
-  font-family: "Proxima N W01 Bold", sans-serif;
-  display: block;
-  letter-spacing: 0.15em;
-  font-size: 1.5em;
-}
-
-h2 {
-  font-family: "Proxima N W01 Bold", sans-serif;
-  line-height: 1;
-  letter-spacing: 0.093em;
-  margin-bottom: 0.425em;
-  text-transform: uppercase;
-  font-size: 1.425em;
-}
-
-h3 {
-  font-family: "Proxima N W01 Bold", sans-serif;
-  line-height: 1;
-  letter-spacing: 0.03em;
-  margin-bottom: 0;
-  font-size: 2.125em;
-}
-
-h4 {
-  font-family: "Proxima N W01 Bold", sans-serif;
-  line-height: 1;
-  letter-spacing: 0.093em;
-  margin-bottom: 0.5em;
-  font-size: 1.25em;
-  text-transform: uppercase;
-}
-
-h5 {
-  font-family: "Proxima N W01 Bold", sans-serif;
-  line-height: 1;
-  letter-spacing: 0.063em;
-  margin-bottom: 1em;
-  text-transform: uppercase;
-}
-
-h6 {
-  font-family: "Proxima N W01 Reg", sans-serif;
-  line-height: 1;
-  letter-spacing: 0.093em;
-  margin-bottom: 0.5em;
-  font-size: 1.125em;
-  text-transform: uppercase;
-}
-
-p {
-  line-height: 1.5;
-  margin-bottom: 1em;
-}
-
-main {
-  display: block;
-  padding-left: 6rem;
-  padding-right: 2rem;
-}
-
-main.expanded {
-  padding-left: 16rem;
-}
-
-@media only screen and (max-width: 40em) {
-  h1 {
-    font-size: 2.5em;
-  }
-  h1 span {
-    letter-spacing: 0.05em;
-  }
-  h6 {
-    font-size: 1.5em;
   }
 }
 
