@@ -33,20 +33,20 @@ const defaultState = {
   tiers: [
     {
       id: "1100",
-      name: "Gold",
+      name: "Gold  $",
       description: "This tier is for customers with any product oppportunity.",
       doc: "/img/doc.pdf"
     },
     {
       id: "2200",
-      name: "Platinum",
+      name: "Platinum  $$",
       description:
         "This tier is for customers with a Light Jet or Corporate Jet opportunity.",
       doc: "/img/doc.pdf"
     },
     {
       id: "3300",
-      name: "Diamond",
+      name: "Diamond  $$$",
       description:
         "This tier is for customers with a Corporate Jet opportunity.",
       doc: "/img/doc.pdf"
