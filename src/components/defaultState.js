@@ -29,9 +29,6 @@ const defaultState = {
   contactId: null,
   requestId: null,
   filtered: [],
-<<<<<<< HEAD
-  filter: "home"
-=======
   filter: "home",
   tiers: [
     {
@@ -55,7 +52,6 @@ const defaultState = {
       doc: "/img/doc.pdf"
     }
   ]
->>>>>>> a2fcebda331e88b83f21a00acb6cc8c3ecdeab2c
 };
 
 export default defaultState;
