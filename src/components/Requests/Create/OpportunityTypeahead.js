@@ -10,6 +10,8 @@ const OpportunityTypeAhead = () => {
   if (!state.fields.Contact_to_Invite__c.record) return null;
   if (!state.fields.Contact_to_Invite__c.record.Account) return null;
   if (!state.fields.Contact_to_Invite__c.record.Account.Id) return null;
+  if (!state.fields.Contact_to_Invite__c.record.Account.Total_Opportunities__c)
+    return null;
   return (
     <TypeAhead
       name="Opportunity__c"
