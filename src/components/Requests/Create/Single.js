@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext } from "react";
 import moment from "moment";
+import DataService from "forcejs/dist/force.data-service";
+import loadedQuery from "../../../routes/Home/loadedQuery";
 import Context from "../../Context";
 import Form from "../../Form";
 import InputField from "../../Form/InputField";
@@ -10,30 +12,47 @@ import SingleDatePickerWrapper from "../../SingleDatePickerWrapper";
 import OpportunityTypeAhead from "./OpportunityTypeahead";
 import "../../../scss/form.scss";
 
-const SingleRequestCreate = ({ initialValues = {} }) => {
-  const [{ user }, dispatch] = useContext(Context);
+const SingleRequestCreate = ({
+  initialValues = {},
+  experienceName,
+  strategicPartner,
+  onSuccess
+}) => {
+  const [state, dispatch] = useContext(Context);
+  const { user, jsforce } = state;
+  const service = DataService.getInstance();
   // const contact = contacts.data[contactId];
 
   return (
     <Form
-      onSubmit={console.log}
+      onSubmit={(event, values) => {
+        service
+          .create("Strategic_Partner_Request__c", values)
+          .then(() => loadedQuery(jsforce, state, dispatch))
+          .then(onSuccess)
+          .catch(console.error);
+      }}
       initialValues={{
         ...initialValues,
         // Contact_to_Invite__c: contactId,
         Requester__c: user.Id,
-        Description__c: ""
+        Description__c: "",
+        Event_Date__c: initialValues.Event_Date__c
+          ? moment(initialValues.Event_Date__c).format("YYYY-MM-DD")
+          : ""
       }}
     >
       <label htmlFor="requester">Requester</label>
       <h5 id="requester">{user.Name}</h5>
       <label htmlFor="partnerName">Strategic Partner</label>
-      <h5 id="partnerName">{initialValues.StrategicPartnerName}</h5>
+      <h5 id="partnerName">{strategicPartner}</h5>
       <label htmlFor="experinceName">Experience</label>
-      <h5 id="experienceName">{initialValues.ExperienceName}</h5>
+      <h5 id="experienceName">{experienceName}</h5>
       <label htmlFor="requirements">Requirements</label>
       <p id="requirements">{initialValues.Requirements__c}</p>
       <TypeAhead
         name="Contact_to_Invite__c"
+        required
         label="Contact"
         sObject="Contact"
         className="exp-typeahead"
@@ -59,7 +78,9 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
       <SingleDatePickerWrapper
         name="Event_Date__c"
         label="Event Date"
-        value={moment(initialValues.Event_Date__c)}
+        value={
+          initialValues.Event_Date__c ? moment(initialValues.Event_Date__c) : ""
+        }
         placeholder="date of requested event"
       />
       {/*

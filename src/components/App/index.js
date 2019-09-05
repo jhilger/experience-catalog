@@ -17,7 +17,6 @@ const App = ({ value = defaultState }) => {
     ...value
   });
 
-  console.log(value);
   useEffect(() => {
     if (
       window.location.origin === "ww2.txtav.com" ||
@@ -32,7 +31,6 @@ const App = ({ value = defaultState }) => {
             return JSON.parse(oauth);
           }
           if (!oauth) {
-            console.log(state.oAuth);
             return state.oAuth.login().then(oauthResult => {
               localStorage.setItem("oAuth", JSON.stringify(oauthResult));
               return oauthResult;

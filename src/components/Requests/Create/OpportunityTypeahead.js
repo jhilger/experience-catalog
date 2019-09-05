@@ -13,6 +13,7 @@ const OpportunityTypeAhead = () => {
   return (
     <TypeAhead
       name="Opportunity__c"
+      required
       label="Opportunity"
       sObject="Opportunity"
       className="exp-typeahead"

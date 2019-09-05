@@ -6,6 +6,7 @@ import AdditionalFieldsContext from "./AdditionalFields/Context";
 
 const TypeAhead = ({
   value: Id,
+  required,
   onChange = () => {},
   dropDownItemLabelField = item => item.Name,
   extraSearchFilterPhrase = "",
@@ -124,6 +125,7 @@ const TypeAhead = ({
       <Search
         labelFormat={searchSelectionLabel}
         extraFilterPhrase={extraSearchFilterPhrase}
+        required={required}
         sObject={sObject}
         fields={fields}
         ref={ref}

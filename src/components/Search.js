@@ -9,6 +9,7 @@ const Search = (
     extraFilterPhrase = "",
     inputName,
     className,
+    required,
     name,
     onChange = () => {},
     onKeyDown = () => {},
@@ -82,6 +83,7 @@ const Search = (
   return React.createElement(component, {
     className,
     ref,
+    required,
     name,
     id: name,
     style: {
