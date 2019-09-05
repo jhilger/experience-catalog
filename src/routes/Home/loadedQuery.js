@@ -21,6 +21,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Experience_Type2__r.Short_Name__c",
           "Experience_Type2__r.Alt_Text__c",
           "Partnership_Details_Requirements__c",
+          "Pricing_Tier__c",
           "Priority__c",
           "Start_Date__c",
           "End_Date__c",
@@ -61,9 +62,19 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           // eslint-disable-next-line prettier/prettier
         `WHERE ID = '${contactId}'`,
         ].join(" ")
-      ).catch(e => {})
+      ).catch(e => {}),
+    performQuery(
+      jsforce,
+      [
+        "SELECT",
+        ["Id", "Name", "imageUrl__c", "Document_Ref__c", "Description__c"].join(
+          ", "
+        ),
+        "FROM Pricing_Tier__c"
+      ].join(" ")
+    ).catch(e => {})
   ])
-    .then(([newExperiences, partnerRequests, contact]) => {
+    .then(([newExperiences, partnerRequests, contact, tiers]) => {
       const { records } = newExperiences;
       if (contact && contact.records[0])
         dispatch({
@@ -77,6 +88,10 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
       dispatch({
         type: "EXP/init",
         payload: { records, total: newExperiences.totalSize }
+      });
+      dispatch({
+        type: "TIER/init",
+        payload: { records: tiers.records, total: tiers.totalSize }
       });
       dispatch({
         type: "REQ/init",

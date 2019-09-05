@@ -93,7 +93,9 @@ const Card = ({ sort, experience, expanded = false }) => {
               }}
               active={modalOpen}
             >
-              {/* TODO: (Isaac) Might need a short description in the Experience object to pass to the request or the request description is ancilliary info for the request input by the salesperson */}
+              {/* TODO: (Isaac) Might need a short description
+              in the Experience object to pass to the request or the request
+              description is ancilliary info for the request input by the salesperson */}
               <SingleRequest
                 initialValues={{
                   Experience__c: experience.Id,
@@ -101,12 +103,13 @@ const Card = ({ sort, experience, expanded = false }) => {
                     experience.Partnership_Details_Requirements__c
                   ),
                   Strategic_Partner_Name__c: experience.Strategic_Partner__c,
-                  ExperienceName: experience.Name,
-                  StrategicPartnerName: experience.Strategic_Partner__r.Name,
                   Event_Date__c: experience.Start_Date__c
                     ? experience.Start_Date__c
                     : Date.now()
                 }}
+                experienceName={experience.Name}
+                strategicPartner={experience.Strategic_Partner__r.Name}
+                onSuccess={() => setModalOpen(false)}
               />
             </Modal>
 

@@ -12,6 +12,8 @@ const getRecordData = (records, uniqueId) =>
     }),
     {}
   );
+const getRecordList = (recordData, recordIds) =>
+  recordIds.map(id => recordData[id]);
 const requestSubmitted = () => {
   const currentDateTime = Date.now();
   return req =>
@@ -58,7 +60,8 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
-  console.log(JSON.stringify(action.type));
+  if (process.env.NODE_ENV !== "production")
+    console.log(JSON.stringify(action.type));
   let newState = { ...state };
   switch (action.type) {
     case "CONT/data":
@@ -121,10 +124,9 @@ function reducer(state = defaultState, action) {
       return { ...state, user: action.payload, loggedIn: true };
     case "EXP/init": {
       const experiences = [
-        ...state.experiences.records,
+        ...getRecordList(state.experiences.data, state.experiences.records),
         ...action.payload.records
       ];
-      console.log(action.payload);
       const experienceData = getRecordData(experiences, "Id");
       const experienceIds = getRecordIds(experiences, "Id");
       return {
@@ -153,6 +155,12 @@ function reducer(state = defaultState, action) {
               .filter((Id, i, arr) => arr.findIndex(v => v === Id) === i)
           }
         }
+      };
+    }
+    case "TIER/init": {
+      return {
+        ...state,
+        tiers: action.payload.records
       };
     }
     case "REQ/init": {

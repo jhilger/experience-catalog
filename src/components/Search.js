@@ -5,8 +5,11 @@ const Search = (
   {
     sObject = "Account",
     searchField = "Name",
+    labelFormat = item => item[searchField],
+    extraFilterPhrase = "",
     inputName,
     className,
+    required,
     name,
     onChange = () => {},
     onKeyDown = () => {},
@@ -21,7 +24,7 @@ const Search = (
   ref
 ) => {
   const [displayValue, setDisplayValue] = useState(
-    typeof value === "object" && value[searchField] ? value[searchField] : ""
+    typeof value === "object" && labelFormat(value) ? labelFormat(value) : ""
   );
   const [query, setQuery] = useState("");
   const [placeholderValue, setPlaceholderValue] = useState("");
@@ -41,8 +44,8 @@ const Search = (
         .then(result => {
           if (!result) return;
           if (result.records.length) {
-            setDisplayValue(result.records[0][searchField]);
-            setPlaceholderValue(result.records[0][searchField]);
+            setDisplayValue(labelFormat(result.records[0]));
+            setPlaceholderValue(labelFormat(result.records[0]));
           }
           setRecord(result.records[0]);
         })
@@ -50,10 +53,10 @@ const Search = (
           // eslint-disable-next-line no-console
           console.error(err);
         });
-    } else if (typeof value === "object" && value[searchField]) {
-      setPlaceholderValue(value[searchField]);
+    } else if (typeof value === "object" && labelFormat(value)) {
+      setPlaceholderValue(labelFormat(value));
       setRecord(value);
-      setDisplayValue(value[searchField]);
+      setDisplayValue(labelFormat(value));
     } else if (!value) {
       setPlaceholderValue("");
       setRecord({});
@@ -80,6 +83,7 @@ const Search = (
   return React.createElement(component, {
     className,
     ref,
+    required,
     name,
     id: name,
     style: {
@@ -100,7 +104,7 @@ const Search = (
       // Fix this as it is causing an issue with displaying
       if (!e.target.value && record[searchField]) {
         onChange("", false, records);
-        return setDisplayValue(record[searchField]);
+        return setDisplayValue(labelFormat(value));
       }
       setDisplayValue(e.target.value);
 
@@ -108,7 +112,9 @@ const Search = (
         setQuery(
           `SELECT Id, ${fields.join(
             ", "
-          )} FROM ${sObject} WHERE ${searchField} LIKE '%${e.target.value.trim()}%' LIMIT ${limit}`
+          )} FROM ${sObject} WHERE ${searchField} LIKE '%${e.target.value.trim()}%'${
+            extraFilterPhrase ? ` AND ${extraFilterPhrase}` : extraFilterPhrase
+          } LIMIT ${limit}`
         );
     },
     onBlur,

@@ -42,10 +42,13 @@ const SingleDatePickerWrapper = ({
     );
     // eslint-disable-next-line no-empty
   } catch (error) {}
-
   useEffect(() => {
     dispatchLocal({ type: "FIELD/insert", payload: { name, label } });
     dispatch({ type: "FIELD/insert", payload: { name, label } });
+    if (value) {
+      dispatchLocal({ type: "FIELD/change", payload: { name, value } });
+      dispatch({ type: "FIELD/change", payload: { name, value } });
+    }
     return () => {
       dispatchLocal({ type: "FIELD/remove", payload: { name } });
       dispatch({
@@ -55,6 +58,19 @@ const SingleDatePickerWrapper = ({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, label]);
+  useEffect(() => {
+    if (value) {
+      dispatchLocal({
+        type: "FIELD/change",
+        payload: { name, value: date.format("YYYY-MM-DD") }
+      });
+      dispatch({
+        type: "FIELD/change",
+        payload: { name, value: date.format("YYYY-MM-DD") }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date]);
 
   return (
     <div className={className}>

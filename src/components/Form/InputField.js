@@ -20,7 +20,13 @@ const InputField = ({
   required
 }) => {
   // eslint-disable-next-line no-unused-vars
-  let [context, state, dispatch, dispatchLocal] = [{}, {}, () => {}, () => {}];
+  let [context, state, dispatch, dispatchLocal, formData] = [
+    {},
+    {},
+    () => {},
+    () => {},
+    {}
+  ];
   try {
     [state, dispatch] = useContext(Context);
     // eslint-disable-next-line no-empty
@@ -54,6 +60,7 @@ const InputField = ({
         {
           style: styles.input,
           className: classes.input,
+          defaultValue: value,
           id: name,
           type,
           name,

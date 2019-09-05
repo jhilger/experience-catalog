@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 
 import DataService from "forcejs/dist/force.data-service";
 import Home from "../../routes/Home";
-import OAuthCallback from "../../routes/OAuthCallback";
+// import OAuthCallback from "../../routes/OAuthCallback";
 import RequestPage from "../../routes/Request";
 import { Provider } from "../Context";
 import reducer, { useThunkReducer } from "../reducer/index";
@@ -17,7 +17,6 @@ const App = ({ value = defaultState }) => {
     ...value
   });
 
-  console.log(value);
   useEffect(() => {
     if (
       window.location.origin === "ww2.txtav.com" ||
@@ -32,7 +31,6 @@ const App = ({ value = defaultState }) => {
             return JSON.parse(oauth);
           }
           if (!oauth) {
-            console.log(state.oAuth);
             return state.oAuth.login().then(oauthResult => {
               localStorage.setItem("oAuth", JSON.stringify(oauthResult));
               return oauthResult;
