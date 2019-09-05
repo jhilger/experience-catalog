@@ -7,14 +7,12 @@ import Form from "../../Form";
 import InputField from "../../Form/InputField";
 import TypeAhead from "../../TypeAhead";
 import SingleDatePickerWrapper from "../../SingleDatePickerWrapper";
+import OpportunityTypeAhead from "./OpportunityTypeahead";
 import "../../../scss/form.scss";
 
 const SingleRequestCreate = ({ initialValues = {} }) => {
   const [{ user }, dispatch] = useContext(Context);
   // const contact = contacts.data[contactId];
-
-  console.log("User ", user);
-  console.log("Initial Values ", initialValues);
 
   return (
     <Form
@@ -39,6 +37,11 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
         label="Contact"
         sObject="Contact"
         className="exp-typeahead"
+        searchSelectionLabel={item => `${item.Name} of ${item.Account.Name}`}
+        dropDownItemLabelField={item => (
+          <span>{`${item.Name} of ${item.Account.Name}`}</span>
+        )}
+        fields={["Name", "Account.Name", "Account.Id"]}
         onChange={record => {
           dispatch({
             type: "CONT/data",
@@ -52,6 +55,7 @@ const SingleRequestCreate = ({ initialValues = {} }) => {
         value=""
         placeholder="contact to invite"
       />
+      <OpportunityTypeAhead />
       <SingleDatePickerWrapper
         name="Event_Date__c"
         label="Event Date"

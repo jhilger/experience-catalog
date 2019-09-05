@@ -5065,16 +5065,9 @@ for-own@^1.0.0:
   dependencies:
     for-in "^1.0.1"
 
-<<<<<<< HEAD
-forcejs@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/forcejs/-/forcejs-2.2.1.tgz#2e08df003357b1f0bdf27bae6e0feec24512351e"
-  integrity sha512-/F2iS1qAessy2LYcVKPOzpYGw4CS9oaKHPe16yGMEs6nXZtWDO/dEVkRi1N6MIZ4NOmtMnFwu33HL+hlNXxzQg==
-=======
 "forcejs@git+https://github.com/couturecraigj/forcejs.git":
   version "2.2.1"
   resolved "git+https://github.com/couturecraigj/forcejs.git#c6ff69b8747e5b0d75359ed8053044b33d5125dd"
->>>>>>> a2fcebda331e88b83f21a00acb6cc8c3ecdeab2c
 
 forever-agent@~0.6.1:
   version "0.6.1"

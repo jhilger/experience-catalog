@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../../../Icons";
-// import Modal from "../../../Modal";
-// import SingleRequest from "../../../Requests/Create/Single";
+import Modal from "../../../Modal";
+import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
 const Card = ({ sort, experience, expanded = false }) => {

@@ -155,6 +155,13 @@ function reducer(state = defaultState, action) {
         }
       };
     }
+    case "TIER/init": {
+      newState = {
+        ...state,
+        tiers: action.payload.records
+      };
+      break;
+    }
     case "REQ/init": {
       const requests = [...state.requests.records, ...action.payload.records];
       // const requestsData = getRecordData(requests, "Id");

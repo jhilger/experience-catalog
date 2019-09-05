@@ -30,18 +30,25 @@ const TierModalButton = ({ history, buttonLabel, modalLabel }) => {
         <div className="exp-list">
           <ul>
             {tiers.length ? (
-              tiers.map(({ id, name, description, doc }) => (
-                <li key={id}>
-                  <a
-                    className="tier"
-                    download
-                    href={`${process.env.PUBLIC_URL}${doc}`}
-                  >
-                    <h5>{name}</h5>
-                    {description}
-                  </a>
-                </li>
-              ))
+              tiers.map(
+                ({
+                  Id,
+                  Name,
+                  Description__c: descript,
+                  Document_Ref__c: doc
+                }) => (
+                  <li key={Id}>
+                    <a
+                      className="tier"
+                      download
+                      href={`${process.env.PUBLIC_URL}${doc}`}
+                    >
+                      <h5>{Name}</h5>
+                      {descript}
+                    </a>
+                  </li>
+                )
+              )
             ) : (
               <li>Sorry, no tiers found.</li>
             )}

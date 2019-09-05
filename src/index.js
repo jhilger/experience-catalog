@@ -34,21 +34,13 @@ hydrate(
         jsforce,
         authNeeded: !!authNeeded,
         user: getUser(),
-<<<<<<< HEAD
-        loggedIn: !!getUser().display_name || !!getUser().Name,
-=======
         loggedIn: loggedIn(),
->>>>>>> a2fcebda331e88b83f21a00acb6cc8c3ecdeab2c
         modalRoot,
         contactId,
         oAuth: OAuth.createInstance(
           window.clientId,
           window.loginUrl,
-<<<<<<< HEAD
-          `${window.location.origin}/oauth/callback/`
-=======
           getCallbackUrl()
->>>>>>> a2fcebda331e88b83f21a00acb6cc8c3ecdeab2c
         )
       }}
     />

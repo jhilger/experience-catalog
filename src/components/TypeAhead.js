@@ -8,6 +8,8 @@ const TypeAhead = ({
   value: Id,
   onChange = () => {},
   dropDownItemLabelField = item => item.Name,
+  extraSearchFilterPhrase = "",
+  searchSelectionLabel = item => item.Name,
   fields = ["Name"],
   name,
   label,
@@ -78,11 +80,11 @@ const TypeAhead = ({
 
     formDispatch({
       type: "FIELD/change",
-      payload: { value: newRecord.Id, name }
+      payload: { value: newRecord.Id, name, record: newRecord }
     });
     addedFieldsDispatch({
       type: "FIELD/change",
-      payload: { value: newRecord.Name, name }
+      payload: { value: newRecord.Name, name, record: newRecord }
     });
     setRecords([]);
     setHovered(null);
@@ -117,42 +119,45 @@ const TypeAhead = ({
   }, [name, label]);
   return (
     <div className={className}>
-        <label htmlFor={name}>{label}</label>
-        <Search
-          sObject={sObject}
-          fields={fields}
-          ref={ref}
-          onChange={(searchValue, more, newRecords) => {
-            if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
-            setRecords(newRecords);
-            setRecord(searchValue);
-          }}
-          onBlur={onBlur}
-          type="text"
-          hovered={hovered}
-          inputName={name}
-          onKeyDown={e => {
-            switch (e.keyCode) {
-              case 40:
-                return downKey(e);
-              case 9:
-                return tabKey(e);
-              case 38:
-                return upKey(e);
-              case 13:
-                return enterKey(e);
-              case 27:
-                return escKey(e);
-              case 8:
-              case 46:
-                return backspaceKey(e);
-              default:
-                break;
-            }
-          }}
-          value={record}
-          autoComplete="new-password"
-        />     
+      {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+      <label htmlFor={name}>{label}</label>
+      <Search
+        labelFormat={searchSelectionLabel}
+        extraFilterPhrase={extraSearchFilterPhrase}
+        sObject={sObject}
+        fields={fields}
+        ref={ref}
+        onChange={(searchValue, more, newRecords) => {
+          if (JSON.stringify(newRecords) === JSON.stringify(records)) return;
+          setRecords(newRecords);
+          setRecord(searchValue);
+        }}
+        onBlur={onBlur}
+        type="text"
+        hovered={hovered}
+        inputName={name}
+        onKeyDown={e => {
+          switch (e.keyCode) {
+            case 40:
+              return downKey(e);
+            case 9:
+              return tabKey(e);
+            case 38:
+              return upKey(e);
+            case 13:
+              return enterKey(e);
+            case 27:
+              return escKey(e);
+            case 8:
+            case 46:
+              return backspaceKey(e);
+            default:
+              break;
+          }
+        }}
+        value={record}
+        autoComplete="new-password"
+      />
 
       <DropDown
         ref={menuRef}
@@ -167,11 +172,11 @@ const TypeAhead = ({
 
           formDispatch({
             type: "FIELD/change",
-            payload: { value: newRecord.Id, name }
+            payload: { value: newRecord.Id, name, record: newRecord }
           });
           addedFieldsDispatch({
             type: "FIELD/change",
-            payload: { value: newRecord.Name, name }
+            payload: { value: newRecord.Name, name, record: newRecord }
           });
         }}
       />
@@ -181,8 +186,7 @@ const TypeAhead = ({
 
 export default TypeAhead;
 
-
-/*return (
+/* return (
   <div style={{ display: "inline-block", position: "relative" }}>
     <div style={{ display: "inline-block" }}>
       
@@ -256,4 +260,4 @@ export default TypeAhead;
       }}
     />
   </div>
-);*/
+); */

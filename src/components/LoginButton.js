@@ -3,9 +3,8 @@ import DataService from "forcejs/dist/force.data-service";
 import Context from "./Context";
 
 const LoginButton = () => {
-  const [{ loggedIn, oAuth, authNeeded }, dispatch] = useContext(Context);
+  const [{ loggedIn, oAuth }, dispatch] = useContext(Context);
   const [rendered, setRendered] = useState(false);
-  console.log(oAuth);
   useEffect(() => {
     setRendered(true);
   }, []);
