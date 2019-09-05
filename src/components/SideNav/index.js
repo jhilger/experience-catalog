@@ -5,21 +5,22 @@ import { getIcon } from "../Icons";
 import Context from "../Context";
 
 const SideNavigation = ({ onToggle }) => {
-  const [{ experiences }, dispatch] = useContext(Context);
-  const experienceTypes = experiences.records.reduce((types, experience) => {
-    if (
-      !types.find(
-        experienceType =>
-          experience.Experience_Type2__r.Id === experienceType.Id
-      )
-    ) {
-      types.push(experience.Experience_Type2__r);
-    }
-    return types;
-  }, []);
+  const [
+    {
+      experiences: {
+        types: { data, list }
+      }
+    },
+    dispatch
+  ] = useContext(Context);
+
+  const experienceTypes = list.map(experienceId => data[experienceId]);
+
+  const theme = "light";
 
   return (
     <SideNav
+      className={theme}
       onSelect={selected => {
         dispatch({
           type: "EXP/filtered",
@@ -34,7 +35,11 @@ const SideNavigation = ({ onToggle }) => {
       <SideNav.Nav defaultSelected="home">
         <NavItem eventKey="home">
           <NavIcon>
-            <img className="exp-nav-icon" src={getIcon("home")} alt="Home" />
+            <img
+              className="exp-nav-icon"
+              src={getIcon("home", theme === "light" ? "gray" : "")}
+              alt="Home"
+            />
           </NavIcon>
           <NavText>Home</NavText>
         </NavItem>
@@ -46,13 +51,18 @@ const SideNavigation = ({ onToggle }) => {
             <NavIcon>
               <img
                 className="exp-nav-icon"
-                src={getIcon(experienceType)}
+                src={getIcon(
+                  experienceType.Short_Name__c.toLowerCase(),
+                  theme === "light" ? "gray" : ""
+                )}
                 alt={experienceType.Alt_Text__c}
               />
             </NavIcon>
             <NavText>{experienceType.Short_Name__c}</NavText>
           </NavItem>
         ))}
+
+        {/* TODO: (Isaac)  Loop through tiers to allow filtering by those tiers */}
       </SideNav.Nav>
     </SideNav>
   );

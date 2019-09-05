@@ -47,10 +47,20 @@
 }
 
 .overlay .content h2 {
+  margin-bottom: 1em;
+}
+
+.overlay .exp-req-filter {
+  display: block;
   margin-bottom: 1.5em;
 }
 
-.overlay .content .exp-req-list {
+.overlay .exp-req-filter button.filter {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.overlay .content .exp-list {
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
@@ -60,20 +70,21 @@
   max-width: 70vw;
 }
 
-.overlay .exp-req-list > ul {
+.overlay .exp-list > ul {
   list-style: outside none none;
   margin: 0;
 }
 
-.overlay .exp-req-list > ul > li {
+.overlay .exp-list > ul > li {
   margin-bottom: 1em;
+  overflow: hidden;
 }
 
-.overlay .exp-req-list > ul > li:last-of-type {
+.overlay .exp-list > ul > li:last-of-type {
   margin-bottom: 0;
 }
 
-.overlay .content a {
+.overlay .exp-list a {
   position: relative;
   text-transform: none;
   padding: 1.5em;
@@ -84,11 +95,11 @@
   transition: 0.5s;
 }
 
-.overlay .content a:hover {
+.overlay .exp-list a:hover {
   transform: translateX(0.5em);
 }
 
-.overlay .content a:after {
+.overlay .exp-list a:after {
   content: "";
   position: absolute;
   top: 50%;
@@ -102,10 +113,29 @@
   transform: translateY(-50%);
 }
 
+.overlay .exp-list a.tier {
+  letter-spacing: 0.063em;
+  padding-right: 5em;
+}
+
+.overlay .exp-list a.tier:after {
+  content: "";
+  right: 2em;
+  background-image: url("../../img/download-gold.svg");
+}
+
 .overlay .content a h5 {
   text-transform: none;
   margin-bottom: 0.5em;
   line-height: 1.5;
+}
+
+.overlay .content a h5 span {
+  text-transform: uppercase;
+  margin-left: 1em;
+  font-family: "Proxima N W01 Light", sans-serif;
+  font-size: 0.75em;
+  color: $gold-light;
 }
 
 .overlay .content a .divider {
@@ -125,8 +155,16 @@
   bottom: auto;
 }
 
+.overlay .no-results {
+  display: none;
+}
+
+.overlay .no-results.active {
+  display: block;
+}
+
 @media only screen and (max-width: 40em) {
-  .overlay .content .exp-req-list {
+  .overlay .content .exp-list {
     min-width: 70vw;
   }
 }

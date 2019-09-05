@@ -1,0 +1,56 @@
+@import "variables";
+
+.SingleDatePickerInput__withBorder {
+  border-radius: 0;
+  border: 0;
+}
+
+.DateInput_fang {
+  display: none;
+}
+
+.DayPickerKeyboardShortcuts_show {
+  display: none;
+}
+
+.DateInput_input {
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: $gray;
+  background-color: #fefefe;
+  width: 30vw;
+  padding: 0.5rem;
+  border: 1px solid #cacaca;
+}
+
+.CalendarDay__selected,
+.CalendarDay__selected:active,
+.CalendarDay__selected:hover {
+  background: $gold-medium;
+  border: 1px double $gold-medium;
+  color: $white;
+}
+
+@media only screen and (max-width: 40em) {
+  .DateInput_input {
+    width: 60vw;
+  }
+}
+@media only screen and (min-width: 40.063em) {
+  .DateInput_input {
+    width: 40vw;
+  }
+}
+
+@media only screen and (min-width: 64.063em) {
+  .DateInput_input {
+    width: 30vw;
+  }
+}
+
+@media only screen and (min-width: 120.063em) {
+  .DateInput_input {
+    width: 30vw;
+  }
+}

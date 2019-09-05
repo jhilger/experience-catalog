@@ -1,4 +1,51 @@
+import { useRef, useState } from "react";
 import defaultState from "../defaultState";
+
+const onlyUniqueId = (v, i, recordArray) =>
+  recordArray.findIndex(record => record.Id === v.Id) === i;
+
+const getRecordData = (records, uniqueId) =>
+  records.reduce(
+    (previousObj, record) => ({
+      ...previousObj,
+      [record[uniqueId]]: record
+    }),
+    {}
+  );
+const requestSubmitted = () => {
+  const currentDateTime = Date.now();
+  return req =>
+    currentDateTime < new Date(req.Event_Date__c).getTime() &&
+    req.Status__c === "Submitted";
+};
+const requestApproved = () => {
+  const currentDateTime = Date.now();
+  return req =>
+    currentDateTime < new Date(req.Event_Date__c).getTime() &&
+    req.Status__c === "Approved";
+};
+
+const getRecordIds = (records, uniqueId) =>
+  records.filter(onlyUniqueId).map(record => record[uniqueId]);
+
+const getFullRecords = (recordIds, data) => recordIds.map(Id => data[Id]);
+export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
+  const [hookState, setHookState] = useState(init(initialArg));
+
+  const state = useRef(hookState);
+  const getState = () => state.current;
+  const setState = newState => {
+    state.current = newState;
+    setHookState(newState);
+  };
+  const reduce = action => reducerFunction(getState(), action);
+  const dispatch = action =>
+    typeof action === "function"
+      ? action(dispatch, getState)
+      : setState(reduce(action));
+
+  return [hookState, dispatch];
+};
 
 const filterItems = (query, experiences) =>
   experiences.map(exp => {
@@ -11,23 +58,59 @@ const filterItems = (query, experiences) =>
   });
 
 function reducer(state = defaultState, action) {
+  console.log(JSON.stringify(action.type));
+  let newState = { ...state };
   switch (action.type) {
-    case "CONT/data": {
-      const newState = {
-        ...state,
+    case "CONT/data":
+      newState = {
+        ...newState,
         contacts: {
           ...state.contacts,
           data: { ...state.contacts.data, [action.payload.Id]: action.payload }
         }
       };
-      return newState;
-    }
-    case "CONT/Id": {
-      const newState = {
+      break;
+    case "REQ/data":
+      newState = {
+        ...newState,
+        requests: {
+          ...state.requests,
+          data: { ...state.requests.data, [action.payload.Id]: action.payload }
+        },
+        requestId: action.payload.Id
+      };
+      break;
+    case "EXP/data":
+      newState = {
+        ...newState,
+        experiences: {
+          ...state.experiences,
+          data: {
+            ...state.experiences.data,
+            [action.payload.Id]: action.payload
+          }
+        },
+        experienceId: action.payload.Id
+      };
+      break;
+    case "EXP/remove_data": {
+      return {
         ...state,
+        experienceId: null
+      };
+    }
+    case "REQ/Id":
+      newState = {
+        ...newState,
+        requestId: action.payload.Id
+      };
+      break;
+    case "CONT/Id": {
+      newState = {
+        ...newState,
         contactId: action.payload.Id
       };
-      return newState;
+      break;
     }
     case "CONT/remove":
       return {
@@ -37,70 +120,122 @@ function reducer(state = defaultState, action) {
     case "loggedin":
       return { ...state, user: action.payload, loggedIn: true };
     case "EXP/init": {
-      const experiences = action.payload.records;
+      const experiences = [
+        ...state.experiences.records,
+        ...action.payload.records
+      ];
+      console.log(action.payload);
+      const experienceData = getRecordData(experiences, "Id");
+      const experienceIds = getRecordIds(experiences, "Id");
       return {
         ...state,
         experiences: {
           ...state.experiences,
-          records: experiences,
-          data: {
-            [action.payload.Id]: action.payload
-          },
-          filtered: filterItems(state.experiences.filter, experiences),
+          records: experienceIds,
+          data: experienceData,
+          filtered: filterItems(
+            state.experiences.filter,
+            getFullRecords(experienceIds, experienceData)
+          ),
           size: experiences.length,
-          total: action.payload.total
+          total: action.payload.total,
+          types: {
+            data: experiences.reduce(
+              (previous, experience) => ({
+                ...previous,
+                [experience.Experience_Type2__r.Id]:
+                  experience.Experience_Type2__r
+              }),
+              {}
+            ),
+            list: experiences
+              .map(experience => experience.Experience_Type2__r.Id)
+              .filter((Id, i, arr) => arr.findIndex(v => v === Id) === i)
+          }
         }
       };
     }
     case "REQ/init": {
-      const requests = action.payload.records;
-      const currentDateTime = new Date().getTime();
+      const requests = [...state.requests.records, ...action.payload.records];
+      // const requestsData = getRecordData(requests, "Id");
+      const requestsIds = getRecordIds(requests, "Id");
+
       return {
         ...state,
         requests: {
-          records: requests,
-          submitted: requests.filter(
-            req =>
-              currentDateTime < new Date(req.Event_Date__c).getTime() &&
-              req.Status__c === "Submitted"
+          records: requestsIds,
+          data: requests.filter(
+            request =>
+              new Date(request.Event_Date__c).getTime() > new Date().getTime()
           ),
-          approved: requests.filter(
-            req =>
-              currentDateTime < new Date(req.Event_Date__c).getTime() &&
-              req.Status__c === "Approved"
+          submitted: getRecordIds(
+            requests.filter(onlyUniqueId).filter(requestSubmitted()),
+            "Id"
+          ),
+          approved: getRecordIds(
+            requests.filter(onlyUniqueId).filter(requestApproved()),
+            "Id"
           ),
           size: requests.length,
           total: action.payload.total
         }
       };
     }
+    case "REQ/create_success": {
+      const request = action.payload.records[0];
+      newState = {
+        ...state,
+        requests: {
+          ...state.requests,
+          data: {
+            ...state.requests.data,
+            [request.Id]: request
+          },
+          submitted: [
+            ...state.requests.submitted,
+            ...(requestSubmitted()(request) ? [request.Id] : [])
+          ],
+          records: state.requests.records.concat(request),
+          size: state.requests.size + 1,
+          total: state.requests.total + 1
+        }
+      };
+      break;
+    }
     case "EXP/add": {
-      const experiences = state.experiences.records.concat(
-        action.payload.records
-      );
+      const experiences = [
+        ...state.experiences.records,
+        ...action.payload.records
+      ];
+      const experienceData = getRecordData(experiences, "Id");
+      const experienceIds = getRecordIds(experiences, "Id");
       return {
         ...state,
         experiences: {
           ...state.experiences,
           records: experiences,
-          filtered: filterItems(state.experiences.filter, experiences),
+          filtered: filterItems(
+            state.experiences.filter,
+            getFullRecords(experienceIds, experienceData)
+          ),
           size: experiences.length,
           total: action.payload.total
         }
       };
     }
-    case "EXP/filtered":
+    case "EXP/filtered": {
       return {
         ...state,
         experiences: {
           ...state.experiences,
           filtered: filterItems(
             action.payload.selected,
-            state.experiences.records
+            getFullRecords(state.experiences.records, state.experiences.data)
           ),
           filter: action.payload.selected
         }
       };
+    }
     case "TOAST/error":
       return {
         ...state,
@@ -142,6 +277,9 @@ function reducer(state = defaultState, action) {
     default:
       return state;
   }
+  // eslint-disable-next-line no-console
+  console.log(newState);
+  return newState;
 }
 
 export default reducer;

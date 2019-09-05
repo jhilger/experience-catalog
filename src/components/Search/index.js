@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState, forwardRef } from "react";
-import Context from "../Context";
+import React, { useEffect, useState, forwardRef } from "react";
+import DataService from "forcejs/dist/force.data-service";
 
 const Search = (
   {
@@ -20,7 +20,6 @@ const Search = (
   },
   ref
 ) => {
-  const [context] = useContext(Context);
   const [displayValue, setDisplayValue] = useState(
     typeof value === "object" && value[searchField] ? value[searchField] : ""
   );
@@ -30,20 +29,21 @@ const Search = (
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    if (typeof value === "string" && value)
-      context.jsforce.browser.connection.query(
-        `SELECT ${searchField} FROM ${sObject} WHERE Id = '${value}'`,
-        (err, result) => {
-          if (err) return;
+    if (typeof value === "string" && value && [15, 18].includes(value.length)) {
+      const service = DataService.getInstance();
+      service
+        .query(`SELECT ${searchField} FROM ${sObject} WHERE Id = '${value}'`)
+        .then(result => {
           if (!result) return;
           if (result.records.length) {
             setDisplayValue(result.records[0][searchField]);
             setPlaceholderValue(result.records[0][searchField]);
           }
           setRecord(result.records[0]);
-        }
-      );
-    else if (typeof value === "object" && value[searchField]) {
+        })
+        // eslint-disable-next-line no-console
+        .catch(err => console.error(err));
+    } else if (typeof value === "object" && value[searchField]) {
       setPlaceholderValue(value[searchField]);
       setRecord(value);
       setDisplayValue(value[searchField]);
@@ -56,13 +56,19 @@ const Search = (
   }, [value]);
 
   useEffect(() => {
-    if (query)
-      context.jsforce.browser.connection.query(query, (err, result) => {
-        // eslint-disable-next-line no-console
-        if (err) console.error(err);
-        setRecords(result.records);
-        onChange(displayValue, result.done, result.records);
-      });
+    if (query) {
+      const service = DataService.getInstance();
+      service
+        .query(query)
+        .then(result => {
+          setRecords(result.records);
+          onChange(displayValue, result.done, result.records);
+        })
+        .catch(err => {
+          // eslint-disable-next-line no-console
+          console.error(err);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
   return React.createElement(component, {
