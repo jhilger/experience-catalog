@@ -8,6 +8,8 @@ const TierModalButton = ({ history, buttonLabel, modalLabel }) => {
   const [{ tiers }] = useContext(Context);
   // console.log("Requests ", requests);
 
+  // TODO: (Isaac) Need to have a way to sort the tiers.
+
   return (
     <>
       <button
