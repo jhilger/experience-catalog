@@ -26,6 +26,7 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Pricing_Tier__r.Id",
           "Pricing_Tier__r.Name",
           "Pricing_Tier__r.imageUrl__c",
+          "Pricing_Tier__r.Sorting_Order__c",
           "Priority__c",
           "Start_Date__c",
           "End_Date__c",
@@ -71,10 +72,15 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
       jsforce,
       [
         "SELECT",
-        ["Id", "Name", "imageUrl__c", "Document_Ref__c", "Description__c"].join(
-          ", "
-        ),
-        "FROM Pricing_Tier__c"
+        [
+          "Id",
+          "Name",
+          "imageUrl__c",
+          "Document_Ref__c",
+          "Description__c",
+          "Sorting_Order__c"
+        ].join(", "),
+        "FROM Pricing_Tier__c ORDER BY Sorting_Order__c NULLS LAST"
       ].join(" ")
     ).catch(e => {})
   ])
