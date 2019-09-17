@@ -50,13 +50,15 @@ export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
 };
 
 const filterItems = (query, experiences) =>
-  experiences.map(exp => {
+  experiences.map(experience => {
     if (query === "home") {
-      exp.display = true;
+      experience.display = true;
     } else {
-      exp.display = exp.Experience_Type2__r.Short_Name__c === query;
+      experience.display =
+        experience.Experience_Type2__r.Short_Name__c === query ||
+        experience.Pricing_Tier__r.Name === query;
     }
-    return exp;
+    return experience;
   });
 
 function reducer(state = defaultState, action) {
@@ -129,6 +131,7 @@ function reducer(state = defaultState, action) {
       ];
       const experienceData = getRecordData(experiences, "Id");
       const experienceIds = getRecordIds(experiences, "Id");
+
       return {
         ...state,
         experiences: {
@@ -141,19 +144,16 @@ function reducer(state = defaultState, action) {
           ),
           size: experiences.length,
           total: action.payload.total,
-          types: {
-            data: experiences.reduce(
-              (previous, experience) => ({
-                ...previous,
-                [experience.Experience_Type2__r.Id]:
-                  experience.Experience_Type2__r
-              }),
-              {}
+          tiers: experiences
+            .map(experience => experience.Pricing_Tier__r)
+            .filter(
+              (tier, i, arr) => arr.findIndex(v => v.Id === tier.Id) === i
             ),
-            list: experiences
-              .map(experience => experience.Experience_Type2__r.Id)
-              .filter((Id, i, arr) => arr.findIndex(v => v === Id) === i)
-          }
+          types: experiences
+            .map(experience => experience.Experience_Type2__r)
+            .filter(
+              (type, i, arr) => arr.findIndex(v => v.Id === type.Id) === i
+            )
         }
       };
     }

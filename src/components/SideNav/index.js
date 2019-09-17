@@ -7,14 +7,11 @@ import Context from "../Context";
 const SideNavigation = ({ onToggle }) => {
   const [
     {
-      experiences: {
-        types: { data, list }
-      }
+      experiences: { types },
+      experiences: { tiers }
     },
     dispatch
   ] = useContext(Context);
-
-  const experienceTypes = list.map(experienceId => data[experienceId]);
 
   const theme = "light";
 
@@ -43,22 +40,35 @@ const SideNavigation = ({ onToggle }) => {
           </NavIcon>
           <NavText>Home</NavText>
         </NavItem>
-        {experienceTypes.map(experienceType => (
-          <NavItem
-            key={experienceType.Id}
-            eventKey={experienceType.Short_Name__c}
-          >
+        {types.map(type => (
+          <NavItem key={type.Id} eventKey={type.Short_Name__c}>
             <NavIcon>
               <img
                 className="exp-nav-icon"
                 src={getIcon(
-                  experienceType.Short_Name__c.toLowerCase(),
+                  type.Short_Name__c.toLowerCase(),
                   theme === "light" ? "gray" : ""
                 )}
-                alt={experienceType.Alt_Text__c}
+                alt={type.Alt_Text__c}
               />
             </NavIcon>
-            <NavText>{experienceType.Short_Name__c}</NavText>
+            <NavText>{type.Short_Name__c}</NavText>
+          </NavItem>
+        ))}
+
+        {tiers.map(tier => (
+          <NavItem key={tier.Id} eventKey={tier.Name}>
+            <NavIcon>
+              <img
+                className="exp-nav-icon"
+                src={getIcon(
+                  tier.Name.toLowerCase(),
+                  theme === "light" ? "gray" : ""
+                )}
+                alt={tier.Name}
+              />
+            </NavIcon>
+            <NavText>{tier.Name}</NavText>
           </NavItem>
         ))}
 

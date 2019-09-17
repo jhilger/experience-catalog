@@ -48,8 +48,8 @@ const SingleRequestCreate = ({
       <h5 id="partnerName">{strategicPartner}</h5>
       <label htmlFor="experinceName">Experience</label>
       <h5 id="experienceName">{experienceName}</h5>
-      <label htmlFor="requirements">Requirements</label>
-      <p id="requirements">{initialValues.Requirements__c}</p>
+      <label htmlFor="requirements">Tier</label>
+      <h5 id="experienceTier">{initialValues.Pricing_Tier__r.Name}</h5>
       <TypeAhead
         name="Contact_to_Invite__c"
         required

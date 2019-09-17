@@ -91,11 +91,12 @@
 }
 
 .exp-typeahead > ul > li:hover {
-  background: linear-gradient(
+  /*background: linear-gradient(
     to right,
     rgba($gold-medium, 1) 0%,
     rgba($gold-medium, 0.75) 75%,
     rgba($gold-light, 0.5) 100%
-  );
+  );*/
+  background: $gold-medium;
   color: $white;
 }

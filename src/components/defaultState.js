@@ -12,10 +12,8 @@ const defaultState = {
     size: null,
     filtered: [],
     filter: "home",
-    types: {
-      data: {},
-      list: []
-    }
+    tiers: [],
+    types: []
   },
   requests: {
     data: {},
@@ -30,28 +28,7 @@ const defaultState = {
   requestId: null,
   filtered: [],
   filter: "home",
-  tiers: [
-    {
-      Id: "1100",
-      name: "Gold  $",
-      description: "This tier is for customers with any product oppportunity.",
-      doc: "/img/doc.pdf"
-    },
-    {
-      Id: "2200",
-      name: "Platinum  $$",
-      description:
-        "This tier is for customers with a Light Jet or Corporate Jet opportunity.",
-      doc: "/img/doc.pdf"
-    },
-    {
-      Id: "3300",
-      name: "Diamond  $$$",
-      description:
-        "This tier is for customers with a Corporate Jet opportunity.",
-      doc: "/img/doc.pdf"
-    }
-  ]
+  tiers: []
 };
 
 export default defaultState;
