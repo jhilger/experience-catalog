@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import Modal from "./Modal";
 import Context from "./Context";
+import { getIcon } from "./Icons";
 
 const TierModalButton = ({ history, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
@@ -36,17 +37,24 @@ const TierModalButton = ({ history, buttonLabel, modalLabel }) => {
                 ({
                   Id,
                   Name,
-                  Description__c: descript,
-                  Document_Ref__c: doc
+                  Description__c: description,
+                  Document_Ref__c: documentUrl
                 }) => (
                   <li key={Id}>
                     <a
                       className="tier"
                       download
-                      href={`${process.env.PUBLIC_URL}${doc}`}
+                      href={`${process.env.PUBLIC_URL}${documentUrl}`}
                     >
-                      <h5>{Name}</h5>
-                      {descript}
+                      <h5>
+                        {Name}
+                        <img
+                          className="tier-icon"
+                          alt={Name}
+                          src={getIcon(Name.toLowerCase())}
+                        />
+                      </h5>
+                      {description}
                     </a>
                   </li>
                 )

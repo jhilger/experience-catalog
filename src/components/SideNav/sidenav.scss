@@ -12,6 +12,9 @@
   background: $gray;
   position: fixed;
   transition: 0.5s;
+  min-width: 88px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sidenav---sidenav-nav---3tvij

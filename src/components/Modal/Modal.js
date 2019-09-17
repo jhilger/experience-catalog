@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import ReactDOM from "react-dom";
-import "./modal.css";
 // import delayUnmounting from "./delayUnmounting";
 import Context from "../Context";
 

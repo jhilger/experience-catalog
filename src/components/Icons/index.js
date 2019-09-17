@@ -36,11 +36,11 @@ const getIcon = (experienceType, type) => {
     case "trophy":
     case "sports":
       return type === "gray" ? trophyGray : trophy;
-    case "gold $":
+    case "gold":
       return type === "gray" ? goldGray : gold;
-    case "platinum $$":
+    case "platinum":
       return type === "gray" ? platinumGray : platinum;
-    case "diamond $$$":
+    case "diamond":
       return type === "gray" ? diamondGray : diamond;
     case "home":
       return type === "gray" ? homeGray : home;
