@@ -1,5 +1,7 @@
 import { performQuery } from "../../utils/jsforce";
 
+// TODO: (Isaac) Looks like the Priority__c field can only be set to '2.'  It needs to be able to accept any number and default to null.
+
 const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
   Promise.all([
     performQuery(
@@ -21,7 +23,9 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Experience_Type2__r.Short_Name__c",
           "Experience_Type2__r.Alt_Text__c",
           "Partnership_Details_Requirements__c",
-          "Pricing_Tier__c",
+          "Pricing_Tier__r.Id",
+          "Pricing_Tier__r.Name",
+          "Pricing_Tier__r.imageUrl__c",
           "Priority__c",
           "Start_Date__c",
           "End_Date__c",

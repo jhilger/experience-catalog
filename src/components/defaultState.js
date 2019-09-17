@@ -12,10 +12,8 @@ const defaultState = {
     size: null,
     filtered: [],
     filter: "home",
-    types: {
-      data: {},
-      list: []
-    }
+    tiers: [],
+    types: []
   },
   requests: {
     data: {},

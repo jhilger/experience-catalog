@@ -70,6 +70,14 @@ const Card = ({ sort, experience, expanded = false }) => {
               alt={experience.Experience_Type2__r.Alt_Text__c}
             />
 
+            <img
+              src={getIcon(
+                experience.Pricing_Tier__r.Name.toLowerCase(),
+                "gray"
+              )}
+              alt={experience.Pricing_Tier__r.Name}
+            />
+
             {/* TODO: (Isaac) Show icon that matches tier of experience */}
           </div>
 
@@ -93,15 +101,13 @@ const Card = ({ sort, experience, expanded = false }) => {
               }}
               active={modalOpen}
             >
-              {/* TODO: (Isaac) Might need a short description
-              in the Experience object to pass to the request or the request
-              description is ancilliary info for the request input by the salesperson */}
               <SingleRequest
                 initialValues={{
                   Experience__c: experience.Id,
                   Requirements__c: removeTags(
                     experience.Partnership_Details_Requirements__c
                   ),
+                  Pricing_Tier__r: experience.Pricing_Tier__r,
                   Strategic_Partner_Name__c: experience.Strategic_Partner__c,
                   Event_Date__c: experience.Start_Date__c
                     ? experience.Start_Date__c
