@@ -71,8 +71,6 @@ const SideNavigation = ({ onToggle }) => {
             <NavText>{tier.Name}</NavText>
           </NavItem>
         ))}
-
-        {/* TODO: (Isaac)  Loop through tiers to allow filtering by those tiers */}
       </SideNav.Nav>
     </SideNav>
   );
