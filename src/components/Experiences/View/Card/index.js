@@ -55,8 +55,8 @@ const Card = ({ sort, experience, expanded = false }) => {
           style={{
             backgroundImage: `url(${
               experience.Image_URL__c
-                ? experience.Image_URL__c
-                : "/img/default.jpg"
+                ? `${process.env.PUBLIC_URL}${experience.Image_URL__c}`
+                : `${process.env.PUBLIC_URL}/img/default.jpg`
             })`
           }}
         />
