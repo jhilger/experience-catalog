@@ -38,7 +38,8 @@ if (
 } else {
   clearData();
 }
-export const getCallbackUrl = () => `${window.location.origin}/oauth/callback/`;
+export const getCallbackUrl = () =>
+  `${window.location.origin}${process.env.PUBLIC_URL}/oauth/callback/`;
 
 export const loggedIn = () =>
   (!!getUser().display_name || !!getUser().Name) &&
