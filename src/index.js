@@ -28,7 +28,7 @@ import * as serviceWorker from "./serviceWorker";
 // eslint-disable-next-line
 
 hydrate(
-  <BrowserRouter basename="/">
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <App
       value={{
         jsforce,
