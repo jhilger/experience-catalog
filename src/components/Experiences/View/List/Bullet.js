@@ -6,9 +6,11 @@ const ExperienceList = () => {
   return (
     <div>
       <h2>Approved Requests</h2>
-      {experiences.records.map(({ Name, Id }, i) => (
-        <div key={Id}>{Name}</div>
-      ))}
+      {experiences.records
+        .map(experience => experiences.data(experience))
+        .map(({ Name, Id }, i) => (
+          <div key={Id}>{Name}</div>
+        ))}
     </div>
   );
 };
