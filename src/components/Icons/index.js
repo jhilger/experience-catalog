@@ -54,12 +54,6 @@ const getIcon = (experienceType, type) => {
       return culinary;
     case "home":
       return type === "gray" ? homeGray : home;
-    case "home":
-      return type === "gray" ? homeGray : home;
-    case "home":
-      return type === "gray" ? homeGray : home;
-    case "home":
-      return type === "gray" ? homeGray : home;
     default:
       return experienceType.Image_Path__c;
   }
