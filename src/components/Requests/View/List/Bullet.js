@@ -42,7 +42,7 @@ const RequestList = ({ label }) => {
       </div>
       <div className="exp-list">
         <ul>
-          {requests.results
+          {requests.records
             .map(request => requests.data(request))
             .map(
               ({
