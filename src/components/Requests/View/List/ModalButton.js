@@ -15,7 +15,7 @@ const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
       <button
         type="button"
         className="req"
-        data-content={requests.data.length || 0}
+        data-content={requests.records.length || 0}
         onClick={() => {
           history.push(`${history.location.pathname}#requests`);
           setShowReqs(!showReqs);
