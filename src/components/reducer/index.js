@@ -145,9 +145,9 @@ function reducer(state = defaultState, action) {
           total: action.payload.total,
           tiers: experiences
             .map(experience => experience.Pricing_Tier__r)
+            .filter(tier => tier)
             .filter(
-              (tier, i, arr) =>
-                tier && arr.findIndex(v => v.Id === tier.Id) === i
+              (tier, i, arr) => arr.findIndex(v => v.Id === tier.Id) === i
             )
             .sort((a, b) => a.Sorting_Order__c - b.Sorting_Order__c),
           types: experiences
