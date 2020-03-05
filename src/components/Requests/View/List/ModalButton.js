@@ -3,24 +3,24 @@ import { withRouter } from "react-router-dom";
 import Modal from "../../../Modal";
 import Context from "../../../Context";
 import RequestList from "./Bullet";
+// import Context from "../../../Context";
 
-const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
+const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
   const [{ requests }] = useContext(Context);
+  // console.log("Requests ", requests);
 
   return (
-    <React.Fragment>
+    <>
       <button
         type="button"
-        className="info"
+        className="req"
+        data-content={requests.data.length || 0}
         onClick={() => {
           history.push(`${history.location.pathname}#requests`);
           setShowReqs(!showReqs);
         }}
-      >
-        <span>{requests[type].length}</span>
-        {buttonLabel}
-      </button>
+      />
       <Modal
         activate={bool => {
           if (bool === false || setShowReqs)
@@ -29,10 +29,25 @@ const RequestModalButton = ({ history, type, buttonLabel, modalLabel }) => {
         }}
         active={showReqs}
       >
-        <RequestList type={type} label={modalLabel} />
+        <RequestList label={modalLabel} />
       </Modal>
-    </React.Fragment>
+    </>
   );
 };
 
 export default withRouter(RequestModalButton);
+
+/*
+ <button
+        type="button"
+        className="info"
+        data-content={requests.data.length || 0}
+        onClick={() => {
+          history.push(`${history.location.pathname}#requests`);
+          setShowReqs(!showReqs);
+        }}
+      >
+        <span>{requests.data.length || 0}</span>
+        {buttonLabel}
+      </button>
+*/

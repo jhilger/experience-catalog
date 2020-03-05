@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import Modal from "../../../Modal";
-import Single from "./Single";
+import CreateSingleRequest from "./CreateSingleRequest";
+import Context from "../../../Context";
+// import { dispatch } from "../../../../../../../../AppData/Local/Microsoft/TypeScript/3.5/node_modules/rxjs/internal/observable/range";
+import { onExpClick } from "../actionCreators";
 
-const CreatePartnerRequestButton = ({ history, experience }) => {
+const CreatePartnerRequestButton = ({ history, ...initialValues }) => {
   const [showReqs, setShowReqs] = useState(false);
+  const [{ experiences }, dispatch] = useContext(Context);
+  const experienceId = initialValues.initialValues.Experience__c;
   return (
     <>
       <div>
@@ -12,6 +17,7 @@ const CreatePartnerRequestButton = ({ history, experience }) => {
           type="button"
           className="info"
           onClick={() => {
+            dispatch(onExpClick(experienceId));
             history.push(`${history.location.pathname}#entry`);
             setShowReqs(!showReqs);
           }}
@@ -21,13 +27,13 @@ const CreatePartnerRequestButton = ({ history, experience }) => {
       </div>
       <Modal
         activate={bool => {
-          if (bool === false || setShowReqs)
+          if (bool === false || showReqs)
             history.push(history.location.pathname);
-          setShowReqs(typeof bool === "boolean" ? bool : !setShowReqs);
+          setShowReqs(typeof bool === "boolean" ? bool : !showReqs);
         }}
         active={showReqs}
       >
-        <Single experience={experience} />
+        <CreateSingleRequest onSuccess={() => setShowReqs(false)} />
       </Modal>
     </>
   );

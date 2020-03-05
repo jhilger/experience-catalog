@@ -10,6 +10,7 @@ const LoginButton = () => {
   }, []);
 
   if (loggedIn || !rendered) return null;
+  // if (!authNeeded) return null;
   return (
     <button
       type="button"
@@ -21,9 +22,10 @@ const LoginButton = () => {
 
         oAuth
           .login()
-          .then(oauthResult =>
-            DataService.createInstance(oauthResult, { useProxy: false })
-          )
+          .then(oauthResult => {
+            DataService.createInstance(oauthResult, { useProxy: false });
+            return localStorage.setItem("oAuth", JSON.stringify(oauthResult));
+          })
           .then(() => {
             const service = DataService.getInstance();
             service.retrieve("User", service.getUserId()).then(response => {

@@ -6,13 +6,17 @@ const defaultState = {
   },
   toasts: [],
   experiences: {
+    data: {},
     records: [],
     total: null,
     size: null,
     filtered: [],
-    filter: "home"
+    filter: "home",
+    tiers: [],
+    types: []
   },
   requests: {
+    data: {},
     records: [],
     data: {},
     submitted: [],
@@ -20,9 +24,12 @@ const defaultState = {
     total: null,
     size: null
   },
+  experienceId: null,
   contactId: null,
+  requestId: null,
   filtered: [],
-  filter: "home"
+  filter: "home",
+  tiers: []
 };
 
 export default defaultState;

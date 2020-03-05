@@ -3,25 +3,44 @@ import DataService from "forcejs/dist/force.data-service";
 
 const Search = (
   {
+    // eslint-disable-next-line react/prop-types
     sObject = "Account",
+    // eslint-disable-next-line react/prop-types
     searchField = "Name",
+    // eslint-disable-next-line react/prop-types
+    labelFormat = item => item[searchField],
+    // eslint-disable-next-line react/prop-types
+    extraFilterPhrase = "",
+    // eslint-disable-next-line react/prop-types
     inputName,
+    // eslint-disable-next-line react/prop-types
     className,
+    // eslint-disable-next-line react/prop-types
+    required,
+    // eslint-disable-next-line react/prop-types
     name,
+    // eslint-disable-next-line react/prop-types
     onChange = () => {},
+    // eslint-disable-next-line react/prop-types
     onKeyDown = () => {},
+    // eslint-disable-next-line react/prop-types
     onBlur = () => {},
+    // eslint-disable-next-line react/prop-types
     style = { color: "black" },
+    // eslint-disable-next-line react/prop-types
     fields = ["Name"],
+    // eslint-disable-next-line react/prop-types
     component = "input",
+    // eslint-disable-next-line react/prop-types
     limit = 5,
+    // eslint-disable-next-line react/prop-types
     value = "",
     ...props
   },
   ref
 ) => {
   const [displayValue, setDisplayValue] = useState(
-    typeof value === "object" && value[searchField] ? value[searchField] : ""
+    typeof value === "object" && labelFormat(value) ? labelFormat(value) : ""
   );
   const [query, setQuery] = useState("");
   const [placeholderValue, setPlaceholderValue] = useState("");
@@ -41,8 +60,8 @@ const Search = (
         .then(result => {
           if (!result) return;
           if (result.records.length) {
-            setDisplayValue(result.records[0][searchField]);
-            setPlaceholderValue(result.records[0][searchField]);
+            setDisplayValue(labelFormat(result.records[0]));
+            setPlaceholderValue(labelFormat(result.records[0]));
           }
           setRecord(result.records[0]);
         })
@@ -53,7 +72,7 @@ const Search = (
     } else if (typeof value === "object" && value[searchField]) {
       setPlaceholderValue(value[searchField]);
       setRecord(value);
-      setDisplayValue(value[searchField]);
+      setDisplayValue(labelFormat(value));
     } else if (!value) {
       setPlaceholderValue("");
       setRecord({});
@@ -80,6 +99,7 @@ const Search = (
   return React.createElement(component, {
     className,
     ref,
+    required,
     name,
     id: name,
     style: {
@@ -100,7 +120,7 @@ const Search = (
       // Fix this as it is causing an issue with displaying
       if (!e.target.value && record[searchField]) {
         onChange("", false, records);
-        return setDisplayValue(record[searchField]);
+        return setDisplayValue(labelFormat(value));
       }
       setDisplayValue(e.target.value);
 
@@ -108,7 +128,9 @@ const Search = (
         setQuery(
           `SELECT Id, ${fields.join(
             ", "
-          )} FROM ${sObject} WHERE ${searchField} LIKE '%${e.target.value.trim()}%' LIMIT ${limit}`
+          )} FROM ${sObject} WHERE ${searchField} LIKE '%${e.target.value.trim()}%'${
+            extraFilterPhrase ? ` AND ${extraFilterPhrase}` : extraFilterPhrase
+          } LIMIT ${limit}`
         );
     },
     onBlur,

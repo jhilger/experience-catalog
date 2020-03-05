@@ -1,4 +1,7 @@
-import "./polyfills";
+// import "./polyfills";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "react-app-polyfill/ie11";
 import React from "react";
 import "./scss/foundation.css";
 import "./scss/fonts.scss";
@@ -10,41 +13,28 @@ import { BrowserRouter } from "react-router-dom";
 import { hydrate } from "react-dom";
 import App from "./components/App";
 import jsforce from "./jsforce";
-import defaultState from "./components/defaultState";
+import {
+  getUser,
+  authNeeded,
+  contactId,
+  getCallbackUrl,
+  loggedIn,
+  modalRoot
+} from "./startup";
 
 import * as serviceWorker from "./serviceWorker";
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 // eslint-disable-next-line
-const {id: contactId} = location.search
-  .replace("?", "")
-  .split("&")
-  .map(v => v.split("="))
-  .reduce(
-    (p, [key, value]) => ({
-      ...p,
-      [key]: value
-    }),
-    {}
-  );
-
-const getCallbackUrl = () => `${window.location.origin}/oauth/callback/`;
-
-const getUser = () =>
-  JSON.parse(localStorage.getItem("local_user")) || defaultState.user;
-
-const getLoggedIn = () =>
-  (!!getUser().display_name || !!getUser().Name) &&
-  localStorage.getItem("oAuth");
-const modalRoot = document.getElementById("modal");
 
 hydrate(
-  <BrowserRouter basename="/">
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <App
       value={{
         jsforce,
+        authNeeded: !!authNeeded,
         user: getUser(),
-        loggedIn: getLoggedIn(),
+        loggedIn: loggedIn(),
         modalRoot,
         contactId,
         oAuth: OAuth.createInstance(

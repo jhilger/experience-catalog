@@ -1,8 +1,8 @@
 @import "../../scss/variables.scss";
 
 .exp-nav-icon {
-  width: 2.5em;
-  height: 2.5em;
+  width: 3em;
+  height: 3em;
   display: inline-block;
   vertical-align: middle;
   padding: 0.25em;
@@ -11,9 +11,16 @@
 .sidenav---sidenav---_2tBP {
   background: $gray;
   position: fixed;
+  transition: 0.5s;
+  min-width: 88px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.sidenav---sidenav-nav---3tvij>.sidenav---sidenav-navitem---uwIJ->.sidenav---navitem---9uL5T .sidenav---navtext---1AE_f {
+.sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-
+  > .sidenav---navitem---9uL5T
+  .sidenav---navtext---1AE_f {
   color: #fff;
   font-family: "Proxima N W01 reg", sans-serif;
   text-transform: uppercase;
@@ -23,7 +30,74 @@
   margin-left: 1em;
 }
 
-.sidenav---sidenav-nav---3tvij>.sidenav---sidenav-navitem---uwIJ->.sidenav---navitem---9uL5T {
+.sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-
+  > .sidenav---navitem---9uL5T {
   line-height: 60px;
   height: 60px;
+}
+
+/*  LIGHT THEME  */
+.sidenav---sidenav---_2tBP.light {
+  background: transparent;
+}
+
+.sidenav---sidenav---_2tBP.light
+  .sidenav---sidenav-toggle---1KRjR
+  .sidenav---icon-bar---u1f02 {
+  background-color: $gray;
+  opacity: 1;
+}
+
+.sidenav---sidenav---_2tBP.light .sidenav---sidenav-toggle---1KRjR {
+  padding-left: 6px;
+}
+
+.sidenav---sidenav---_2tBP.light .sidenav---sidenav-toggle---1KRjR:hover,
+.sidenav---sidenav---_2tBP.light .sidenav---sidenav-toggle---1KRjR:focus {
+  background: transparent;
+}
+
+.sidenav---sidenav---_2tBP.light
+  .sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-.sidenav---highlighted---oUx9u
+  > .sidenav---navitem---9uL5T::after,
+.sidenav---sidenav---_2tBP.light
+  .sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-:hover.sidenav---highlighted---oUx9u
+  > .sidenav---navitem---9uL5T::after {
+  background: transparent;
+}
+
+.sidenav---sidenav---_2tBP.light
+  .sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-
+  > .sidenav---navitem---9uL5T
+  .sidenav---navicon---3gCRo {
+  opacity: 1;
+  border-left: 6px solid transparent;
+  transition: 0.3s;
+}
+
+.sidenav---sidenav---_2tBP.light
+  .sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-:hover
+  > .sidenav---navitem---9uL5T
+  .sidenav---navicon---3gCRo,
+.sidenav---sidenav---_2tBP.light
+  .sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-.sidenav---highlighted---oUx9u
+  > .sidenav---navitem---9uL5T
+  .sidenav---navicon---3gCRo {
+  opacity: 1;
+  border-left: 6px solid $gold-medium;
+}
+
+.sidenav---sidenav---_2tBP.light
+  .sidenav---sidenav-nav---3tvij
+  > .sidenav---sidenav-navitem---uwIJ-
+  > .sidenav---navitem---9uL5T
+  .sidenav---navtext---1AE_f {
+  opacity: 1;
+  color: $gray;
 }
