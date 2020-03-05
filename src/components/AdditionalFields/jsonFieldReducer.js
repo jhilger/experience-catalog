@@ -34,7 +34,8 @@ const fieldReducer = (state = defaultFieldState, action) => {
     case "FIELD/change":
       return {
         ...state,
-        value: action.payload.value
+        value: action.payload.value,
+        record: action.payload.record
       };
     case "FIELD/remove":
       return {

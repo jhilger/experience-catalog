@@ -46,9 +46,8 @@ const Card = ({ sort, experience }) => {
           }}
         >
           <img
-            src={getIcon(experience.Experience_Type2__r.Short_Name__c)}
-            data-type={experience.Experience_Type2__r.Short_Name__c}
-            alt="Experience type icon"
+            src={getIcon(experience.Experience_Type2__r.Short_Name__c, "gray")}
+            alt={experience.Experience_Type2__r.Short_Name__c}
           />
         </div>
         <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
@@ -57,9 +56,14 @@ const Card = ({ sort, experience }) => {
               <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
-            <button className="fancy" >Request This Experience</button>
-            <div className="exp-card-content" dangerouslySetInnerHTML={{ __html: experience.Info__c }}>
-            </div>
+            <button type="button" className="fancy">
+              Request This Experience
+            </button>
+            <div
+              className="exp-card-content"
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: experience.Info__c }}
+            />
           </div>
           <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">

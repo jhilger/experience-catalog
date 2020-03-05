@@ -5,23 +5,19 @@ import { getIcon } from "../Icons";
 import Context from "../Context";
 
 const SideNavigation = ({ onToggle }) => {
-  const [{ experiences }, dispatch] = useContext(Context);
-  const experienceTypes = experiences.records
-    .map(experienceId => experiences.data[experienceId])
-    .reduce((types, experience) => {
-      if (
-        !types.find(
-          experienceType =>
-            experience.Experience_Type2__r.Id === experienceType.Id
-        )
-      ) {
-        types.push(experience.Experience_Type2__r);
-      }
-      return types;
-    }, []);
+  const [
+    {
+      experiences: { types },
+      experiences: { tiers }
+    },
+    dispatch
+  ] = useContext(Context);
+
+  const theme = "light";
 
   return (
     <SideNav
+      className={theme}
       onSelect={selected => {
         dispatch({
           type: "EXP/filtered",
@@ -36,23 +32,43 @@ const SideNavigation = ({ onToggle }) => {
       <SideNav.Nav defaultSelected="home">
         <NavItem eventKey="home">
           <NavIcon>
-            <img className="exp-nav-icon" src={getIcon("home")} alt="Home" />
+            <img
+              className="exp-nav-icon"
+              src={getIcon("home", theme === "light" ? "gray" : "")}
+              alt="Home"
+            />
           </NavIcon>
           <NavText>Home</NavText>
         </NavItem>
-        {experienceTypes.map(experienceType => (
-          <NavItem
-            key={experienceType.Id}
-            eventKey={experienceType.Short_Name__c}
-          >
+        {types.map(type => (
+          <NavItem key={type.Id} eventKey={type.Short_Name__c}>
             <NavIcon>
               <img
                 className="exp-nav-icon"
-                src={getIcon(experienceType)}
-                alt={experienceType.Alt_Text__c}
+                src={getIcon(
+                  type.Short_Name__c.toLowerCase(),
+                  theme === "light" ? "gray" : ""
+                )}
+                alt={type.Alt_Text__c}
               />
             </NavIcon>
-            <NavText>{experienceType.Short_Name__c}</NavText>
+            <NavText>{type.Short_Name__c}</NavText>
+          </NavItem>
+        ))}
+
+        {tiers.map(tier => (
+          <NavItem key={tier.Id} eventKey={tier.Name}>
+            <NavIcon>
+              <img
+                className="exp-nav-icon"
+                src={getIcon(
+                  tier.Name.toLowerCase(),
+                  theme === "light" ? "gray" : ""
+                )}
+                alt={tier.Name}
+              />
+            </NavIcon>
+            <NavText>{tier.Name}</NavText>
           </NavItem>
         ))}
       </SideNav.Nav>

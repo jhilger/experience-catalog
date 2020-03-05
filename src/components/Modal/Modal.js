@@ -6,7 +6,7 @@ import "./modal.css";
 import Context from "../Context";
 
 const Modal = ({ children, className, activate, active, history }) => {
-  const [context] = useContext(Context);
+  const [context, dispatch] = useContext(Context);
   const [el, setEl] = useState();
 
   useEffect(() => {
@@ -26,6 +26,9 @@ const Modal = ({ children, className, activate, active, history }) => {
       const closeModal = ev => {
         if (ev.target === newEl) {
           activate(false);
+          dispatch({
+            type: "EXP/remove_data"
+          });
         }
       };
       if (active) window.addEventListener("click", closeModal);

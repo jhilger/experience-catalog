@@ -1,5 +1,7 @@
 import { performQuery } from "../../utils/jsforce";
 
+// TODO: (Isaac) Looks like the Priority__c field can only be set to '2.'  It needs to be able to accept any number and default to null.
+
 const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
   Promise.all([
     performQuery(
@@ -21,13 +23,20 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           "Experience_Type2__r.Short_Name__c",
           "Experience_Type2__r.Alt_Text__c",
           "Partnership_Details_Requirements__c",
+          "Pricing_Tier__r.Id",
+          "Pricing_Tier__r.Name",
+          "Pricing_Tier__r.imageUrl__c",
+          "Pricing_Tier__r.Sorting_Order__c",
+          "Priority__c",
+          "Start_Date__c",
+          "End_Date__c",
           // eslint-disable-next-line prettier/prettier
           "Image_URL__c",
+          "Thumbnail_URL__c"
         ].join(", "),
         "FROM Experience__c",
-        // TODO: (ISAAC) Using ! to filter out disabled experiences, probably needs a field to control this
         // eslint-disable-next-line prettier/prettier
-        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (NOT Name LIKE '!%') ORDER BY Strategic_Partner__r.Name",
+        "WHERE Strategic_Partner__r.Status__c = 'Current Partner' AND  (Start_Date__c > TODAY OR Start_Date__c = NULL ) ORDER BY Priority__c NULLS LAST,Strategic_Partner__r.Name, Name",
       ].join(" ")
     ),
     performQuery(
@@ -58,9 +67,24 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
           // eslint-disable-next-line prettier/prettier
         `WHERE ID = '${contactId}'`,
         ].join(" ")
-      ).catch(e => {})
+      ).catch(e => {}),
+    performQuery(
+      jsforce,
+      [
+        "SELECT",
+        [
+          "Id",
+          "Name",
+          "imageUrl__c",
+          "Document_Ref__c",
+          "Description__c",
+          "Sorting_Order__c"
+        ].join(", "),
+        "FROM Pricing_Tier__c ORDER BY Sorting_Order__c NULLS LAST"
+      ].join(" ")
+    ).catch(e => {})
   ])
-    .then(([newExperiences, partnerRequests, contact]) => {
+    .then(([newExperiences, partnerRequests, contact, tiers]) => {
       const { records } = newExperiences;
       if (contact && contact.records[0])
         dispatch({
@@ -74,6 +98,10 @@ const loadedQuery = (jsforce, { user, contactId }, dispatch) =>
       dispatch({
         type: "EXP/init",
         payload: { records, total: newExperiences.totalSize }
+      });
+      dispatch({
+        type: "TIER/init",
+        payload: { records: tiers.records, total: tiers.totalSize }
       });
       dispatch({
         type: "REQ/init",

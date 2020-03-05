@@ -1,35 +1,90 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { CSSTransition } from "react-transition-group";
 import Context from "../../../Context";
 
-const RequestList = ({ label, type }) => {
+const RequestList = ({ label }) => {
   const [{ requests }] = useContext(Context);
-  const requestRecords = requests[type].map(record => requests.data[record]);
+  const [filterButton, setFilterButton] = useState("all");
+  const [count, setCount] = useState(requests.data.length);
+
   return (
-    <div>
+    <>
       <h2>{label}</h2>
-      <div className="exp-req-list">
+      <div className="exp-req-filter">
+        <button
+          type="button"
+          className={filterButton === "all" ? "filter active" : "filter"}
+          onClick={() => setFilterButton("all")}
+        >
+          All
+        </button>
+        <button
+          type="button"
+          className={filterButton === "submitted" ? "filter active" : "filter"}
+          onClick={() => setFilterButton("submitted")}
+        >
+          Submitted
+        </button>
+        <button
+          type="button"
+          className={filterButton === "approved" ? "filter active" : "filter"}
+          onClick={() => setFilterButton("approved")}
+        >
+          Approved
+        </button>
+        <button
+          type="button"
+          className={filterButton === "rejected" ? "filter active" : "filter"}
+          onClick={() => setFilterButton("rejected")}
+        >
+          Rejected
+        </button>
+      </div>
+      <div className="exp-list">
         <ul>
-          {requestRecords.map(
+          {requests.data.map(
             ({
               Event_Date__c: eventDate,
               Id,
               Contact_to_Invite__r: contact,
-              Experience__r: experience
+              Experience__r: experience,
+              Status__c: status
             }) => (
-              <li key={Id}>
-                <Link to={`/requests/single/${Id}`}>
-                  <h5>{contact.Name}</h5>
-                  {experience.Name}
-                  <span className="divider">|</span>
-                  {eventDate}
-                </Link>
-              </li>
+              <CSSTransition
+                key={Id}
+                in={
+                  status.toLowerCase() === filterButton ||
+                  filterButton === "all"
+                }
+                timeout={400}
+                classNames="reqanim"
+                onEntered={() => setCount(count + 1)}
+                onExited={() => setCount(count - 1)}
+              >
+                <li>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}
+                  >
+                    <h5>
+                      {contact ? contact.Name : "No Contact Name"}
+                      <span>{status}</span>
+                    </h5>
+                    {experience ? experience.Name : "N/A Experience"}
+                    <span className="divider">|</span>
+                    {eventDate}
+                  </a>
+                </li>
+              </CSSTransition>
             )
           )}
+          <li className={count === 0 ? "no-results active" : "no-results"}>
+            Sorry, no matches found.
+          </li>
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 
