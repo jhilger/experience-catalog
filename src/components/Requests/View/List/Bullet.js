@@ -67,7 +67,10 @@ const RequestList = ({ label }) => {
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}
+                      href={`${`${process.env.REACT_APP_LOGIN_URL}/`.replace(
+                        /\/\/$/gm,
+                        "/"
+                      )}${Id}`}
                     >
                       <h5>
                         {contact ? contact.Name : "No Contact Name"}
