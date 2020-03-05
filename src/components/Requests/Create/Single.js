@@ -15,6 +15,7 @@ import "../../../scss/form.scss";
 const SingleRequestCreate = ({
   initialValues = {},
   experienceName,
+  pricingTier,
   strategicPartner,
   onSuccess
 }) => {
@@ -49,9 +50,7 @@ const SingleRequestCreate = ({
       <label htmlFor="experinceName">Experience</label>
       <h5 id="experienceName">{experienceName}</h5>
       <label htmlFor="requirements">Tier</label>
-      {initialValues.Pricing_Tier__r && (
-        <h5 id="experienceTier">{initialValues.Pricing_Tier__r.Name}</h5>
-      )}
+      {pricingTier && <h5 id="experienceTier">{pricingTier.Name}</h5>}
       <TypeAhead
         name="Contact_to_Invite__c"
         required
@@ -85,18 +84,6 @@ const SingleRequestCreate = ({
         }
         placeholder="date of requested event"
       />
-      {/*
-      <InputField
-        name="Event_Date__c"
-        label="Event Date"
-        placeholder="mm/dd/yyyy"
-        component="input"
-        includeInBlob
-        type="date"
-        required
-        value={initialValues.Event_Date__c}
-      />
-      */}
       <InputField
         name="Description__c"
         label="Business Case"

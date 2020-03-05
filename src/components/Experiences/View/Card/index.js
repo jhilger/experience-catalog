@@ -107,12 +107,15 @@ const Card = ({ sort, experience, expanded = false }) => {
                   Requirements__c: removeTags(
                     experience.Partnership_Details_Requirements__c
                   ),
-                  Pricing_Tier__r: experience.Pricing_Tier__r,
+                  Pricing_Tier__c: experience.Pricing_Tier__r
+                    ? experience.Pricing_Tier__r.Id
+                    : null,
                   Strategic_Partner_Name__c: experience.Strategic_Partner__c,
                   Event_Date__c: experience.Start_Date__c
                     ? experience.Start_Date__c
                     : Date.now()
                 }}
+                pricingTier={experience.Pricing_Tier__r}
                 experienceName={experience.Name}
                 strategicPartner={experience.Strategic_Partner__r.Name}
                 onSuccess={() => setModalOpen(false)}
