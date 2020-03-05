@@ -67,10 +67,9 @@ const RequestList = ({ label }) => {
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={`${`${process.env.REACT_APP_LOGIN_URL}/`.replace(
-                        /\/\/$/gm,
-                        "/"
-                      )}${Id}`}
+                      href={`${
+                        process.env.REACT_APP_LIGHTNING_URL
+                      }r/Strategic_Partner_Request__c/${Id}/view`}
                     >
                       <h5>
                         {contact ? contact.Name : "No Contact Name"}
