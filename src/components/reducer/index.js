@@ -166,11 +166,11 @@ function reducer(state = defaultState, action) {
       };
     }
     case "REQ/init": {
-      const requests = [...state.requests.records, ...action.payload.records];
+      const requests = [...action.payload.records];
       // const requestsData = getRecordData(requests, "Id");
       const requestsIds = getRecordIds(requests, "Id");
 
-      return {
+      newState = {
         ...state,
         requests: {
           records: requestsIds,
@@ -193,6 +193,7 @@ function reducer(state = defaultState, action) {
           total: action.payload.total
         }
       };
+      break;
     }
     case "REQ/create_success": {
       const request = action.payload.records[0];
