@@ -37,6 +37,7 @@ const SingleRequestCreate = ({
         ...initialValues,
         // Contact_to_Invite__c: contactId,
         Requester__c: user.Id,
+        Status__c: "Draft",
         Description__c: "",
         Event_Date__c: initialValues.Event_Date__c
           ? moment(initialValues.Event_Date__c).format("YYYY-MM-DD")
