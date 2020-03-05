@@ -174,9 +174,12 @@ function reducer(state = defaultState, action) {
         ...state,
         requests: {
           records: requestsIds,
-          data: requests.filter(
-            request =>
-              new Date(request.Event_Date__c).getTime() > new Date().getTime()
+          data: requests.reduce(
+            (previous, current) => ({
+              ...previous,
+              [current.Id]: current
+            }),
+            {}
           ),
           submitted: getRecordIds(
             requests.filter(onlyUniqueId).filter(requestSubmitted()),
