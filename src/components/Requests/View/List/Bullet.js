@@ -43,7 +43,7 @@ const RequestList = ({ label }) => {
       <div className="exp-list">
         <ul>
           {requests.records
-            .map(request => requests.data(request))
+            .map(request => requests.data[request])
             .map(
               ({
                 Event_Date__c: eventDate,
