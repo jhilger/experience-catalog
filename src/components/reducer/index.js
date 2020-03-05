@@ -56,7 +56,8 @@ const filterItems = (query, experiences) =>
     } else {
       experience.display =
         experience.Experience_Type2__r.Short_Name__c === query ||
-        experience.Pricing_Tier__r.Name === query;
+        (experience.Pricing_Tier__r &&
+          experience.Pricing_Tier__r.Name === query);
     }
     return experience;
   });

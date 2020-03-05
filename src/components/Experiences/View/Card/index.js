@@ -69,15 +69,15 @@ const Card = ({ sort, experience, expanded = false }) => {
               )}
               alt={experience.Experience_Type2__r.Alt_Text__c}
             />
-
-            <img
-              src={getIcon(
-                experience.Pricing_Tier__r.Name.toLowerCase(),
-                "gray"
-              )}
-              alt={experience.Pricing_Tier__r.Name}
-            />
-
+            {experience.Pricing_Tier__r && (
+              <img
+                src={getIcon(
+                  experience.Pricing_Tier__r.Name.toLowerCase(),
+                  "gray"
+                )}
+                alt={experience.Pricing_Tier__r.Name}
+              />
+            )}
             {/* TODO: (Isaac) Show icon that matches tier of experience */}
           </div>
 
