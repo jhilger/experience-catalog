@@ -1,17 +1,34 @@
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import { getIcon } from "../../../Icons";
 import Modal from "../../../Modal";
 import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
 
-const Card = ({ sort, experience, expanded = false }) => {
-  const [cardSize, setCardSize] = useState(expanded);
+const Div = styled.div`
+  transition: all 1s, order 0.25s;
+  @media (min-width: 40em) {
+    order: ${props =>
+      !props.cardExpanded
+        ? props.orderSize
+        : props.orderSize - 1 - ((props.orderSize - 1) % 2)};
+  }
+  @media (min-width: 64em) {
+    order: ${props =>
+      !props.cardExpanded
+        ? props.orderSize
+        : props.orderSize - 1 - ((props.orderSize - 1) % 3)};
+  }
+`;
+
+const Card = ({ sort, experience, expanded: passedExpanded = false }) => {
+  const [expanded, setExpanded] = useState(passedExpanded);
   const [modalOpen, setModalOpen] = useState(false);
 
   const toggleCard = e => {
-    setCardSize(!cardSize);
+    setExpanded(!expanded);
   };
 
   const removeTags = str => (str ? str.replace(/<\/?[^>]+(>|$)/g, "") : "");
@@ -24,9 +41,11 @@ const Card = ({ sort, experience, expanded = false }) => {
       classNames="cardanim"
       unmountOnExit
     >
-      <div
+      <Div
+        orderSize={sort + 1}
+        cardExpanded={expanded}
         className={
-          cardSize
+          expanded
             ? "medium-12 cell exp-card open"
             : "medium-6 large-4 cell exp-card close"
         }
@@ -43,7 +62,7 @@ const Card = ({ sort, experience, expanded = false }) => {
         <button
           type="button"
           onClick={toggleCard}
-          className={cardSize ? "exp-card-toggle close" : "exp-card-toggle"}
+          className={expanded ? "exp-card-toggle close" : "exp-card-toggle"}
         >
           <div className="exp-plus" />
         </button>
@@ -78,7 +97,7 @@ const Card = ({ sort, experience, expanded = false }) => {
             {/* TODO: (Isaac) Show icon that matches tier of experience */}
           </div>
 
-          <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
+          <div className={expanded ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-title">
               <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
@@ -126,7 +145,7 @@ const Card = ({ sort, experience, expanded = false }) => {
             />
           </div>
 
-          <div className={cardSize ? "medium-6 cell" : "medium-12 cell"}>
+          <div className={expanded ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-keepinmind">
               <h4>Keep In Mind</h4>
               <div
@@ -147,7 +166,7 @@ const Card = ({ sort, experience, expanded = false }) => {
             </div>
           </div>
         </div>
-      </div>
+      </Div>
     </CSSTransition>
   );
 };
@@ -165,7 +184,7 @@ export default Card;
 <div
         ref={ref}
         className={
-          cardSize
+          expanded
             ? "medium-12 cell exp-card open"
             : "medium-6 large-4 cell exp-card close"
         }
@@ -173,13 +192,13 @@ export default Card;
 
 
 className={
-  cardSize
+  expanded
     ? `medium-12 medium-order-${Math.floor(sort / 2)} large-order-${Math.floor(sort / 3)} cell exp-card open`
     : `medium-6 large-4 medium-order-${Math.floor(sort / 2) + 1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
   } 
 
 style={
-          cardSize
+          expanded
             ? {
                 position: "absolute",
                 zIndex: 1,
@@ -197,7 +216,7 @@ style={
 
 /*
 
- {cardSize && (
+ {expanded && (
   <div>
     <button
       type="button"

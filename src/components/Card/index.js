@@ -3,7 +3,6 @@ import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../Icons";
 import "./card.scss";
-import EntryButton from "../Requests/Entry/EntryButton";
 
 const Card = ({ sort, experience }) => {
   const [cardSize, setCardSize] = useState(false);

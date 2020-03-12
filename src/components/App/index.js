@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 // import { ThemeProvider } from "styled-components";
 
-import DataService from "forcejs/dist/force.data-service";
 import Home from "../../routes/Home";
 // import OAuthCallback from "../../routes/OAuthCallback";
 import RequestPage from "../../routes/Request";
