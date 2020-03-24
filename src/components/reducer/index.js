@@ -49,8 +49,9 @@ export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
   return [hookState, dispatch];
 };
 
-const filterItems = (query, experiences) =>
-  experiences.map(experience => {
+const filterItems = (query, experiences) => {
+  let index = 0;
+  return experiences.map(experience => {
     if (query === "home") {
       experience.display = true;
     } else {
@@ -59,9 +60,14 @@ const filterItems = (query, experiences) =>
         (experience.Pricing_Tier__r &&
           experience.Pricing_Tier__r.Name === query);
     }
+    if (experience.display) {
+      experience.index = index;
+      // eslint-disable-next-line no-plusplus
+      index++;
+    }
     return experience;
   });
-
+};
 function reducer(state = defaultState, action) {
   if (process.env.NODE_ENV !== "production")
     console.log(JSON.stringify(action.type));

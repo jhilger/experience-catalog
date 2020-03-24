@@ -3,6 +3,7 @@ import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { getIcon } from "../../../Icons";
+import { useImage } from "../../../Image";
 import Modal from "../../../Modal";
 import SingleRequest from "../../../Requests/Create/Single";
 import "./card.scss";
@@ -10,12 +11,14 @@ import "./card.scss";
 const Div = styled.div`
   transition: all 1s, order 0.25s;
   @media (min-width: 40em) {
+    transition: all 1s, order 0.25s;
     order: ${props =>
       !props.cardExpanded
         ? props.orderSize
         : props.orderSize - 1 - ((props.orderSize - 1) % 2)};
   }
   @media (min-width: 64em) {
+    transition: all 1s, order 0.125s;
     order: ${props =>
       !props.cardExpanded
         ? props.orderSize
@@ -32,7 +35,11 @@ const Card = ({ sort, experience, expanded: passedExpanded = false }) => {
   };
 
   const removeTags = str => (str ? str.replace(/<\/?[^>]+(>|$)/g, "") : "");
-
+  const src = useImage({
+    src: `${process.env.PUBLIC_URL}${experience.Image_URL__c}`,
+    defaultSrc: `${process.env.PUBLIC_URL}/img/default.jpg`,
+    order: ["src", "defaultSrc"]
+  });
   return (
     <CSSTransition
       key={experience.Id}
@@ -69,11 +76,7 @@ const Card = ({ sort, experience, expanded: passedExpanded = false }) => {
         <div
           className="exp-card-hero"
           style={{
-            backgroundImage: `url(${
-              experience.Image_URL__c
-                ? `${process.env.PUBLIC_URL}${experience.Image_URL__c}`
-                : `${process.env.PUBLIC_URL}/img/default.jpg`
-            })`
+            backgroundImage: `url(${src})`
           }}
         />
         <div className="grid-x grid-margin-x grid-margin-y exp-card-main">
