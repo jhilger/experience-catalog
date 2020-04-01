@@ -102,7 +102,6 @@ const Card = ({ sort, experience, expanded: passedExpanded = false }) => {
 
           <div className={expanded ? "medium-6 cell" : "medium-12 cell"}>
             <div className="exp-card-title">
-              <h2>{experience.Strategic_Partner__r.Name}</h2>
               <h3>{experience.Name}</h3>
             </div>
 
