@@ -60,7 +60,12 @@ const SingleRequestCreate = ({
         dropDownItemLabelField={item => (
           <span>{`${item.Name} of ${item.Account.Name}`}</span>
         )}
-        fields={["Name", "Account.Name", "Account.Id"]}
+        fields={[
+          "Name",
+          "Account.Name",
+          "Account.Id",
+          "Account.Total_Opportunities__c"
+        ]}
         onChange={record => {
           dispatch({
             type: "CONT/data",

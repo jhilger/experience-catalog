@@ -4,15 +4,16 @@ import TypeAhead from "../../TypeAhead";
 
 const OpportunityTypeAhead = () => {
   const [state] = useContext(Context);
-  console.log(state);
+
   if (!state) return null;
   if (!state.fields) return null;
   if (!state.fields.Contact_to_Invite__c) return null;
   if (!state.fields.Contact_to_Invite__c.record) return null;
   if (!state.fields.Contact_to_Invite__c.record.Account) return null;
   if (!state.fields.Contact_to_Invite__c.record.Account.Id) return null;
-  if (!state.fields.Contact_to_Invite__c.record.Account.Total_Opportunities__c)
-    return null;
+  console.log(state.fields.Contact_to_Invite__c.record.Account);
+  // if (!state.fields.Contact_to_Invite__c.record.Account.Total_Opportunities__c)
+  //   return null;
   return (
     <TypeAhead
       name="Opportunity__c"
