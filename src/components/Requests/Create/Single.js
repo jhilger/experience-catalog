@@ -63,8 +63,8 @@ const SingleRequestCreate = ({
         fields={[
           "Name",
           "Account.Name",
-          "Account.Id",
-          "Account.Total_Opportunities__c"
+          // "Account.Total_Opportunities__c",
+          "Account.Id"
         ]}
         onChange={record => {
           dispatch({
