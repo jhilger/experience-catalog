@@ -46,8 +46,6 @@ const SingleRequestCreate = ({
     >
       <label htmlFor="requester">Requester</label>
       <h5 id="requester">{user.Name}</h5>
-      <label htmlFor="partnerName">Strategic Partner</label>
-      <h5 id="partnerName">{strategicPartner}</h5>
       <label htmlFor="experinceName">Experience</label>
       <h5 id="experienceName">{experienceName}</h5>
       <label htmlFor="requirements">Tier</label>
