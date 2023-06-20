@@ -42,43 +42,47 @@ const RequestList = ({ label }) => {
       </div>
       <div className="exp-list">
         <ul>
-          {requests.data.map(
-            ({
-              Event_Date__c: eventDate,
-              Id,
-              Contact_to_Invite__r: contact,
-              Experience__r: experience,
-              Status__c: status
-            }) => (
-              <CSSTransition
-                key={Id}
-                in={
-                  status.toLowerCase() === filterButton ||
-                  filterButton === "all"
-                }
-                timeout={400}
-                classNames="reqanim"
-                onEntered={() => setCount(count + 1)}
-                onExited={() => setCount(count - 1)}
-              >
-                <li>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`${process.env.REACT_APP_LOGIN_URL}${Id}`}
-                  >
-                    <h5>
-                      {contact ? contact.Name : "No Contact Name"}
-                      <span>{status}</span>
-                    </h5>
-                    {experience ? experience.Name : "N/A Experience"}
-                    <span className="divider">|</span>
-                    {eventDate}
-                  </a>
-                </li>
-              </CSSTransition>
-            )
-          )}
+          {requests.records
+            .map(request => requests.data[request])
+            .map(
+              ({
+                Event_Date__c: eventDate,
+                Id,
+                Contact_to_Invite__r: contact,
+                Experience__r: experience,
+                Status__c: status
+              }) => (
+                <CSSTransition
+                  key={Id}
+                  in={
+                    status.toLowerCase() === filterButton ||
+                    filterButton === "all"
+                  }
+                  timeout={400}
+                  classNames="reqanim"
+                  onEntered={() => setCount(count + 1)}
+                  onExited={() => setCount(count - 1)}
+                >
+                  <li>
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`${
+                        process.env.REACT_APP_LIGHTNING_URL
+                      }r/Strategic_Partner_Request__c/${Id}/view`}
+                    >
+                      <h5>
+                        {contact ? contact.Name : "No Contact Name"}
+                        <span>{status}</span>
+                      </h5>
+                      {experience ? experience.Name : "N/A Experience"}
+                      <span className="divider">|</span>
+                      {eventDate}
+                    </a>
+                  </li>
+                </CSSTransition>
+              )
+            )}
           <li className={count === 0 ? "no-results active" : "no-results"}>
             Sorry, no matches found.
           </li>

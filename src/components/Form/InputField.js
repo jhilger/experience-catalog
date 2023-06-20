@@ -68,36 +68,36 @@ const InputField = ({
           rows,
           required,
           onChange: e => {
-            if (includeInBlob)
-              dispatchLocal({
-                type: "FIELD/change",
-                payload: { value: e.target.value, name: e.target.name }
-              });
-            dispatch({
+            dispatchLocal({
               type: "FIELD/change",
               payload: { value: e.target.value, name: e.target.name }
             });
+            if (includeInBlob)
+              dispatch({
+                type: "FIELD/change",
+                payload: { value: e.target.value, name: e.target.name }
+              });
           },
           onBlur: e => {
-            if (includeInBlob)
-              dispatchLocal({
-                type: "FIELD/blur",
-                payload: {
-                  value: e.target.value,
-                  name: e.target.name,
-                  messages: validate(
-                    { value: e.target.value, name: e.target.name },
-                    state
-                  )
-                }
-              });
-            dispatch({
+            dispatchLocal({
               type: "FIELD/blur",
               payload: {
                 value: e.target.value,
-                name: e.target.name
+                name: e.target.name,
+                messages: validate(
+                  { value: e.target.value, name: e.target.name },
+                  state
+                )
               }
             });
+            if (includeInBlob)
+              dispatch({
+                type: "FIELD/blur",
+                payload: {
+                  value: e.target.value,
+                  name: e.target.name
+                }
+              });
             (
               validate({ value: e.target.value, name: e.target.name }, state) ||
               []
@@ -113,15 +113,15 @@ const InputField = ({
             });
           },
           onFocus: e => {
-            if (includeInBlob)
-              dispatchLocal({
-                type: "FIELD/focus",
-                payload: { value: e.target.value, name: e.target.name }
-              });
-            dispatch({
+            dispatchLocal({
               type: "FIELD/focus",
               payload: { value: e.target.value, name: e.target.name }
             });
+            if (includeInBlob)
+              dispatch({
+                type: "FIELD/focus",
+                payload: { value: e.target.value, name: e.target.name }
+              });
           },
           placeholder
         },

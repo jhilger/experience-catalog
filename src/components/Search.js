@@ -3,21 +3,37 @@ import DataService from "forcejs/dist/force.data-service";
 
 const Search = (
   {
+    // eslint-disable-next-line react/prop-types
     sObject = "Account",
+    // eslint-disable-next-line react/prop-types
     searchField = "Name",
+    // eslint-disable-next-line react/prop-types
     labelFormat = item => item[searchField],
+    // eslint-disable-next-line react/prop-types
     extraFilterPhrase = "",
+    // eslint-disable-next-line react/prop-types
     inputName,
+    // eslint-disable-next-line react/prop-types
     className,
+    // eslint-disable-next-line react/prop-types
     required,
+    // eslint-disable-next-line react/prop-types
     name,
+    // eslint-disable-next-line react/prop-types
     onChange = () => {},
+    // eslint-disable-next-line react/prop-types
     onKeyDown = () => {},
+    // eslint-disable-next-line react/prop-types
     onBlur = () => {},
+    // eslint-disable-next-line react/prop-types
     style = { color: "black" },
+    // eslint-disable-next-line react/prop-types
     fields = ["Name"],
+    // eslint-disable-next-line react/prop-types
     component = "input",
+    // eslint-disable-next-line react/prop-types
     limit = 5,
+    // eslint-disable-next-line react/prop-types
     value = "",
     ...props
   },
@@ -53,8 +69,8 @@ const Search = (
           // eslint-disable-next-line no-console
           console.error(err);
         });
-    } else if (typeof value === "object" && labelFormat(value)) {
-      setPlaceholderValue(labelFormat(value));
+    } else if (typeof value === "object" && value[searchField]) {
+      setPlaceholderValue(value[searchField]);
       setRecord(value);
       setDisplayValue(labelFormat(value));
     } else if (!value) {

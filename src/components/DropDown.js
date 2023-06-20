@@ -27,6 +27,7 @@ const DropDown = (
       onBlur={() => (ref.current.mouseOver = false)}
     >
       {list.map(item => (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions,jsx-a11y/click-events-have-key-events
         <li
           onMouseOver={() => {
             setCurrentHover(item.Id);

@@ -3,7 +3,6 @@ import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 import { getIcon } from "../Icons";
 import "./card.scss";
-import EntryButton from "../Requests/Entry/EntryButton";
 
 const Card = ({ sort, experience }) => {
   const [cardSize, setCardSize] = useState(false);
@@ -21,11 +20,8 @@ const Card = ({ sort, experience }) => {
       <div
         className={
           cardSize
-            ? `medium-12 medium-order-${Math.floor(
-                sort / 2
-              )} large-order-${Math.floor(sort / 3)} cell exp-card open`
-            : `medium-6 large-4 medium-order-${Math.floor(sort / 2) +
-                1} large-order-${Math.floor(sort / 3) + 1} cell exp-card close`
+            ? "medium-12 cell exp-card open"
+            : "medium-6 large-4 cell exp-card close"
         }
       >
         <button

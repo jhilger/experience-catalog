@@ -16,6 +16,10 @@ const LoginButton = () => {
       type="button"
       className="fancy"
       onClick={e => {
+        window.onunload = () => {
+          localStorage.removeItem("local_user");
+        };
+
         oAuth
           .login()
           .then(oauthResult => {

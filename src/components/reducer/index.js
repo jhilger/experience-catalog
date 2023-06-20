@@ -49,18 +49,25 @@ export const useThunkReducer = (reducerFunction, initialArg, init = a => a) => {
   return [hookState, dispatch];
 };
 
-const filterItems = (query, experiences) =>
-  experiences.map(experience => {
+const filterItems = (query, experiences) => {
+  let index = 0;
+  return experiences.map(experience => {
     if (query === "home") {
       experience.display = true;
     } else {
       experience.display =
         experience.Experience_Type2__r.Short_Name__c === query ||
-        experience.Pricing_Tier__r.Name === query;
+        (experience.Pricing_Tier__r &&
+          experience.Pricing_Tier__r.Name === query);
+    }
+    if (experience.display) {
+      experience.index = index;
+      // eslint-disable-next-line no-plusplus
+      index++;
     }
     return experience;
   });
-
+};
 function reducer(state = defaultState, action) {
   if (process.env.NODE_ENV !== "production")
     console.log(JSON.stringify(action.type));
@@ -131,7 +138,6 @@ function reducer(state = defaultState, action) {
       ];
       const experienceData = getRecordData(experiences, "Id");
       const experienceIds = getRecordIds(experiences, "Id");
-
       return {
         ...state,
         experiences: {
@@ -146,6 +152,7 @@ function reducer(state = defaultState, action) {
           total: action.payload.total,
           tiers: experiences
             .map(experience => experience.Pricing_Tier__r)
+            .filter(tier => tier)
             .filter(
               (tier, i, arr) => arr.findIndex(v => v.Id === tier.Id) === i
             )
@@ -165,17 +172,20 @@ function reducer(state = defaultState, action) {
       };
     }
     case "REQ/init": {
-      const requests = [...state.requests.records, ...action.payload.records];
+      const requests = [...action.payload.records];
       // const requestsData = getRecordData(requests, "Id");
       const requestsIds = getRecordIds(requests, "Id");
 
-      return {
+      newState = {
         ...state,
         requests: {
           records: requestsIds,
-          data: requests.filter(
-            request =>
-              new Date(request.Event_Date__c).getTime() > new Date().getTime()
+          data: requests.reduce(
+            (previous, current) => ({
+              ...previous,
+              [current.Id]: current
+            }),
+            {}
           ),
           submitted: getRecordIds(
             requests.filter(onlyUniqueId).filter(requestSubmitted()),
@@ -189,6 +199,7 @@ function reducer(state = defaultState, action) {
           total: action.payload.total
         }
       };
+      break;
     }
     case "REQ/create_success": {
       const request = action.payload.records[0];

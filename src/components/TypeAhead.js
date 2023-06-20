@@ -5,6 +5,7 @@ import FormContext from "./Form/Context";
 import AdditionalFieldsContext from "./AdditionalFields/Context";
 
 const TypeAhead = ({
+  /* eslint-disable react/prop-types */
   value: Id,
   required,
   onChange = () => {},
@@ -16,6 +17,7 @@ const TypeAhead = ({
   label,
   className,
   sObject
+  /* eslint-enable react/prop-types */
 }) => {
   const ref = useRef();
   const menuRef = useRef();

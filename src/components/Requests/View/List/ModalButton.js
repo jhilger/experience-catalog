@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import Modal from "../../../Modal";
 import Context from "../../../Context";
 import RequestList from "./Bullet";
+// import Context from "../../../Context";
 
 const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
   const [showReqs, setShowReqs] = useState(false);
@@ -14,7 +15,7 @@ const RequestModalButton = ({ history, buttonLabel, modalLabel }) => {
       <button
         type="button"
         className="req"
-        data-content={requests.data.length || 0}
+        data-content={requests.records.length || 0}
         onClick={() => {
           history.push(`${history.location.pathname}#requests`);
           setShowReqs(!showReqs);
